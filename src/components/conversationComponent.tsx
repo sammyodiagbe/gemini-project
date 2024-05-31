@@ -1,7 +1,9 @@
+import { useConversationContext } from "@/context/conversationContext";
 import PossibleInteractionComponent from "./possibleInteractionComponent";
 import { SendHorizonal } from "lucide-react";
 
 const ConversationComponent = () => {
+  const { interactions } = useConversationContext();
   const possibleInteractions = [
     "Summarize the article for me.",
     "Bring out the key points",
@@ -17,10 +19,10 @@ const ConversationComponent = () => {
         {/* this would be the conversation body */}
         <div className=" overflow-hidden relative">
           <div className="absolute bottom-0 left-0 py-2 w-full grid grid-cols-2 gap-[15px]">
-            {possibleInteractions.map((interaction, index) => {
+            {interactions.map((interaction, index) => {
               return (
                 <PossibleInteractionComponent
-                  interactionMessage={interaction}
+                  interactionMessage={interaction.text}
                   key={index}
                 />
               );

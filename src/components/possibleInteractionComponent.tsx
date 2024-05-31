@@ -8,7 +8,7 @@ const PossibleInteractionComponent: FC<ComponentType> = ({
   interactionMessage,
 }) => {
   return (
-    <div className="flex items-center py-4 bg-gray-300 h-[80px] cursor-pointer hover:bg-gray-400 justify-center rounded-md">
+    <div className=" p-4 bg-gray-100 min-h-[80px] border shadow-md text-sm cursor-pointer hover:bg-gray-200 rounded-md">
       <p>{interactionMessage}</p>
     </div>
   );

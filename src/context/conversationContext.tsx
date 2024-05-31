@@ -8,18 +8,22 @@ import {
   Dispatch,
 } from "react";
 
+type interaction = {
+  text: string;
+};
+
 type ContextType = {
-  interactions: string[] | null;
+  interactions: interaction[];
   extractedText: string | undefined | null;
   setExtractedText: Dispatch<SetStateAction<undefined | string>> | null;
-  setInteractions: Dispatch<SetStateAction<null | string[]>> | null;
+  setInteractions: Dispatch<SetStateAction<interaction[]>>;
 };
 
 const conversationContext = createContext<ContextType>({
   interactions: [],
   extractedText: undefined,
   setExtractedText: null,
-  setInteractions: null,
+  setInteractions: () => {},
 });
 
 type ConversationContextType = {
@@ -29,7 +33,7 @@ type ConversationContextType = {
 const ConversationContextProvider: FC<ConversationContextType> = ({
   children,
 }) => {
-  const [interactions, setInteractions] = useState<string[] | null>([]);
+  const [interactions, setInteractions] = useState<interaction[]>([]);
   const [extractedText, setExtractedText] = useState<string>();
   return (
     <conversationContext.Provider
