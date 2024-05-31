@@ -43,7 +43,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [chat, setChat] = useState<ChatSession>();
 
   const chatWithGemini = async (message: string) => {
-    console.log(extractedText);
     const initialText: TextPart = {
       text: geminiDocumentInitInstruction(extractedText!),
     };
