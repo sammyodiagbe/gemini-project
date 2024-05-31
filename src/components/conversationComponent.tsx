@@ -1,15 +1,22 @@
+"use client";
+
 import { useConversationContext } from "@/context/conversationContext";
 import PossibleInteractionComponent from "./possibleInteractionComponent";
 import { SendHorizonal } from "lucide-react";
+import { FormEvent, FormEventHandler, useState } from "react";
 
 const ConversationComponent = () => {
-  const { interactions } = useConversationContext();
-  const possibleInteractions = [
-    "Summarize the article for me.",
-    "Bring out the key points",
-    "Do something with the pdf",
-    "Create quize questions",
-  ];
+  const { interactions, chatWithGemini } = useConversationContext();
+  const [message, setMessage] = useState("");
+
+  const sendMessage: FormEventHandler<HTMLFormElement> = (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    if (!message || message.trim() === "") return;
+    chatWithGemini(message);
+  };
+
   return (
     <div className="bg-gray-200 py-2">
       <div className="grid grid-rows-[80px_1fr_80px] grid-cols-1 w-[750px] h-full mx-auto">
@@ -31,12 +38,14 @@ const ConversationComponent = () => {
         </div>
         {/* this woudl contain the textarea and other action btn */}
         <div className="py-2">
-          <form className="w-full">
+          <form className="w-full" onSubmit={sendMessage}>
             <div className="w-full flex items-center bg-white px-2 rounded-md">
               <input
                 type="text"
                 placeholder="What do you want to do ?"
-                className="flex-1 border-none outline-none py-6 font-semibold px-2"
+                className="flex-1 border-none outline-none py-6 font-medium px-2"
+                value={message}
+                onChange={({ target }) => setMessage(target.value)}
               />
               <button className="w-[40px] h-[40px] bg-gray-200 hover:bg-blue-400 rounded-md hover:text-white flex items-center justify-center">
                 <SendHorizonal size={24} />

@@ -1,18 +1,12 @@
 "use client";
 import axios from "axios";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FormEvent,
-  FormEventHandler,
-  useState,
-} from "react";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import { Gemini as AI } from "@/gemini/gemini";
-import { Document } from "@react-pdf/renderer";
 import MyPdfViewer from "@/components/pdfViewer";
 import ConversationComponent from "@/components/conversationComponent";
 import { useConversationContext } from "@/context/conversationContext";
 import { jsonDecode } from "@/lib/utils";
+import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string>();
@@ -43,24 +37,16 @@ const Page = () => {
       });
 
       const result = await AI.generateContent(
-        `Hey Gemini, 
-        Analyze the text and generate 4 possible interactions a user might want to have with ypu in regards to the text article below
-        If the text has no clarity or direction you can ignore and just send a message back letting the user know their isn't clarity you could also add an entry in your response that sets clarity: false.( this is also at the root of the json object) The structure of each interaction object should always be { text: "..."} and also keep them at a shorter length please.
-
-        Here is another thing to note, not all text given to you are for education purpose, some could be resumes, cover letters, you need to detect and create appropriate possible interactions, i believe in you
-
-        Also add a field in the root of your response that type of article. It is up to you to determine if this is a school work, an article, a resume, a cover letter etc.
-
-        An example of interactions would be, let say i send you an article on microplasticity, interactions I as a user would want to have with the article might be Summarize the text, Point out key note, create notes based on text, How does MicroPlasticity affect our enviroment
-  
-        text=${extracted_text}`
+        generateInitialPossibleInteractions(extracted_text)
       );
       const response = await result.response;
-      const json = jsonDecode(response.text());
+      const text = await response.text();
+      const json = jsonDecode(text);
 
       const { interactions } = json;
       setInteractions(interactions);
       setFile(fileUrl);
+      setExtractedText(extracted_text);
     } catch (error: any) {
       console.log("Something went wrong");
       console.log(error);
