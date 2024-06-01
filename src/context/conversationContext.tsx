@@ -10,6 +10,8 @@ import {
 import { Gemini as AI } from "@/gemini/gemini";
 import { ChatSession, TextPart } from "@google/generative-ai";
 import { geminiDocumentInitInstruction } from "@/lib/gemini_interactons";
+import { createConversationObject, jsonDecode } from "@/lib/utils";
+import { ConversationType } from "@/lib/type";
 
 type interaction = {
   text: string;
@@ -21,6 +23,7 @@ type ContextType = {
   setExtractedText: Dispatch<SetStateAction<undefined | string>>;
   setInteractions: Dispatch<SetStateAction<interaction[]>>;
   chatWithGemini: Function;
+  conversation: ConversationType[];
 };
 
 const conversationContext = createContext<ContextType>({
@@ -29,6 +32,7 @@ const conversationContext = createContext<ContextType>({
   setExtractedText: () => {},
   setInteractions: () => {},
   chatWithGemini: () => {},
+  conversation: [],
 });
 
 type ConversationContextType = {
@@ -41,8 +45,14 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [interactions, setInteractions] = useState<interaction[]>([]);
   const [extractedText, setExtractedText] = useState<string>();
   const [chat, setChat] = useState<ChatSession>();
+  const [conversation, setConversation] = useState<ConversationType[]>([]);
 
   const chatWithGemini = async (message: string) => {
+    const obj = createConversationObject("chat", "user", message);
+    const updateConvo = [...conversation];
+
+    updateConvo.push(obj);
+    setConversation(updateConvo);
     const initialText: TextPart = {
       text: geminiDocumentInitInstruction(extractedText!),
     };
@@ -58,9 +68,13 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const result = await chat.sendMessage(message);
       const response = await result.response;
       const text = await response.text();
-
-      console.log(response.text());
+      const decodejson = jsonDecode(text);
+      const { response: res } = decodejson;
+      const convoObj = createConversationObject("chat", "ai", res);
+      const newConv = [...conversation];
+      newConv.push(convoObj);
       setChat(chat);
+      setConversation(newConv);
     } catch (error: any) {
       console.log("Something went wrong");
       console.log(error);
@@ -74,6 +88,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         setExtractedText,
         setInteractions,
         chatWithGemini,
+        conversation,
       }}
     >
       {children}

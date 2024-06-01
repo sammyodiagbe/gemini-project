@@ -54,7 +54,7 @@ const Page = () => {
   };
 
   return (
-    <main className="grid grid-cols-[700px_1fr] h-screen w-screen">
+    <main className="grid grid-cols-[700px_1fr] h-screen max-h-screen w-screen">
       {/* <div className="">
         <form onSubmit={handleFileUpload}>
           <input
