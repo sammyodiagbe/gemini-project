@@ -16,8 +16,6 @@ export const generateInitialPossibleInteractions = (
 
 export const geminiDocumentInitInstruction = (text: string): string => {
   return `
-    Please make sure your text contents are written in Markdown
-    Also make sure to format the text properly adding doulbe newlines after headings and also after each paragraph(this is a very important instruction)
     The user has sent in extracted text from  a pdf I have given you the text below, So your conversation with user is going to be in relation to what(Text) the text is about, you are goin to help the user with every question or help they need. The extracted text has been passed below
 
     Whenever you are asked about the text provided your response should never mention text it should be more professionall and say maybe something like article, pdf, document, you come up with something awesome
@@ -27,14 +25,25 @@ export const geminiDocumentInitInstruction = (text: string): string => {
     for the structure of the response you send back it should always be 
     and you should include sources in the response if the user ask for that,
     you should also include a seperate entry called text if the user ask you to do some article or essay writting , you response are short like 'Yes i can definitely do that' then you actions lets say writing the article should be in the text entry of the json response
-    {response: ".....", sources: [...], text:"", quizes: [{question: "", answer: "", options: []}] , flashcards: [{question: "...", answer: "..."}]}, should includ quiz or flashcards only if the requests is asking for flashcards or quiz questions
+    {response: ".....", sources: [...], text:"", type: 'chat' },
 
-    When you are ask to generate x amount of quiz or flashcard you have to generate quiz or flashcards based on the text. If the messages doesn't specify a number the default number should be 10 so don't just send back a response you have to send either quizes or flashcards as per the request
-    if the request is for quiz you have to include a quiz entry and it value will be the list of quiz questions, same applies for flashcards too,
+    Always include sources anytime possible
+    And always go straight to action for example if a user ask you to summarize all of some points in the document, don't ask questions just do
 
-    Keep the quiz questions short and answer short and the answer needs to be in the options
+    If the user ask you anything related to quiz or flashcard, Tell them they can start a quiz or flashcard by clicking on the quiz|flashcard(you can only use one of this options depending on if the user asked for a quiz or a flashcard) button below
 
     This is the text to build your responses on
     Text=${text}
     `;
+};
+
+export const generateQuizGemini = (text: string): string => {
+  return `
+    Generate 10 quiz questions based on the text document
+    you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "..."}
+    now you should only send one question at a time
+    remember the answer has to be an option
+
+    After recieving this instruction, send the first question right away and also keep track of the user score point. each correct quiz answered is 10 points
+  `;
 };

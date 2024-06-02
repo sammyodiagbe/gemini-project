@@ -31,7 +31,7 @@ const ConversationComponent = () => {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    if (!message || message.trim() === "") return;
+    if (!message || message === "") return;
     await chatWithGemini(message);
     setMessage("");
   };
@@ -41,7 +41,7 @@ const ConversationComponent = () => {
       ref={convoContainerRef}
       className="bg-white py-2 max-h-screen overflow-y-auto"
     >
-      <div className="absolute bottom-0 left-0 py-2 w-full grid grid-cols-2 gap-[15px]">
+      {/* <div className="absolute bottom-0 left-0 py-2 w-full grid grid-cols-2 gap-[15px]">
         {interactions.map((interaction, index) => {
           return (
             <PossibleInteractionComponent
@@ -50,7 +50,7 @@ const ConversationComponent = () => {
             />
           );
         })}
-      </div>
+      </div> */}
       <div className="grid grid-rows-[1fr_80px] grid-cols-1 w-[850px] h-full max-h-full mx-auto ">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}

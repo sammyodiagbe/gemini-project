@@ -30,17 +30,17 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
   return (
     <div className="p-4 bg-gray-100 rounded-md mb-5">
       <p className="pb-3 text-sm">{sender === "ai" ? "Ally" : "You"}</p>
-      {sender === "ai" ? (
+      {/* {sender === "ai" ? (
         <ReactTyped
           strings={[message]}
           typeSpeed={25}
           showCursor={false}
           className="mb-4 leading-8"
         />
-      ) : (
-        // <MarkdownView markdown={message} />
-        <p className={cn("leading-8 mb-3")}>{message}</p>
-      )}
+      ) : ( */}
+      {/* // <MarkdownView markdown={message} /> */}
+      <p className={cn("leading-8 mb-3")}>{message}</p>
+
       {sender === "ai" && (
         <div className="flex items-center mt-6">
           <button className="flex items-center p-2 mr-2 text-gray-600 bg-blue-100 rounded-md active:scale-95 justify-center">
