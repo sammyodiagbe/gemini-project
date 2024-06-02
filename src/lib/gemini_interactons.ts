@@ -16,6 +16,8 @@ export const generateInitialPossibleInteractions = (
 
 export const geminiDocumentInitInstruction = (text: string): string => {
   return `
+    Please make sure your text contents are written in Markdown
+    Also make sure to format the text properly adding doulbe newlines after headings and also after each paragraph(this is a very important instruction)
     The user has sent in extracted text from  a pdf I have given you the text below, So your conversation with user is going to be in relation to what(Text) the text is about, you are goin to help the user with every question or help they need. The extracted text has been passed below
 
     Whenever you are asked about the text provided your response should never mention text it should be more professionall and say maybe something like article, pdf, document, you come up with something awesome
