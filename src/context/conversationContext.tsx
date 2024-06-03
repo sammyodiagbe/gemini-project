@@ -10,7 +10,7 @@ import {
 import { Gemini as AI } from "@/gemini/gemini";
 import { ChatSession, TextPart } from "@google/generative-ai";
 import { geminiDocumentInitInstruction } from "@/lib/gemini_interactons";
-import { createConversationObject, jsonDecode } from "@/lib/utils";
+import { createConversationObject, jsonDecode, processText } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
 
 type interaction = {
@@ -53,9 +53,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
     updateConvo.push(obj);
     setConversation(updateConvo);
-    const initialText: TextPart = {
-      text: geminiDocumentInitInstruction(extractedText!),
-    };
+    const initialText = processText(extractedText!);
     try {
       let chat;
       if (!chat) {
@@ -80,6 +78,32 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       console.log(error);
     }
   };
+
+  const startQuizMode = async () => {
+    const initialText = processText(extractedText!);
+    const message = `Generate 10 quiz questions, but only send one at a time, each correct response is worth 10 points,
+    user can decide to end the game at any point. Send back the first questions right away and make sure the questions are based off of the document that has been provided`;
+    try {
+      let chat;
+      if (!chat) {
+        chat = AI.startChat({
+          history: [{ role: "user", parts: [initialText] }],
+        });
+      } else {
+        chat = chat;
+      }
+
+      const result = await chat.sendMessage(message);
+      const response = await result.response;
+      const text = await response.text();
+
+      const jsonData = jsonDecode(text);
+      console.log(jsonData);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
     <conversationContext.Provider
       value={{
