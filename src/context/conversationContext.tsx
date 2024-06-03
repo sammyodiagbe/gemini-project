@@ -68,7 +68,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const result = await chat.sendMessage(message);
       const response = await result.response;
       const text = await response.text();
-      console.log(text);
       const decodejson = jsonDecode(text);
       const { response: res } = decodejson;
       const convoObj = createConversationObject("chat", "ai", res);
