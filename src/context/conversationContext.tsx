@@ -24,6 +24,7 @@ type ContextType = {
   setInteractions: Dispatch<SetStateAction<interaction[]>>;
   chatWithGemini: Function;
   conversation: ConversationType[];
+  startQuizMode: Function;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -33,6 +34,7 @@ const conversationContext = createContext<ContextType>({
   setInteractions: () => {},
   chatWithGemini: () => {},
   conversation: [],
+  startQuizMode: () => {},
 });
 
 type ConversationContextType = {
@@ -113,6 +115,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         setInteractions,
         chatWithGemini,
         conversation,
+        startQuizMode,
       }}
     >
       {children}

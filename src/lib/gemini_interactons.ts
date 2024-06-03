@@ -40,9 +40,11 @@ export const geminiDocumentInitInstruction = (text: string): string => {
 export const generateQuizGemini = (text: string): string => {
   return `
     Generate 10 quiz questions based on the text document
-    you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "..."}
     now you should only send one question at a time
+    you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "..."}
     remember the answer has to be an option
+
+    include a question object in your response and it should contain the question data
 
     After recieving this instruction, send the first question right away and also keep track of the user score point. each correct quiz answered is 10 points
   `;

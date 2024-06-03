@@ -13,7 +13,7 @@ import {
 import ChatMessageComponent from "./chatMessageComponent";
 
 const ConversationComponent = () => {
-  const { interactions, chatWithGemini, conversation } =
+  const { interactions, chatWithGemini, conversation, startQuizMode } =
     useConversationContext();
   const [message, setMessage] = useState("");
   const convoContainerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +34,11 @@ const ConversationComponent = () => {
     if (!message || message === "") return;
     await chatWithGemini(message);
     setMessage("");
+  };
+
+  const startQuiz = () => {
+    console.log("Attempting to start the quiz");
+    startQuizMode();
   };
 
   return (
@@ -67,7 +72,10 @@ const ConversationComponent = () => {
           <form className="w-full" onSubmit={sendMessage}>
             <div className="w-full flex items-center bg-white px-2 rounded-md">
               <div className="flex">
-                <button className="flex items-center justify-center mr-2 p-2  rounded-md active:scale-95 bg-blue-100">
+                <button
+                  className="flex items-center justify-center mr-2 p-2  rounded-md active:scale-95 bg-blue-100"
+                  onClick={startQuiz}
+                >
                   <BookText size={18} className="mr-1" /> Quiz Me
                 </button>
                 <button className="flex items-center justify-center p-2  bg-blue-100 rounded-md active:scale-95">
