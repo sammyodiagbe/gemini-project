@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ConversationType } from "./type";
+import { ConversationType, MessageType, QuizType } from "./type";
 import { TextPart } from "@google/generative-ai";
 import { geminiDocumentInitInstruction } from "./gemini_interactons";
 
@@ -13,11 +13,12 @@ export const jsonDecode = (encodedJson: string) => {
 };
 
 export function createConversationObject(
-  type: string,
+  type: MessageType,
   sender: string,
-  message: string
+  message: string,
+  quiz?: QuizType
 ): ConversationType {
-  return { type, sender, message };
+  return { type, sender, message, quiz };
 }
 
 export function processText(text: string): TextPart {

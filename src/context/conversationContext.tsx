@@ -6,12 +6,17 @@ import {
   useState,
   SetStateAction,
   Dispatch,
+  useEffect,
 } from "react";
 import { Gemini as AI } from "@/gemini/gemini";
-import { ChatSession, TextPart } from "@google/generative-ai";
-import { geminiDocumentInitInstruction } from "@/lib/gemini_interactons";
+import { ChatSession } from "@google/generative-ai";
 import { createConversationObject, jsonDecode, processText } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
+import {
+  geminiDocumentInitInstruction,
+  generateInitialPossibleInteractions,
+  generateQuizGemini,
+} from "@/lib/gemini_interactons";
 
 type interaction = {
   text: string;
@@ -49,31 +54,34 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [chat, setChat] = useState<ChatSession>();
   const [conversation, setConversation] = useState<ConversationType[]>([]);
 
+  useEffect(() => {
+    if (extractedText) {
+      const initMessage = geminiDocumentInitInstruction(extractedText);
+      const initConversationText = processText(initMessage);
+      let chat = AI.startChat({
+        history: [{ role: "user", parts: [initConversationText] }],
+      });
+
+      setChat(chat);
+    }
+  }, [extractedText]);
+
   const chatWithGemini = async (message: string) => {
     const obj = createConversationObject("chat", "user", message);
     const updateConvo = [...conversation];
 
     updateConvo.push(obj);
     setConversation(updateConvo);
-    const initialText = processText(extractedText!);
     try {
-      let chat;
-      if (!chat) {
-        chat = AI.startChat({
-          history: [{ role: "user", parts: [initialText] }],
-        });
-      } else {
-        chat = chat;
-      }
-      const result = await chat.sendMessage(message);
-      const response = await result.response;
-      const text = await response.text();
-      const decodejson = jsonDecode(text);
+      console.log(extractedText);
+      const result = await chat?.sendMessage(message);
+      const response = await result?.response;
+      const text = await response?.text();
+      const decodejson = jsonDecode(text!);
       const { response: res } = decodejson;
       const convoObj = createConversationObject("chat", "ai", res);
       const newConv = [...conversation];
       newConv.push(convoObj);
-      setChat(chat);
       setConversation(newConv);
     } catch (error: any) {
       console.log("Something went wrong");
@@ -82,24 +90,14 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   };
 
   const startQuizMode = async () => {
-    const initialText = processText(extractedText!);
-    const message = `Generate 10 quiz questions, but only send one at a time, each correct response is worth 10 points,
-    user can decide to end the game at any point. Send back the first questions right away and make sure the questions are based off of the document that has been provided`;
+    const message = generateQuizGemini();
+
     try {
-      let chat;
-      if (!chat) {
-        chat = AI.startChat({
-          history: [{ role: "user", parts: [initialText] }],
-        });
-      } else {
-        chat = chat;
-      }
+      const result = await chat?.sendMessage(message);
+      const response = await result?.response;
+      const text = await response?.text();
 
-      const result = await chat.sendMessage(message);
-      const response = await result.response;
-      const text = await response.text();
-
-      const jsonData = jsonDecode(text);
+      const jsonData = jsonDecode(text!);
       console.log(jsonData);
     } catch (error: any) {
       console.log(error);

@@ -11,10 +11,12 @@ export const generateInitialPossibleInteractions = (
 
     An example of interactions would be, let say i send you an article on microplasticity, interactions I as a user would want to have with the article might be Summarize the text, Point out key note, create notes based on text, How does MicroPlasticity affect our enviroment
 
+    This is the text gotten from the document
     text=${articleText}`;
 };
 
 export const geminiDocumentInitInstruction = (text: string): string => {
+  console.log(text);
   return `
     The user has sent in extracted text from  a pdf I have given you the text below, So your conversation with user is going to be in relation to what(Text) the text is about, you are goin to help the user with every question or help they need. The extracted text has been passed below
 
@@ -37,12 +39,15 @@ export const geminiDocumentInitInstruction = (text: string): string => {
     `;
 };
 
-export const generateQuizGemini = (text: string): string => {
+export const generateQuizGemini = (text?: string): string => {
   return `
     Generate 10 quiz questions based on the text document
+    It is multiple choice quiz and options
+    
     now you should only send one question at a time
     you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "..."}
     remember the answer has to be an option
+    the type entry in this case would be quiz i.e type: "quiz"
 
     include a question object in your response and it should contain the question data
 
