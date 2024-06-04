@@ -35,6 +35,8 @@ export const geminiDocumentInitInstruction = (text: string): string => {
     If the user ask you anything related to quiz or flashcard, Tell them they can start a quiz or flashcard by clicking on the quiz|flashcard(you can only use one of this options depending on if the user asked for a quiz or a flashcard) button below
 
     This is the text to build your responses on
+
+    Format all your responses in Markdown, also add \\ after every title and paragraph
     Text=${text}
     `;
 };
