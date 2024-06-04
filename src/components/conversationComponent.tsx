@@ -11,6 +11,7 @@ import {
   useState,
 } from "react";
 import ChatMessageComponent from "./chatMessageComponent";
+import QuizMessageComponent from "./QuizMessageComponent";
 
 const ConversationComponent = () => {
   const { interactions, chatWithGemini, conversation, startQuizMode } =
@@ -64,7 +65,17 @@ const ConversationComponent = () => {
         <div className="relative pb-[100px]">
           {conversation &&
             conversation.map((conv, index) => {
-              return <ChatMessageComponent conv={conv} key={index} />;
+              const { type, quiz } = conv;
+              switch (type) {
+                case "chat":
+                  return <ChatMessageComponent conv={conv} key={index} />;
+                case "quiz":
+                  return <QuizMessageComponent quiz={quiz!} />;
+                case "flashcard":
+                  break;
+                default:
+                  break;
+              }
             })}
         </div>
         {/* this woudl contain the textarea and other action btn */}

@@ -30,6 +30,7 @@ type ContextType = {
   chatWithGemini: Function;
   conversation: ConversationType[];
   startQuizMode: Function;
+  nextQuestion: Function;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -40,6 +41,7 @@ const conversationContext = createContext<ContextType>({
   chatWithGemini: () => {},
   conversation: [],
   startQuizMode: () => {},
+  nextQuestion: () => {},
 });
 
 type ConversationContextType = {
@@ -98,7 +100,29 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const text = await response?.text();
 
       const jsonData = jsonDecode(text!);
-      console.log(jsonData);
+      const { response: res, quiz } = jsonData;
+      const convoobj = createConversationObject("quiz", "ai", res, quiz);
+      const newConv = [...conversation];
+      newConv.push(convoobj);
+      setConversation(newConv);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const nextQuestion = async () => {
+    const message = "Next Question please, Don't repeat questions.";
+    try {
+      const sendMessage = await chat?.sendMessage(message);
+      const response = sendMessage?.response;
+      const rawjson = response?.text();
+      console.log(jsonDecode(rawjson!));
+      const { response: res, quiz } = jsonDecode(rawjson!);
+      const obj = createConversationObject("quiz", "ai", res, quiz);
+
+      const newConv = [...conversation];
+      newConv.push(obj);
+      setConversation(newConv);
     } catch (error: any) {
       console.log(error);
     }
@@ -114,6 +138,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         chatWithGemini,
         conversation,
         startQuizMode,
+        nextQuestion,
       }}
     >
       {children}

@@ -10,6 +10,7 @@ export type ConversationType = {
 export type QuizType = {
   question: string;
   options: string[];
+  answer: string;
 };
 
 export type GeminiResponseType = {

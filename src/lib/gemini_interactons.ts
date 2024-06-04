@@ -45,12 +45,17 @@ export const generateQuizGemini = (text?: string): string => {
     It is multiple choice quiz and options
     
     now you should only send one question at a time
-    you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "..."}
+    Also include current question number
+    Also include total number of quiz questio in your response
+    Always shuffle the options so answers are always in different positions   
+    Also include total points user has gotten( I would provide you with data if the user got the question right or wrong, update this score accordingly if they are right increase by 10 points)
+    you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "...", currentQuestion: 2, totalQuestions: 10, score: 0}
     remember the answer has to be an option
     the type entry in this case would be quiz i.e type: "quiz"
 
     include a question object in your response and it should contain the question data
 
     After recieving this instruction, send the first question right away and also keep track of the user score point. each correct quiz answered is 10 points
+    Your response entry should be filled with study sense of humour based off of if the user got the question right or wrong, i would provide you with that data
   `;
 };
