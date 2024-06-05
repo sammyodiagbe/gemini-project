@@ -43,10 +43,7 @@ const ConversationComponent = () => {
   };
 
   return (
-    <div
-      ref={convoContainerRef}
-      className="bg-white py-2 max-h-screen overflow-y-auto"
-    >
+    <div ref={convoContainerRef} className="py-2 max-h-screen overflow-y-auto">
       {/* <div className="absolute bottom-0 left-0 py-2 w-full grid grid-cols-2 gap-[15px]">
         {interactions.map((interaction, index) => {
           return (
@@ -79,9 +76,9 @@ const ConversationComponent = () => {
             })}
         </div>
         {/* this woudl contain the textarea and other action btn */}
-        <div className="py-2 fixed w-[850px] bottom-2 shadow-sm border">
+        <div className="py-2 fixed w-[850px] bottom-2 ">
           <form className="w-full" onSubmit={sendMessage}>
-            <div className="w-full flex items-center bg-white px-2 rounded-md">
+            <div className="w-full flex items-center  px-2 rounded-md">
               <div className="flex">
                 <button
                   className="flex items-center justify-center mr-2 p-2  rounded-md active:scale-95 bg-blue-100"

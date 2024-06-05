@@ -28,7 +28,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
     }
   };
   return (
-    <div className="p-4 bg-gray-100 rounded-md mb-5">
+    <div className="p-4rounded-md mb-5">
       <p className="pb-3 text-sm">{sender === "ai" ? "Ally" : "You"}</p>
       {/* {sender === "ai" ? (
         <ReactTyped
