@@ -15,7 +15,7 @@ export type QuizType = {
 
 export type GeminiResponseType = {
   sources?: string[];
-  type: MessageType;
+  type?: MessageType;
   response: string;
   quiz?: QuizType;
   text?: string;

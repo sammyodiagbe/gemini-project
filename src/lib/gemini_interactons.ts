@@ -1,6 +1,12 @@
 export const generateInitialPossibleInteractions = (
   articleText: string
 ): string => {
+  console.log(articleText.replace(/\n+/, ""));
+  if (articleText.replace(/\n+/, "") === "") {
+    console.log("empty dataset");
+    return `Article or document has no context, so your response should be telling the user there is nothing to work with, let the user know you have not recieved any text or article or let the user know nothing was pulled out of the documents provided, now your response in json would look like this {response: "", .....}, let them know There is no information to work with`;
+  }
+
   return `Hey Gemini, 
     Analyze the text and generate 4 possible interactions a user might want to have with ypu in regards to the text article below
     If the text has no clarity or direction you can ignore and just send a message back letting the user know their isn't clarity you could also add an entry in your response that sets clarity: false.( this is also at the root of the json object) The structure of each interaction object should always be { text: "..."} and also keep them at a shorter length please.
@@ -12,11 +18,21 @@ export const generateInitialPossibleInteractions = (
     An example of interactions would be, let say i send you an article on microplasticity, interactions I as a user would want to have with the article might be Summarize the text, Point out key note, create notes based on text, How does MicroPlasticity affect our enviroment
 
     This is the text gotten from the document
+    
+
+    ==============================================================================
+    Never send back the text above this line........
+    You are only responding based of the text here
+    In the case where text isn't provided then you can simply respond to the user saying There is not context provided, come up with some response to let them know there is nothing to work with
     text=${articleText}`;
 };
 
 export const geminiDocumentInitInstruction = (text: string): string => {
-  console.log(text);
+  if (text.replace(/\n+/, "") === "") {
+    console.log("empty dataset");
+    return `Article or document has no context, so your response should be telling the user there is nothing to work with, let the user know you have not recieved any text or article or let the user know nothing was pulled out of the documents provided, now your response in json would look like this {response: "", .....} Let them know there is no information to work with`;
+  }
+
   return `
     The user has sent in extracted text from  a pdf I have given you the text below, So your conversation with user is going to be in relation to what(Text) the text is about, you are goin to help the user with every question or help they need. The extracted text has been passed below
 
