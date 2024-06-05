@@ -3,6 +3,7 @@ import { useConversationContext } from "@/context/conversationContext";
 import { QuizType } from "@/lib/type";
 import { FC, useState } from "react";
 import QuizOptionComponent from "./quizOptionComponent";
+import Confetti from "react-confetti";
 
 type QuizData = {
   quiz: QuizType;
@@ -26,7 +27,10 @@ const QuizMessageComponent: FC<QuizData> = ({
     setAnswered(true);
   };
   return (
-    <div className="max-w-[600px] mx-auto">
+    <div className="max-w-[600px] mx-auto relative">
+      {rightAnswer && (
+        <Confetti className="absolute w-full h-full" recycle={false} />
+      )}
       <h1 className="text-xl font-medium mb-8 leading-8">{question}</h1>
       <div className="grid gap-8">
         {options.map((option, index) => {
