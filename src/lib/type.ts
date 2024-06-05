@@ -5,6 +5,12 @@ export type ConversationType = {
   message: string;
   sender: string;
   quiz?: QuizType;
+  flashcard?: FlashCardType;
+};
+
+export type FlashCardType = {
+  front: string;
+  back: string;
 };
 
 export type QuizType = {

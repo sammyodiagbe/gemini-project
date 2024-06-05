@@ -81,3 +81,14 @@ export const generateQuizGemini = (text?: string): string => {
     Your response entry should be filled with study sense of humour based off of if the user got the question right or wrong, i would provide you with that data
   `;
 };
+
+export const generateFlashcardGemini = (): string => {
+  return `
+    Generate flashcards based on the text document that has been provided also send the first flashcard right away
+    you response is always going to be a json string
+    Help the user have fun while learning
+    Send one Flashcard at a time and the structure of the response should be { response: "....", flashcard:{ front: "...." , back: "...."}}
+    The front is the question part and the back is the answer(make them as short as possible), also try to make your response very funny and motivating
+    Thanks Gemini..
+  `;
+};

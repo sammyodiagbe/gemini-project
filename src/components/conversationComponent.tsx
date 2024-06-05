@@ -14,8 +14,13 @@ import ChatMessageComponent from "./chatMessageComponent";
 import QuizMessageComponent from "./QuizMessageComponent";
 
 const ConversationComponent = () => {
-  const { interactions, chatWithGemini, conversation, startQuizMode } =
-    useConversationContext();
+  const {
+    interactions,
+    chatWithGemini,
+    conversation,
+    startQuizMode,
+    getFlashCard,
+  } = useConversationContext();
   const [message, setMessage] = useState("");
   const convoContainerRef = useRef<HTMLDivElement>(null);
 
@@ -86,7 +91,10 @@ const ConversationComponent = () => {
                 >
                   <BookText size={18} className="mr-1" /> Quiz Me
                 </button>
-                <button className="flex items-center justify-center p-2  bg-blue-100 rounded-md active:scale-95">
+                <button
+                  className="flex items-center justify-center p-2  bg-blue-100 rounded-md active:scale-95"
+                  onClick={() => getFlashCard()}
+                >
                   <Gamepad className="mr-1" size={18} /> Flashcard
                 </button>
               </div>
@@ -97,7 +105,10 @@ const ConversationComponent = () => {
                 value={message}
                 onChange={({ target }) => setMessage(target.value)}
               />
-              <button className="w-[40px] h-[40px] text-white hover:bg-blue-400 rounded-md hover:text-white flex items-center justify-center bg-blue-500">
+              <button
+                type="submit"
+                className="w-[40px] h-[40px] text-white hover:bg-blue-400 rounded-md hover:text-white flex items-center justify-center bg-blue-500"
+              >
                 <SendHorizonal size={24} />
               </button>
             </div>

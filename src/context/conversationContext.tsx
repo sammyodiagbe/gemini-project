@@ -9,11 +9,12 @@ import {
   useEffect,
 } from "react";
 import { Gemini as AI } from "@/gemini/gemini";
-import { ChatSession } from "@google/generative-ai";
+import { ChatSession, GoogleGenerativeAIError } from "@google/generative-ai";
 import { createConversationObject, jsonDecode, processText } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
 import {
   geminiDocumentInitInstruction,
+  generateFlashcardGemini,
   generateInitialPossibleInteractions,
   generateQuizGemini,
 } from "@/lib/gemini_interactons";
@@ -31,6 +32,7 @@ type ContextType = {
   conversation: ConversationType[];
   startQuizMode: Function;
   nextQuestion: Function;
+  getFlashCard: Function;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -42,6 +44,7 @@ const conversationContext = createContext<ContextType>({
   conversation: [],
   startQuizMode: () => {},
   nextQuestion: () => {},
+  getFlashCard: () => {},
 });
 
 type ConversationContextType = {
@@ -116,12 +119,32 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const sendMessage = await chat?.sendMessage(message);
       const response = sendMessage?.response;
       const rawjson = response?.text();
-      console.log(jsonDecode(rawjson!));
       const { response: res, quiz } = jsonDecode(rawjson!);
       const obj = createConversationObject("quiz", "ai", res, quiz);
 
       const newConv = [...conversation];
       newConv.push(obj);
+      setConversation(newConv);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const getFlashCard = async () => {
+    const message = generateFlashcardGemini();
+    try {
+      const requestFlashCard = await chat?.sendMessage(message);
+      const response = requestFlashCard?.response;
+      const rawJson = response?.text();
+      const { response: res, flashcard } = jsonDecode(rawJson!);
+      const chatMessage: ConversationType = {
+        message: res,
+        flashcard,
+        type: "flashcard",
+        sender: "ai",
+      };
+      const newConv = [...conversation];
+      newConv.push(chatMessage);
       setConversation(newConv);
     } catch (error: any) {
       console.log(error);
@@ -139,6 +162,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         conversation,
         startQuizMode,
         nextQuestion,
+        getFlashCard,
       }}
     >
       {children}
