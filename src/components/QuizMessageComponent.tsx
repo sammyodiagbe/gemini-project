@@ -14,9 +14,20 @@ const QuizMessageComponent: FC<QuizData> = ({
   const { nextQuestion } = useConversationContext();
   const [showanswer, setShowanswer] = useState(false);
   const [selected, setSelected] = useState<number>(-1);
+  const [answered, setAnswered] = useState<boolean>(false);
+  const [rightAnswer, setRightAnswer] = useState<boolean>(false);
+
+  const pickOption = (position: number) => {
+    if (answered) return;
+    if (options[position] === answer) {
+      setRightAnswer(true);
+    }
+    setSelected(position);
+    setAnswered(true);
+  };
   return (
     <div className="max-w-[600px] mx-auto">
-      <h1 className="text-2xl font-medium mb-8">{question}</h1>
+      <h1 className="text-xl font-medium mb-8 leading-8">{question}</h1>
       <div className="grid gap-8">
         {options.map((option, index) => {
           return (
@@ -24,8 +35,12 @@ const QuizMessageComponent: FC<QuizData> = ({
               selected={selected}
               text={option}
               key={index}
-              setSelected={setSelected}
               position={index}
+              pickOption={pickOption}
+              answered={answered}
+              rightAnswer={rightAnswer}
+              answer={answer}
+              options={options}
             />
           );
         })}
@@ -36,8 +51,9 @@ const QuizMessageComponent: FC<QuizData> = ({
           Show answer
         </button>
         <button
-          className="p-2 rounded-md bg-gray-200"
+          className="p-3 px-7 rounded-md bg-indigo-500 text-white disabled:bg-gray-50 disabled:text-gray-400 ring-1 ring-gray-400"
           onClick={() => nextQuestion()}
+          disabled={!answered}
         >
           Next
         </button>

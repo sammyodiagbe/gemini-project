@@ -51,6 +51,7 @@ export const generateQuizGemini = (text?: string): string => {
     Also include total number of quiz questio in your response
     Always shuffle the options so answers are always in different positions   
     Also include total points user has gotten( I would provide you with data if the user got the question right or wrong, update this score accordingly if they are right increase by 10 points)
+    options should be 4 in length all the time
     you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "...", currentQuestion: 2, totalQuestions: 10, score: 0}
     remember the answer has to be an option
     the type entry in this case would be quiz i.e type: "quiz"
