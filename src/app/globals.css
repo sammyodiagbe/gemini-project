@@ -1,5 +1,20 @@
 @tailwind base;
   @tailwind components;
+
+
+  .card-container {
+    @apply h-[450px] w-[320px] rounded-lg;
+  }
+  .card-face {
+    @apply h-[450px] w-[320px] grid place-content-center text-center px-3 rounded-lg shadow-md cursor-pointer hover:ring-2 transition-all;
+  }
+  .card-front {
+    @apply bg-gradient-to-r from-fuchsia-600 via-violet-600 to-purple-600 text-white;
+  }
+
+  .card-back {
+    @apply bg-gray-200;
+  }
   @tailwind utilities;
 
   @layer base {

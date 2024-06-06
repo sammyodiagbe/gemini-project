@@ -1,6 +1,7 @@
 import { FlashCardType } from "@/lib/type";
-import { FC } from "react";
+import { FC, useState } from "react";
 import MarkdownView from "react-showdown";
+import FlashCard from "react-card-flip";
 
 type FlashCardPropTypes = {
   message: string;
@@ -9,20 +10,19 @@ type FlashCardPropTypes = {
 
 const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
   const { front, back } = flashcard;
+  const [flip, setFlip] = useState(false);
   return (
     <div className="">
       <MarkdownView markdown={message} />
-      <div className="group bg-green-400">
-        <div className="h-[380px] w-[280px] mx-auto mt-[100px] [transform-style:perspective-3d] group-hover:rotate-y-[180deg]">
-          <div className="relative card h-[380px] w-[280px] rounded-md bg-blue-500 text-white">
-            <div className="absolutew-full h-full [backface-visibility]">
-              <p>{front}</p>
-            </div>
-            <div className="absolute h-full w-full bg-orange-500">
-              <p>{back}</p>
-            </div>
+      <div className="py-8 grid justify-center">
+        <FlashCard isFlipped={flip} containerClassName="card-container">
+          <div className="card-face card-front" onClick={() => setFlip(!flip)}>
+            <p className="text-xl font-semibold">{front}</p>
           </div>
-        </div>
+          <div className="card-face card-back" onClick={() => setFlip(!flip)}>
+            <p className="text-xl font-semibold">{back}</p>
+          </div>
+        </FlashCard>
       </div>
     </div>
   );
