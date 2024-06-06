@@ -143,6 +143,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         type: "flashcard",
         sender: "ai",
       };
+
+      console.log(chatMessage);
       const newConv = [...conversation];
       newConv.push(chatMessage);
       setConversation(newConv);

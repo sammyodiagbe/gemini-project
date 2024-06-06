@@ -12,6 +12,7 @@ import {
 } from "react";
 import ChatMessageComponent from "./chatMessageComponent";
 import QuizMessageComponent from "./QuizMessageComponent";
+import FlashCardComponent from "./flashCardComponent";
 
 const ConversationComponent = () => {
   const {
@@ -67,13 +68,19 @@ const ConversationComponent = () => {
         <div className="relative pb-[100px]">
           {conversation &&
             conversation.map((conv, index) => {
-              const { type, quiz } = conv;
+              const { type, quiz, message, flashcard } = conv;
               switch (type) {
                 case "chat":
                   return <ChatMessageComponent conv={conv} key={index} />;
                 case "quiz":
                   return <QuizMessageComponent quiz={quiz!} />;
                 case "flashcard":
+                  return (
+                    <FlashCardComponent
+                      message={message}
+                      flashcard={flashcard!}
+                    />
+                  );
                   break;
                 default:
                   break;
