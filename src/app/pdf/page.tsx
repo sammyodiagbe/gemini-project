@@ -7,20 +7,26 @@ import ConversationComponent from "@/components/conversationComponent";
 import { useConversationContext } from "@/context/conversationContext";
 import { jsonDecode } from "@/lib/utils";
 import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
-import { File, UploadCloudIcon } from "lucide-react";
+import { UploadCloudIcon } from "lucide-react";
+import { useLoadingContext } from "@/context/loadingStateContext";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string>();
   const { setExtractedText, setInteractions } = useConversationContext()!;
+  const { setWorkingOnPdf, workingOnPdf } = useLoadingContext()!;
+
+  console.log(workingOnPdf);
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
   ) => {
     event.preventDefault();
+
     const { target } = event;
     const file = target.files!;
     if (!file) return;
     handleFileUpload(file[0]);
+    setWorkingOnPdf(true);
   };
 
   const handleFileUpload = async (file: File) => {
@@ -66,20 +72,26 @@ const Page = () => {
       <div className="relative w-full h-full ">
         {!fileUrl ? (
           <>
-            <label
-              className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:bg-gray-200 hover:ring-primary/70 ring-inset cursor-pointer border-r border-gray-400"
-              htmlFor="pdf_file"
-            >
-              <span className="grid place-items-center max-w-[350px] space-y-4">
-                <UploadCloudIcon
-                  size={120}
-                  className="font-thin text-gray-400"
-                />
-                <span className="text-center text-2xl">
-                  Click here to choose a file to upload (pdf only)
+            {workingOnPdf ? (
+              <div className="h-full w-full bg-orange-400">
+                <p>Working on the pdf yo</p>
+              </div>
+            ) : (
+              <label
+                className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:bg-gray-200 hover:ring-primary/70 ring-inset cursor-pointer border-r border-gray-400"
+                htmlFor="pdf_file"
+              >
+                <span className="grid place-items-center max-w-[350px] space-y-4">
+                  <UploadCloudIcon
+                    size={120}
+                    className="font-thin text-gray-400"
+                  />
+                  <span className="text-center text-2xl">
+                    Click here to choose a file to upload (pdf only)
+                  </span>
                 </span>
-              </span>
-            </label>
+              </label>
+            )}
 
             <input
               type="file"

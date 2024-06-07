@@ -9,13 +9,12 @@ import {
   useEffect,
 } from "react";
 import { Gemini as AI } from "@/gemini/gemini";
-import { ChatSession, GoogleGenerativeAIError } from "@google/generative-ai";
+import { ChatSession } from "@google/generative-ai";
 import { createConversationObject, jsonDecode, processText } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
 import {
   geminiDocumentInitInstruction,
   generateFlashcardGemini,
-  generateInitialPossibleInteractions,
   generateQuizGemini,
 } from "@/lib/gemini_interactons";
 

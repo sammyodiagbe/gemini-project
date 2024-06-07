@@ -1,6 +1,6 @@
 "use client";
 import { Pause, Play, RotateCcw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 
 const PomodoroTimerComponent = () => {
   const workTime = 25 * 60;
@@ -43,10 +43,13 @@ const PomodoroTimerComponent = () => {
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-
   const percentage = (timeLeft / (isWorkTime ? workTime : breakTime)) * 100;
+
   return (
-    <div className="absolute right-0 bottom-[400px] rounded-lg bg-backgroundColor h-[250px] w-[200px] z-10 shadow-lg rign-1 ring-secondary">
+    <div
+      className="absolute right-0 bottom-[400px] rounded-lg bg-backgroundColor h-[250px] w-[200px] z-10 shadow-lg rign-1 ring-secondary cursor-grab"
+      draggable
+    >
       <svg width="200" height="200" viewBox="0 0 100 100">
         <circle
           cx="50"
