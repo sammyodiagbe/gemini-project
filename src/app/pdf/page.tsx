@@ -7,6 +7,7 @@ import ConversationComponent from "@/components/conversationComponent";
 import { useConversationContext } from "@/context/conversationContext";
 import { jsonDecode } from "@/lib/utils";
 import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
+import { File, UploadCloudIcon } from "lucide-react";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string>();
@@ -47,10 +48,7 @@ const Page = () => {
       setInteractions(interactions);
       setFile(fileUrl);
       setExtractedText(extracted_text);
-    } catch (error: any) {
-      console.log("Something went wrong");
-      console.log(error);
-    }
+    } catch (error: any) {}
   };
 
   return (
@@ -65,24 +63,36 @@ const Page = () => {
           <button type="submit">Upload Pdf</button>
         </form>
       </div> */}
-      <div className="relative w-full h-full bg-red-300">
-        {!fileUrl && (
-          <label
-            className=" grid items-center justify-center absolute h-full w-full  bg-green-500 top-0 left-0"
-            htmlFor="pdf_file"
-          >
-            <span className="">Click here to upload your pdf</span>
-          </label>
+      <div className="relative w-full h-full ">
+        {!fileUrl ? (
+          <>
+            <label
+              className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:bg-gray-200 hover:ring-primary/70 ring-inset cursor-pointer border-r border-gray-400"
+              htmlFor="pdf_file"
+            >
+              <span className="grid place-items-center max-w-[350px] space-y-4">
+                <UploadCloudIcon
+                  size={120}
+                  className="font-thin text-gray-400"
+                />
+                <span className="text-center text-2xl">
+                  Click here to choose a file to upload (pdf only)
+                </span>
+              </span>
+            </label>
+
+            <input
+              type="file"
+              accept="application/pdf"
+              name="pdf_file"
+              id="pdf_file"
+              className="appearance-none hidden"
+              onChange={handleFileChange}
+            />
+          </>
+        ) : (
+          <MyPdfViewer filePath={fileUrl!} />
         )}
-        <input
-          type="file"
-          accept="application/pdf"
-          name="pdf_file"
-          id="pdf_file"
-          className="appearance-none hidden"
-          onChange={handleFileChange}
-        />
-        {fileUrl && <MyPdfViewer filePath={fileUrl!} />}
       </div>
       <ConversationComponent />
     </main>

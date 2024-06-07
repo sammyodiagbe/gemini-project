@@ -1,7 +1,5 @@
 import { ConversationType } from "@/lib/type";
-import { cn } from "@/lib/utils";
 import { NotebookPen, SpeechIcon } from "lucide-react";
-import { ReactTyped } from "react-typed";
 import MarkdownView from "react-showdown";
 import { FC } from "react";
 

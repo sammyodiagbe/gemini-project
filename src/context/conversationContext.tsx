@@ -76,7 +76,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
     setConversation((prev) => [...prev, obj]);
     try {
-      console.log(extractedText);
       const result = await chat?.sendMessage(message);
       const response = await result?.response;
       const text = await response?.text();
