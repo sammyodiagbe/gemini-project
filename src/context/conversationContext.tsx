@@ -73,10 +73,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const chatWithGemini = async (message: string) => {
     const obj = createConversationObject("chat", "user", message);
-    const updateConvo = [...conversation];
 
-    updateConvo.push(obj);
-    setConversation(updateConvo);
+    setConversation((prev) => [...prev, obj]);
     try {
       console.log(extractedText);
       const result = await chat?.sendMessage(message);
@@ -85,9 +83,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const decodejson = jsonDecode(text!);
       const { response: res } = decodejson;
       const convoObj = createConversationObject("chat", "ai", res);
-      const newConv = [...conversation];
-      newConv.push(convoObj);
-      setConversation(newConv);
+
+      setConversation((prev) => [...prev, convoObj]);
     } catch (error: any) {
       console.log("Something went wrong");
       console.log(error);
@@ -105,9 +102,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const jsonData = jsonDecode(text!);
       const { response: res, quiz } = jsonData;
       const convoobj = createConversationObject("quiz", "ai", res, quiz);
-      const newConv = [...conversation];
-      newConv.push(convoobj);
-      setConversation(newConv);
+      setConversation((prev) => [...prev, convoobj]);
     } catch (error: any) {
       console.log(error);
     }
@@ -121,10 +116,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const rawjson = response?.text();
       const { response: res, quiz } = jsonDecode(rawjson!);
       const obj = createConversationObject("quiz", "ai", res, quiz);
-
-      const newConv = [...conversation];
-      newConv.push(obj);
-      setConversation(newConv);
+      setConversation((prev) => [...prev, obj]);
     } catch (error: any) {
       console.log(error);
     }
@@ -144,10 +136,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         sender: "ai",
       };
 
-      console.log(chatMessage);
-      const newConv = [...conversation];
-      newConv.push(chatMessage);
-      setConversation(newConv);
+      setConversation((prev) => [...prev, chatMessage]);
     } catch (error: any) {
       console.log(error);
     }
