@@ -49,13 +49,9 @@ const QuizMessageComponent: FC<QuizData> = ({
           );
         })}
       </div>
-      {showanswer && <p>{answer}</p>}
       <div className="flex justify-end py-5">
-        <button className="p-2 " onClick={() => setShowanswer(true)}>
-          Show answer
-        </button>
         <button
-          className="p-3 px-7 rounded-md bg-indigo-500 text-white disabled:bg-gray-50 disabled:text-gray-400 ring-1 ring-gray-400"
+          className="p-3 px-7 rounded-md disabled:bg-gray-50 disabled:text-gray-400 ring-1 ring-secondary70"
           onClick={() => nextQuestion()}
           disabled={!answered}
         >

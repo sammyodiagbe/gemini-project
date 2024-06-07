@@ -13,7 +13,10 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
   const [flip, setFlip] = useState(false);
   return (
     <div className="">
-      <MarkdownView markdown={message} />
+      <MarkdownView
+        markdown={message}
+        className="bg-onBackground p-2 max-w-[80%] rounded-lg"
+      />
       <div className="py-8 grid justify-center">
         <FlashCard isFlipped={flip} containerClassName="card-container">
           <div className="card-face card-front" onClick={() => setFlip(!flip)}>

@@ -28,7 +28,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
     }
   };
   return (
-    <div className="p-4rounded-md mb-5">
+    <div className="p-4rounded-md mb-5 bg-onBackground p-4 rounded-lg">
       <p className="pb-3 text-sm">{sender === "ai" ? "Ally" : "You"}</p>
       {/* {sender === "ai" ? (
         <ReactTyped
@@ -46,12 +46,12 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}
 
       {sender === "ai" && (
-        <div className="flex items-center mt-6">
-          <button className="flex items-center p-2 mr-2 text-gray-600 bg-blue-100 rounded-md active:scale-95 justify-center">
+        <div className="flex items-center mt-6 space-x-4">
+          <button className="flex items-center p-2 mr-2 text-gray-600 ring-1 ring-secondary rounded-md active:scale-95 justify-center">
             <NotebookPen size={15} className="mr-1" /> Take note
           </button>
           <button
-            className="flex items-center p-2 text-gray-600 bg-blue-100 rounded-md active:scale-95 justify-center"
+            className="flex items-center p-2 text-textColor/80 ring-1 ring-secondary rounded-md active:scale-95 justify-center"
             onClick={handleSpeak}
           >
             <SpeechIcon size={15} className="mr-1" /> Listen

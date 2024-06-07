@@ -1,87 +1,70 @@
 @tailwind base;
-  @tailwind components;
-
-
-  .card-container {
-    @apply h-[450px] w-[320px] rounded-lg;
-  }
-  .card-face {
-    @apply h-[450px] w-[320px] grid place-content-center text-center px-3 rounded-lg shadow-md cursor-pointer hover:ring-2 transition-all;
-  }
-  .card-front {
-    @apply bg-gradient-to-r from-fuchsia-600 via-violet-600 to-purple-600 text-white;
-  }
-
-  .card-back {
-    @apply bg-gray-200;
-  }
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
   @layer base {
+    .card-container {
+      @apply h-[450px] w-[320px] rounded-lg;
+    }
+    .card-face {
+      @apply h-[450px] w-[320px] grid place-content-center text-center px-3 rounded-lg shadow-md cursor-pointer hover:ring-2 transition-all;
+    }
+    .card-front {
+      @apply bg-pink-500 text-white;
+    }
+  
+    .card-back {
+      @apply bg-gray-200;
+    }
+
     :root {
-      --background: 0 0% 100%;
-      --foreground: 222.2 84% 4.9%;
-
-      --card: 0 0% 100%;
-      --card-foreground: 222.2 84% 4.9%;
-
-      --popover: 0 0% 100%;
-      --popover-foreground: 222.2 84% 4.9%;
-
-      --primary: 222.2 47.4% 11.2%;
-      --primary-foreground: 210 40% 98%;
-
-      --secondary: 210 40% 96.1%;
-      --secondary-foreground: 222.2 47.4% 11.2%;
-
-      --muted: 210 40% 96.1%;
-      --muted-foreground: 215.4 16.3% 46.9%;
-
-      --accent: 210 40% 96.1%;
-      --accent-foreground: 222.2 47.4% 11.2%;
-
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 214.3 31.8% 91.4%;
-      --input: 214.3 31.8% 91.4%;
-      --ring: 222.2 84% 4.9%;
-
-      --radius: 0.5rem;
+      --color-primary: 173 58 39;
+      --color-secondary: 43 74 66;
+      --color-backgroundColor: 204 20 95;
+      --color-accentColor: 27 87 67: 
+      --color-textColor: 197 37 24;
     }
 
-    .dark {
-      --background: 222.2 84% 4.9%;
-      --foreground: 210 40% 98%;
+    :root body {
+      background-color: var(--color-backgroundColor);
+      color: var(--color-textColor);
+    }
 
-      --card: 222.2 84% 4.9%;
-      --card-foreground: 210 40% 98%;
+    .ocean-breeze {
+      --color-primary: 42 157 143;
+      --color-secondary: 233 196 106;
+      --color-accentColor: 234 150 31;
+      --color-backgroundColor: 240 243 245;
+      --color-textColor: 38 70 83;
+      --color-onBackground: 235 235 235;
+    }
 
-      --popover: 222.2 84% 4.9%;
-      --popover-foreground: 210 40% 98%;
+    .calm-thoughts {
+      --color-primary: 128 45 244;
+      --color-secondary: 131 56 236;
+      --color-accentColor: 155 92 244;
+      --color-backgroundColor: 240 243 245;
+      --color-textColor: 60 47 47;
+      --color-onBackground: 239 239 239;
+    }
+    .soft-pastels {
+      --color-primary: 255 111 97;
+      --color-secondary: 107 66 38;
+      --color-accentColor: 217 202 179;
+      --color-backgroundColor: 246 241 238;
+      --color-textColor: 60 47 47;
+    }
 
-      --primary: 210 40% 98%;
-      --primary-foreground: 222.2 47.4% 11.2%;
-
-      --secondary: 217.2 32.6% 17.5%;
-      --secondary-foreground: 210 40% 98%;
-
-      --muted: 217.2 32.6% 17.5%;
-      --muted-foreground: 215 20.2% 65.1%;
-
-      --accent: 217.2 32.6% 17.5%;
-      --accent-foreground: 210 40% 98%;
-
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 217.2 32.6% 17.5%;
-      --input: 217.2 32.6% 17.5%;
-      --ring: 212.7 26.8% 83.9%;
+    .twilight-glow {
+      --color-primary: 10 17 40;
+      --color-secondary: 0 31 84;
+      --color-accentColor: 242 92 84;
+      --color-backgroundColor: 33 43 54;
+      --color-textColor: 217 226 236;
     }
   }
 
-  @layer base {
+  /* @layer base {
     * {
       @apply border-border;
     }
@@ -97,4 +80,4 @@
   canvas * {
     background: transaprent !important;
     background-color: transparent !important;
-  }
+  } */
