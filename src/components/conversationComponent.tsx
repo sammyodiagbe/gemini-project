@@ -92,22 +92,25 @@ const ConversationComponent = () => {
         </div>
         {/* this woudl contain the textarea and other action btn */}
         <div className="py-2 fixed w-[850px] bottom-2 rounded-md">
-          <form className="w-full" onSubmit={sendMessage}>
-            <div className="w-full flex items-center py-3 rounded-md bg-onBackground px-4">
-              <div className="flex">
-                <button
-                  className="flex items-center justify-center mr-2 p-2 py-3  rounded-md active:scale-95 ring-1 ring-secondary  text-textColor/70 text-secondary"
-                  onClick={startQuiz}
-                >
-                  <BookText size={18} className="mr-1" /> Quiz Me
-                </button>
-                <button
-                  className="flex items-center justify-center p-2 py-3 ring-1 ring-secondary  text-textColor/70 rounded-md active:scale-95 text-secondary"
-                  onClick={() => getFlashCard()}
-                >
-                  <Gamepad className="mr-1" size={18} /> Flashcard
-                </button>
-              </div>
+          <div className="w-full flex items-center py-3 rounded-md bg-onBackground px-4 shadow-md">
+            <div className="flex">
+              <button
+                className="flex items-center justify-center mr-2 p-2 py-3  rounded-md active:scale-95 ring-1 ring-secondary  text-textColor/70 text-secondary"
+                onClick={startQuiz}
+              >
+                <BookText size={18} className="mr-1" /> Quiz Me
+              </button>
+              <button
+                className="flex items-center justify-center p-2 py-3 ring-1 ring-secondary  text-textColor/70 rounded-md active:scale-95 text-secondary"
+                onClick={() => getFlashCard()}
+              >
+                <Gamepad className="mr-1" size={18} /> Flashcard
+              </button>
+            </div>
+            <form
+              className="w-full flex-1 flex items-center"
+              onSubmit={sendMessage}
+            >
               <input
                 type="text"
                 placeholder="What do you want to do? i.e Take quick notes."
@@ -121,8 +124,8 @@ const ConversationComponent = () => {
               >
                 <SendHorizonal size={24} />
               </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

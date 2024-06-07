@@ -82,7 +82,11 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const text = await response?.text();
       const decodejson = jsonDecode(text!);
       const { response: res } = decodejson;
-      const convoObj = createConversationObject("chat", "ai", res);
+      const convoObj: ConversationType = {
+        type: "chat",
+        sender: "ai",
+        message: res,
+      };
 
       setConversation((prev) => [...prev, convoObj]);
     } catch (error: any) {
@@ -100,6 +104,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const text = await response?.text();
 
       const jsonData = jsonDecode(text!);
+      console.log(jsonData);
       const { response: res, quiz } = jsonData;
       const convoobj = createConversationObject("quiz", "ai", res, quiz);
       setConversation((prev) => [...prev, convoobj]);
