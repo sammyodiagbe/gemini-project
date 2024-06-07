@@ -1,3 +1,4 @@
+import PomodoroTimerComponent from "@/components/pomodoroTimerComponent";
 import ConversationContextProvider from "@/context/conversationContext";
 import { FC } from "react";
 
@@ -6,7 +7,12 @@ type LayoutType = {
 };
 
 const PageLayout: FC<LayoutType> = ({ children }) => {
-  return <ConversationContextProvider>{children}</ConversationContextProvider>;
+  return (
+    <ConversationContextProvider>
+      <PomodoroTimerComponent />
+      {children}
+    </ConversationContextProvider>
+  );
 };
 
 export default PageLayout;

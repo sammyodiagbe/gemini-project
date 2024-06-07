@@ -91,7 +91,7 @@ const ConversationComponent = () => {
             })}
         </div>
         {/* this woudl contain the textarea and other action btn */}
-        <div className="py-2 fixed w-[850px] bottom-2 ">
+        <div className="py-2 fixed w-[850px] bottom-2 rounded-md">
           <form className="w-full" onSubmit={sendMessage}>
             <div className="w-full flex items-center py-3 rounded-md bg-onBackground px-4">
               <div className="flex">

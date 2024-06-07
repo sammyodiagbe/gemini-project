@@ -47,6 +47,15 @@
       --color-textColor: 60 47 47;
       --color-onBackground: 239 239 239;
     }
+
+    .calm-thoughts-inverse {
+      --color-primary: 128 45 244;
+      --color-secondary: 131 56 236;
+      --color-accentColor: 155 92 244;
+      --color-textColor: 240 243 245;
+      --color-backgroundColor: 60 47 47;
+      --color-onBackground: 71 62 62;
+    }
     .soft-pastels {
       --color-primary: 255 111 97;
       --color-secondary: 107 66 38;
