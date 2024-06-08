@@ -63,7 +63,7 @@ const ConversationComponent = () => {
           );
         })}
       </div> */}
-      <div className="grid grid-rows-[1fr_80px] grid-cols-1 w-[850px] h-full max-h-full mx-auto ">
+      <div className="grid grid-rows-[1fr_80px] grid-cols-1 w-[700px] h-full max-h-full mx-auto ">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}
 
