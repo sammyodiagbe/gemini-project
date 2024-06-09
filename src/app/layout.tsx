@@ -3,6 +3,7 @@ import { Inter, Manrope, Outfit } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import LoadingStateContextProvider from "@/context/loadingStateContext";
+import Navbar from "@/components/navbar";
 
 const inter = Manrope({ subsets: ["latin"] });
 
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en" className=" relative">
       <body className={cn(inter.className, "calm-thoughts")}>
-        <LoadingStateContextProvider>{children}</LoadingStateContextProvider>
+        <LoadingStateContextProvider>
+          <Navbar />
+          {children}
+        </LoadingStateContextProvider>
       </body>
     </html>
   );

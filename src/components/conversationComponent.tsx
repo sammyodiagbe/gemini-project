@@ -1,7 +1,6 @@
 "use client";
 
 import { useConversationContext } from "@/context/conversationContext";
-import PossibleInteractionComponent from "./possibleInteractionComponent";
 import { BookText, SendHorizonal, Gamepad } from "lucide-react";
 import {
   FormEvent,
