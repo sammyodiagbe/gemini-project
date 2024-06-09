@@ -88,8 +88,15 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
       setConversation((prev) => [...prev, convoObj]);
     } catch (error: any) {
-      console.log("Something went wrong");
-      console.log(error);
+      setConversation((prev) => [
+        ...conversation,
+        {
+          sender: "system",
+          message: "Something went wrong, please try again",
+          retryQuery: message,
+          type: "chat",
+        },
+      ]);
     }
   };
 
@@ -107,7 +114,15 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const convoobj = createConversationObject("quiz", "ai", res, quiz);
       setConversation((prev) => [...prev, convoobj]);
     } catch (error: any) {
-      console.log(error);
+      setConversation((prev) => [
+        ...conversation,
+        {
+          sender: "system",
+          message: "Something went wrong, please try again",
+          retryQuery: message,
+          type: "chat",
+        },
+      ]);
     }
   };
 
@@ -121,7 +136,15 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const obj = createConversationObject("quiz", "ai", res, quiz);
       setConversation((prev) => [...prev, obj]);
     } catch (error: any) {
-      console.log(error);
+      setConversation((prev) => [
+        ...conversation,
+        {
+          sender: "system",
+          message: "Something went wrong, please try again",
+          retryQuery: message,
+          type: "chat",
+        },
+      ]);
     }
   };
 
@@ -141,7 +164,15 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
       setConversation((prev) => [...prev, chatMessage]);
     } catch (error: any) {
-      console.log(error);
+      setConversation((prev) => [
+        ...conversation,
+        {
+          sender: "system",
+          message: "Something went wrong, please try again",
+          retryQuery: message,
+          type: "chat",
+        },
+      ]);
     }
   };
 

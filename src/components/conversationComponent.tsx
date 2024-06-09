@@ -12,6 +12,7 @@ import {
 import ChatMessageComponent from "./chatMessageComponent";
 import QuizMessageComponent from "./QuizMessageComponent";
 import FlashCardComponent from "./flashCardComponent";
+import QueryErrorComponent from "./errorComponent";
 
 const ConversationComponent = () => {
   const {
@@ -83,7 +84,8 @@ const ConversationComponent = () => {
                       flashcard={flashcard!}
                     />
                   );
-                  break;
+                case "error":
+                  return <QueryErrorComponent data={conv} />;
                 default:
                   break;
               }

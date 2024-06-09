@@ -91,5 +91,7 @@ export const generateFlashcardGemini = (): string => {
     Send one Flashcard at a time and the structure of the response should be { response: "....", flashcard:{ front: "...." , back: "...."}}
     The front is the question part and the back is the answer(make them as short as possible), also try to make your response very funny and motivating
     Thanks Gemini..
+
+    Dont repeat questions please
   `;
 };

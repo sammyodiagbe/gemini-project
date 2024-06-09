@@ -1,11 +1,13 @@
-export type MessageType = "chat" | "quiz" | "flashcard";
+export type MessageType = "chat" | "quiz" | "flashcard" | "error";
+type senderType = "ai" | "user" | "system";
 
 export type ConversationType = {
   type: MessageType;
   message: string;
-  sender: string;
+  sender: senderType;
   quiz?: QuizType;
   flashcard?: FlashCardType;
+  retryQuery?: string;
 };
 
 export type FlashCardType = {
