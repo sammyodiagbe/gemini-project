@@ -51,11 +51,11 @@ const QuizMessageComponent: FC<QuizData> = ({
       </div>
       <div className="flex justify-end py-5">
         <button
-          className="p-3 px-7 rounded-md disabled:bg-gray-50 disabled:text-gray-400 ring-1 ring-secondary70"
+          className="p-3 px-7 font-semibold rounded-md disabled:bg-gray-50 disabled:text-gray-400 ring-1 ring-secondary70"
           onClick={() => nextQuestion()}
           disabled={!answered}
         >
-          Next
+          Another Question
         </button>
       </div>
     </div>

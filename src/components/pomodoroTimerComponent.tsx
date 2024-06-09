@@ -47,7 +47,7 @@ const PomodoroTimerComponent = () => {
 
   return (
     <div
-      className="absolute right-0 bottom-[100px] rounded-lg bg-backgroundColor h-[250px] w-[200px] z-10 shadow-lg rign-1 ring-secondary cursor-grab"
+      className="hidden absolute right-0 bottom-[100px] rounded-lg bg-backgroundColor h-[250px] w-[200px] z-10 shadow-lg rign-1 ring-secondary cursor-grab"
       draggable
     >
       <svg width="200" height="200" viewBox="0 0 100 100">
