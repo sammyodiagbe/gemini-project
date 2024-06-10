@@ -13,6 +13,7 @@ import ChatMessageComponent from "./chatMessageComponent";
 import QuizMessageComponent from "./QuizMessageComponent";
 import FlashCardComponent from "./flashCardComponent";
 import QueryErrorComponent from "./errorComponent";
+import PossibleInteractionComponent from "./possibleInteractionComponent";
 
 const ConversationComponent = () => {
   const {
@@ -55,46 +56,51 @@ const ConversationComponent = () => {
       ref={convoContainerRef}
       className="bg-backgroundColor text-textColor py-2 max-h-screen overflow-y-auto"
     >
-      {/* <div className="absolute bottom-0 left-0 py-2 w-full grid grid-cols-2 gap-[15px]">
-        {interactions.map((interaction, index) => {
-          return (
-            <PossibleInteractionComponent
-              interactionMessage={interaction.text}
-              key={index}
-            />
-          );
-        })}
-      </div> */}
-      <div className="grid grid-rows-[1fr_80px] grid-cols-1 w-[700px] h-full max-h-full mx-auto ">
+      <div className="grid grid-rows-[1fr_80px] grid-cols-1 w-[800px] h-full max-h-full mx-auto ">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
-        <div className="relative pb-[100px]">
-          {conversation &&
+        <div className="relative pb-[30px]">
+          {conversation.length ? (
             conversation.map((conv, index) => {
               const { type, quiz, message, flashcard } = conv;
               switch (type) {
                 case "chat":
                   return <ChatMessageComponent conv={conv} key={index} />;
                 case "quiz":
-                  return <QuizMessageComponent quiz={quiz!} />;
+                  return <QuizMessageComponent quiz={quiz!} key={index} />;
                 case "flashcard":
                   return (
                     <FlashCardComponent
                       message={message}
                       flashcard={flashcard!}
+                      key={index}
                     />
                   );
                 case "error":
-                  return <QueryErrorComponent data={conv} />;
+                  return <QueryErrorComponent data={conv} key={index} />;
                 default:
                   break;
               }
-            })}
+            })
+          ) : (
+            <div className="py-2 h-full  grid justify-center items-end ">
+              <div className="grid grid-cols-2 gap-[20px]">
+                {interactions.map((interaction, index) => {
+                  return (
+                    <PossibleInteractionComponent
+                      interactionMessage={interaction.text}
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
         {/* this woudl contain the textarea and other action btn */}
-        <div className="py-2 fixed w-[850px] bottom-2 rounded-md">
+        <div className="py-2  w-full bottom-2 rounded-md">
           <div className="w-full flex items-center py-3 rounded-md bg-onBackground px-4 shadow-md">
             <div className="flex">
               <button
@@ -114,13 +120,13 @@ const ConversationComponent = () => {
               className="w-full flex-1 flex items-center"
               onSubmit={sendMessage}
             >
-              <input
-                type="text"
+              <textarea
                 placeholder="What do you want to do? i.e Take quick notes."
-                className="flex-1 border-none outline-none py-6 font-medium px-2 bg-transparent"
+                className="flex-1 border-none outline-none py-6 font-medium px-2 bg-transparent h-full resize-none"
                 value={message}
                 onChange={({ target }) => setMessage(target.value)}
-              />
+                wrap="softwrap"
+              ></textarea>
               <button
                 type="submit"
                 className="w-[40px] h-[40px] text-white hover:bg-accentColor rounded-md hover:text-white flex items-center justify-center bg-accentColor"
