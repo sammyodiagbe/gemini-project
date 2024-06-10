@@ -1,7 +1,6 @@
 export const generateInitialPossibleInteractions = (
   articleText: string
 ): string => {
-  console.log(articleText.replace(/\n+/, ""));
   if (articleText.replace(/\n+/, "") === "") {
     console.log("empty dataset");
     return `Article or document has no context, so your response should be telling the user there is nothing to work with, let the user know you have not recieved any text or article or let the user know nothing was pulled out of the documents provided, now your response in json would look like this {response: "", .....}, let them know There is no information to work with`;

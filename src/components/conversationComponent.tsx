@@ -38,7 +38,9 @@ const ConversationComponent = () => {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+
     if (!message || message === "") return;
+    setMessage("");
     await chatWithGemini(message);
     setMessage("");
   };

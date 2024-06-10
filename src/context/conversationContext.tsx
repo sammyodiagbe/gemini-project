@@ -94,7 +94,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           sender: "system",
           message: "Something went wrong, please try again",
           retryQuery: message,
-          type: "chat",
+          type: "error",
         },
       ]);
     }
@@ -120,7 +120,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           sender: "system",
           message: "Something went wrong, please try again",
           retryQuery: message,
-          type: "chat",
+          type: "error",
         },
       ]);
     }
@@ -142,7 +142,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           sender: "system",
           message: "Something went wrong, please try again",
           retryQuery: message,
-          type: "chat",
+          type: "error",
         },
       ]);
     }
@@ -170,7 +170,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           sender: "system",
           message: "Something went wrong, please try again",
           retryQuery: message,
-          type: "chat",
+          type: "error",
         },
       ]);
     }
