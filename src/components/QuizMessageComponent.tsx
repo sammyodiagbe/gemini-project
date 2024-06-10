@@ -27,7 +27,7 @@ const QuizMessageComponent: FC<QuizData> = ({
     setAnswered(true);
   };
   return (
-    <div className="max-w-[600px] mx-auto relative">
+    <div className="max-w-full mx-auto relative">
       {rightAnswer && (
         <Confetti className="absolute w-full h-full" recycle={false} />
       )}

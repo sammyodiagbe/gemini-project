@@ -1,7 +1,7 @@
 "use client";
 
 import { useConversationContext } from "@/context/conversationContext";
-import { BookText, SendHorizonal, Gamepad } from "lucide-react";
+import { BookText, SendHorizonal, Gamepad, Send } from "lucide-react";
 import {
   FormEvent,
   FormEventHandler,
@@ -131,7 +131,7 @@ const ConversationComponent = () => {
                 type="submit"
                 className="w-[40px] h-[40px] text-white hover:bg-accentColor rounded-md hover:text-white flex items-center justify-center bg-accentColor"
               >
-                <SendHorizonal size={24} />
+                <Send size={24} />
               </button>
             </form>
           </div>
