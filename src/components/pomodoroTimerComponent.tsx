@@ -47,26 +47,26 @@ const PomodoroTimerComponent = () => {
 
   return (
     <div
-      className="hidden absolute right-0 bottom-[100px] rounded-lg bg-backgroundColor h-[250px] w-[200px] z-10 shadow-lg rign-1 ring-secondary cursor-grab"
+      className=" absolute bottom-0  right-0 rounded-lg bg-backgroundColor z-10 shadow-lg rign-1 ring-secondary cursor-grab"
       draggable
     >
-      <svg width="200" height="200" viewBox="0 0 100 100">
+      <svg viewBox="0 0 100 100">
         <circle
           cx="50"
           cy="50"
-          r="25"
+          r="15"
           fill="none"
           className="stroke-primary/15"
-          strokeWidth="5"
+          strokeWidth="2"
           strokeLinecap="round"
         />
         <circle
           cx="50"
           cy="50"
-          r="25"
+          r="14"
           className=" stroke-primary"
           fill="none"
-          strokeWidth="5"
+          strokeWidth="2"
           strokeDasharray={`${percentage} ${100 - percentage}`}
           strokeDashoffset="0"
           transform="rotate(90 50 50)"
@@ -80,7 +80,7 @@ const PomodoroTimerComponent = () => {
           fill="#333"
         >{`${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}</text>
       </svg>
-      <div className="grid grid-cols-3 gap-2 place-items-center">
+      {/* <div className="grid grid-cols-3 gap-2 place-items-center">
         <button onClick={startTimer}>
           <Play />
         </button>
@@ -90,7 +90,7 @@ const PomodoroTimerComponent = () => {
         <button onClick={resetTimer}>
           <RotateCcw />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -56,12 +56,12 @@ const ConversationComponent = () => {
       ref={convoContainerRef}
       className="bg-backgroundColor text-textColor py-2 max-h-screen overflow-y-auto"
     >
-      <div className="grid grid-rows-[1fr_80px] grid-cols-1 w-[800px] h-full max-h-full mx-auto ">
+      <div className="relative grid grid-rows-[1fr_80px] grid-cols-1 w-[800px] h-full max-h-full mx-auto">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
-        <div className="relative pb-[30px]">
+        <div className=" pb-[30px]">
           {conversation.length ? (
             conversation.map((conv, index) => {
               const { type, quiz, message, flashcard } = conv;
@@ -100,17 +100,17 @@ const ConversationComponent = () => {
           )}
         </div>
         {/* this woudl contain the textarea and other action btn */}
-        <div className="py-2  w-full bottom-2 rounded-md">
-          <div className="w-full flex items-center py-3 rounded-md bg-onBackground px-4 shadow-md">
+        <div className=" sticky bottom-3 w-full">
+          <div className="w-full flex items-center py-2 bg-onBackground px-4 rounded-md">
             <div className="flex">
               <button
-                className="flex items-center justify-center mr-2 p-2 py-3  rounded-md active:scale-95 ring-1 ring-secondary  text-textColor/70 text-secondary"
+                className="flex items-center justify-center mr-2 p-2 py-2 rounded-md active:scale-95 ring-1 ring-secondary  text-textColor/70 text-secondary"
                 onClick={startQuiz}
               >
                 <BookText size={18} className="mr-1" /> Quiz Me
               </button>
               <button
-                className="flex items-center justify-center p-2 py-3 ring-1 ring-secondary  text-textColor/70 rounded-md active:scale-95 text-secondary"
+                className="flex items-center justify-center p-2 py-2 ring-1 ring-secondary  text-textColor/70 rounded-md active:scale-95 text-secondary"
                 onClick={() => getFlashCard()}
               >
                 <Gamepad className="mr-1" size={18} /> Flashcard
@@ -122,10 +122,11 @@ const ConversationComponent = () => {
             >
               <textarea
                 placeholder="What do you want to do? i.e Take quick notes."
-                className="flex-1 border-none outline-none py-6 font-medium px-2 bg-transparent h-full resize-none"
+                className="flex-1  outline-none border-none p-2 bg-transparent resize-none overflow-hidden self-center"
                 value={message}
                 onChange={({ target }) => setMessage(target.value)}
                 wrap="softwrap"
+                rows={1}
               ></textarea>
               <button
                 type="submit"

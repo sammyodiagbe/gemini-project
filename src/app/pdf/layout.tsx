@@ -7,12 +7,7 @@ type LayoutType = {
 };
 
 const PageLayout: FC<LayoutType> = ({ children }) => {
-  return (
-    <ConversationContextProvider>
-      <PomodoroTimerComponent />
-      {children}
-    </ConversationContextProvider>
-  );
+  return <ConversationContextProvider>{children}</ConversationContextProvider>;
 };
 
 export default PageLayout;
