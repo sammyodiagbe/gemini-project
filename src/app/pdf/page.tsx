@@ -5,17 +5,17 @@ import { Gemini as AI } from "@/gemini/gemini";
 import MyPdfViewer from "@/components/pdfViewer";
 import ConversationComponent from "@/components/conversationComponent";
 import { useConversationContext } from "@/context/conversationContext";
-import { jsonDecode } from "@/lib/utils";
+import { buttonIconSize, cn, jsonDecode } from "@/lib/utils";
 import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
-import { UploadCloudIcon } from "lucide-react";
+import { Upload, UploadCloudIcon } from "lucide-react";
 import { useLoadingContext } from "@/context/loadingStateContext";
+import { buttonClass } from "@/lib/tailwind_classes";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string>();
-  const { setExtractedText, setInteractions } = useConversationContext()!;
+  const { setExtractedText, setInteractions, setConversation } =
+    useConversationContext()!;
   const { setWorkingOnPdf, workingOnPdf } = useLoadingContext()!;
-
-  console.log(workingOnPdf);
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
@@ -26,7 +26,10 @@ const Page = () => {
     const file = target.files!;
     if (!file) return;
     handleFileUpload(file[0]);
+
     setWorkingOnPdf(true);
+    setConversation([]);
+    setInteractions([]);
   };
 
   const handleFileUpload = async (file: File) => {
@@ -92,20 +95,31 @@ const Page = () => {
                 </span>
               </label>
             )}
-
-            <input
-              type="file"
-              accept="application/pdf"
-              name="pdf_file"
-              id="pdf_file"
-              className="appearance-none hidden"
-              onChange={handleFileChange}
-            />
           </>
         ) : (
-          <MyPdfViewer filePath={fileUrl!} />
+          <div className="relative h-full w-full">
+            <label
+              htmlFor="pdf_file"
+              className={cn(
+                buttonClass,
+                "absolute  z-10 bottom-3 ring-2 right-[50px] bg-white hover:scale-110 cursor-pointer"
+              )}
+            >
+              <Upload size={buttonIconSize} className="mr-2" /> Upload New File
+            </label>
+            <MyPdfViewer filePath={fileUrl!} />
+          </div>
         )}
       </div>
+      <input
+        type="file"
+        accept="application/pdf"
+        name="pdf_file"
+        id="pdf_file"
+        className="appearance-none hidden"
+        onChange={handleFileChange}
+      />
+
       <ConversationComponent />
     </main>
   );

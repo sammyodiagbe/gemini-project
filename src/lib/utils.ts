@@ -21,6 +21,8 @@ export function createConversationObject(
   return { type, sender, message, quiz };
 }
 
+export const buttonIconSize = 15;
+
 export function processText(text: string): TextPart {
   const initialText: TextPart = {
     text: geminiDocumentInitInstruction(text!),

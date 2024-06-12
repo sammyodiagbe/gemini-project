@@ -32,6 +32,7 @@ type ContextType = {
   startQuizMode: Function;
   nextQuestion: Function;
   getFlashCard: Function;
+  setConversation: Dispatch<SetStateAction<ConversationType[]>>;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -44,6 +45,7 @@ const conversationContext = createContext<ContextType>({
   startQuizMode: () => {},
   nextQuestion: () => {},
   getFlashCard: () => {},
+  setConversation: () => {},
 });
 
 type ConversationContextType = {
@@ -188,6 +190,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         startQuizMode,
         nextQuestion,
         getFlashCard,
+        setConversation,
       }}
     >
       {children}
