@@ -14,6 +14,7 @@ import QuizMessageComponent from "./QuizMessageComponent";
 import FlashCardComponent from "./flashCardComponent";
 import QueryErrorComponent from "./errorComponent";
 import PossibleInteractionComponent from "./possibleInteractionComponent";
+import { buttonClass } from "@/lib/tailwind_classes";
 
 const ConversationComponent = () => {
   const {
@@ -101,18 +102,12 @@ const ConversationComponent = () => {
         </div>
         {/* this woudl contain the textarea and other action btn */}
         <div className=" sticky bottom-3 w-full">
-          <div className="w-full flex items-center py-2 bg-onBackground px-4 rounded-md">
+          <div className="w-full  flex items-center py-4 bg-gray-200 px-4 rounded-full">
             <div className="flex">
-              <button
-                className="flex items-center justify-center mr-2 p-2 py-2 rounded-md active:scale-95 ring-1 ring-secondary  text-textColor/70 text-secondary"
-                onClick={startQuiz}
-              >
-                <BookText size={18} className="mr-1" /> Quiz Me
+              <button className={buttonClass} onClick={startQuiz}>
+                <BookText size={18} className="mr-1 " /> Quiz Me
               </button>
-              <button
-                className="flex items-center justify-center p-2 py-2 ring-1 ring-secondary  text-textColor/70 rounded-md active:scale-95 text-secondary"
-                onClick={() => getFlashCard()}
-              >
+              <button className={buttonClass} onClick={() => getFlashCard()}>
                 <Gamepad className="mr-1" size={18} /> Flashcard
               </button>
             </div>
@@ -130,7 +125,7 @@ const ConversationComponent = () => {
               ></textarea>
               <button
                 type="submit"
-                className="w-[40px] h-[40px] text-white hover:bg-accentColor rounded-md hover:text-white flex items-center justify-center bg-accentColor"
+                className="w-[50px] h-[50px] text-white hover:bg-secondary rounded-full hover:text-white flex items-center justify-center bg-accentColor"
               >
                 <Send size={24} />
               </button>

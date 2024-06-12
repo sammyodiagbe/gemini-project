@@ -6,17 +6,15 @@ const Navbar = () => {
       <h1 className="font-bold text-xl">Rafikiai</h1>
 
       <div className="">
-        <ul className="flex space-x-3">
+        <ul className="flex space-x-3 items-center">
           <li>
             <PomodoroTimerComponent />
           </li>
           <li>
-            <button className="p-2 px-4 ring-1 ring-primary rounded-md text-primary font-medium">
-              Connect spotify
-            </button>
+            <b>Hi, Samson</b>
           </li>
           <li>
-            <div className="h-[40px] w-[40px] rounded-full bg-onBackground" />
+            <div className="h-[40px] w-[40px] rounded-full bg-gray-300" />
           </li>
         </ul>
       </div>
