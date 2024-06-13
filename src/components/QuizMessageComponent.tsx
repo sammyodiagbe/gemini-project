@@ -29,7 +29,11 @@ const QuizMessageComponent: FC<QuizData> = ({
   return (
     <div className="max-w-full mx-auto relative">
       {rightAnswer && (
-        <Confetti className="absolute w-full h-full" recycle={false} />
+        <Confetti
+          className="absolute w-full h-full"
+          recycle={false}
+          gravity={0.8}
+        />
       )}
       <h1 className="text-xl font-medium mb-8 leading-8">{question}</h1>
       <div className="grid gap-8">

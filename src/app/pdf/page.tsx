@@ -10,6 +10,7 @@ import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
 import { Upload, UploadCloudIcon } from "lucide-react";
 import { useLoadingContext } from "@/context/loadingStateContext";
 import { buttonClass } from "@/lib/tailwind_classes";
+import LoaderComponent from "@/components/loader";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string>();
@@ -57,9 +58,13 @@ const Page = () => {
       setInteractions(interactions);
       setFile(fileUrl);
       setExtractedText(extracted_text);
-    } catch (error: any) {}
+      setWorkingOnPdf(false);
+    } catch (error: any) {
+      setWorkingOnPdf(false);
+    }
   };
 
+  if (workingOnPdf) return <LoaderComponent />;
   return (
     <main className="grid grid-cols-[800px_1fr] h-screen max-h-[calc(100vh-70px)] w-screen">
       {/* <div className="">
@@ -102,7 +107,7 @@ const Page = () => {
               htmlFor="pdf_file"
               className={cn(
                 buttonClass,
-                "absolute  z-10 bottom-3 ring-2 right-[50px] bg-white hover:scale-110 cursor-pointer"
+                "absolute  z-10 bottom-10 ring-2 right-[50px] bg-white hover:scale-110 cursor-pointer"
               )}
             >
               <Upload size={buttonIconSize} className="mr-2" /> Upload New File

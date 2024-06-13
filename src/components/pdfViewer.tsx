@@ -22,7 +22,7 @@ const MyPdfViewer: FC<MyPdfViewerType> = ({ filePath }) => {
   }, [iframeRef]);
   return (
     <iframe
-      src={`${filePath}#toolbar=0`}
+      src={`${filePath}`}
       className="w-full h-full scale-1 zoom-in-50 bg-red-300"
     ></iframe>
   );
