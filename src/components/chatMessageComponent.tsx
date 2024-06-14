@@ -40,7 +40,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       ) : ( */}
       <MarkdownView
         markdown={message}
-        className="leading-8 mb-3"
+        className="leading-8 mb-3 max-w-[80%]"
         options={{}}
       />
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}

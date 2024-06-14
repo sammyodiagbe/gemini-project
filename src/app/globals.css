@@ -10,11 +10,11 @@
       @apply h-[450px] w-[320px] grid place-content-center text-center px-3 rounded-lg shadow-md cursor-pointer hover:ring-2 transition-all;
     }
     .card-front {
-      @apply bg-pink-500 text-white;
+      @apply bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white;
     }
   
     .card-back {
-      @apply bg-gray-200;
+      @apply bg-gray-200 text-black;
     }
 
     :root {
@@ -30,12 +30,12 @@
 
 
     .dark {
-      --color-backgroundColor: 2 48 87;
-      --color-inputBackground: 255 0 0;
+      --color-backgroundColor: 43 45 56;
+      --color-inputBackground: 55 56 75;
 
       --color-textColor: 255 255 255;
       --color-primary: 58 134 255;
-      --color-onBackground: 16 60 98;
+      --color-onBackground: 55 56 75;
       --color-secondary: 43 74 66;
       --color-accentColor: 27 87 67: 
 

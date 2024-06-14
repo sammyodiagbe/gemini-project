@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import LoadingStateContextProvider from "@/context/loadingStateContext";
 import Navbar from "@/components/navbar";
 
-const inter = Manrope({ subsets: ["latin"] });
+const inter = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",

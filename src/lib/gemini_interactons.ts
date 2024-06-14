@@ -89,8 +89,10 @@ export const generateFlashcardGemini = (): string => {
     Help the user have fun while learning
     Send one Flashcard at a time and the structure of the response should be { response: "....", flashcard:{ front: "...." , back: "...."}}
     The front is the question part and the back is the answer(make them as short as possible), also try to make your response very funny and motivating
+    There is numbering so dont say things like here is the first card just say here is your card, click on card to flip to comfirm answer, Now if the last interaction was a request for a flash card, be creative with your responses and motivate the student or user
+    Add some cool emojis as well hahaha
     Thanks Gemini..
 
-    Dont repeat questions please
+    Dont repeat questions please (This bit is crucial and very important)
   `;
 };
