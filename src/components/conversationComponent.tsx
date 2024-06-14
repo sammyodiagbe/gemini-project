@@ -125,7 +125,7 @@ const ConversationComponent = () => {
               ></textarea>
               <button
                 type="submit"
-                className="w-[50px] h-[50px] text-white hover:bg-primary/70 rounded-full hover:text-white flex items-center justify-center bg-primary"
+                className="w-[50px] h-[50px] text-white hover:bg-primary/70 rounded-full hover:text-white flex items-center justify-center bg-gradient-to-r from-fuchsia-600 to-purple-600"
               >
                 <Send size={24} />
               </button>

@@ -2,6 +2,8 @@ import { ConversationType } from "@/lib/type";
 import { NotebookPen, SpeechIcon } from "lucide-react";
 import MarkdownView from "react-showdown";
 import { FC } from "react";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 type ChatComponentType = {
   conv: ConversationType;
@@ -26,9 +28,16 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
     }
   };
   return (
-    <div className="p-4rounded-md mb-5 bg-onBackground p-4 rounded-lg">
+    <motion.div
+      initial={{ transform: "scale(0)", opacity: 0 }}
+      animate={{ transform: "scale(1)", opacity: 1 }}
+      className={cn(
+        "p-4rounded-md mb-5 bg-onBackground p-4 rounded-lg py-3 grid",
+        sender === "user" && "max-w-[80%] justify-start"
+      )}
+    >
       <p className="pb-3 text-sm">
-        {sender === "ai" ? "Ally" : sender === "system" ? "" : "you"}
+        {sender === "ai" ? "Rafikki" : sender === "system" ? "" : "you"}
       </p>
       {/* {sender === "ai" ? (
         <ReactTyped
@@ -40,7 +49,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       ) : ( */}
       <MarkdownView
         markdown={message}
-        className="leading-8 mb-3 max-w-[80%]"
+        className="leading-10 mb-3 "
         options={{}}
       />
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}
@@ -58,7 +67,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
           </button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

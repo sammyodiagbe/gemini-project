@@ -2,6 +2,7 @@ import { FlashCardType } from "@/lib/type";
 import { FC, useState } from "react";
 import MarkdownView from "react-showdown";
 import FlashCard from "react-card-flip";
+import { motion } from "framer-motion";
 
 type FlashCardPropTypes = {
   message: string;
@@ -12,7 +13,11 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
   const { front, back } = flashcard;
   const [flip, setFlip] = useState(false);
   return (
-    <div className="">
+    <motion.div
+      className=""
+      initial={{ transform: "scale(0)", opacity: 0 }}
+      animate={{ transform: "scale(1)", opacity: 1 }}
+    >
       <MarkdownView
         markdown={message}
         className="bg-onBackground p-2 max-w-[80%] rounded-lg"
@@ -27,7 +32,7 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
           </div>
         </FlashCard>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

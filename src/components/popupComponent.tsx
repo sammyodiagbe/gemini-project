@@ -1,7 +1,8 @@
 "use client";
 import { usePopupContext } from "@/context/popupContext";
 import { MessageCircleQuestion, NotebookPen } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 const PopupComponent = () => {
   const { setSelected, selected, setCoord, coord } = usePopupContext();
@@ -35,15 +36,22 @@ const PopupComponent = () => {
   }, []);
   if (!selected) return null;
   return (
-    <div
-      className="absolute -top-[50px] left-0 bg-gray-800 text-white grid grid-cols-2 gap-[20px] py-3 p-2 z-30 rounded-md"
-      style={{ transform: `translate3d(${coord.x}px, ${coord.y}px, 0)` }}
+    <motion.div
+      initial={{
+        transform: `translate3d(${coord.x}px, ${coord.y}px, 0) scale(0)`,
+        opacity: 0,
+      }}
+      animate={{
+        transform: `translate3d(${coord.x}px, ${coord.y}px, 0) scale(1)`,
+        opacity: 1,
+      }}
+      className="absolute -top-[50px] left-0 bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white grid grid-cols-2 gap-[20px] py-3 p-2 z-30 rounded-md"
     >
       <span>
         <NotebookPen />
       </span>
       <MessageCircleQuestion />
-    </div>
+    </motion.div>
   );
 };
 

@@ -107,7 +107,7 @@ const Page = () => {
               htmlFor="pdf_file"
               className={cn(
                 buttonClass,
-                "absolute  z-10 bottom-10 ring-2 right-[50px] bg-white hover:scale-110 cursor-pointer"
+                "absolute  z-10 bottom-10 ring-2 ring-purple-600 right-[50px] text-purple-600 bg-white hover:scale-110 cursor-pointer"
               )}
             >
               <Upload size={buttonIconSize} className="mr-2" /> Upload New File
