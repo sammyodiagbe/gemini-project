@@ -1,16 +1,16 @@
 "use client";
-import Lottie from "lottie-react";
-import loadingMonkey from "../lottie/loading_monkey.json";
+
+//
 
 const LoaderComponent = () => {
   return (
-    <div className="fixed h-screen w-screen  grid items-center justify-center z-50 top-0 left-0 bg-onBackground">
+    <div className="fixed h-screen w-screen  grid items-center justify-center z-50 top-0 left-0 bg-backgroundColor">
       <div className="text-center max-w-[250px]">
-        <Lottie
+        {/* <Lottie
           animationData={loadingMonkey}
           className=" w-[280px] mb-0 self-auto"
           marginHeight={0}
-        />
+        /> */}
         {/* <h1 className="text-2xl text-center font-bold text-primary w-[280px]">
           Analyzing your file.
         </h1> */}

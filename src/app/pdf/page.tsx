@@ -86,15 +86,15 @@ const Page = () => {
               </div>
             ) : (
               <label
-                className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:bg-gray-200 hover:ring-primary/70 ring-inset cursor-pointer border-r border-gray-400"
+                className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:ring-primary/70 ring-inset cursor-pointer border-r border-onBackground"
                 htmlFor="pdf_file"
               >
                 <span className="grid place-items-center max-w-[350px] space-y-4">
                   <UploadCloudIcon
                     size={120}
-                    className="font-thin text-gray-400"
+                    className="font-thin text-textColor/30"
                   />
-                  <span className="text-center text-2xl">
+                  <span className="text-center text-2xl text-textColor/60">
                     Click here to choose a file to upload (pdf only)
                   </span>
                 </span>

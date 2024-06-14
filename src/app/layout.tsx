@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import LoadingStateContextProvider from "@/context/loadingStateContext";
 import Navbar from "@/components/navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className=" relative">
-      <body className={cn(inter.className, "calm-thoughts")}>
+      <body className={cn(inter.className, "dark")}>
         <LoadingStateContextProvider>
           <Navbar />
           {children}

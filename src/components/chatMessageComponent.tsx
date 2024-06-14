@@ -47,7 +47,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
 
       {sender === "ai" && (
         <div className="flex items-center mt-6 space-x-4">
-          <button className="flex items-center p-2 mr-2 text-gray-600 ring-1 ring-secondary rounded-md active:scale-95 justify-center">
+          <button className="flex items-center  text-textColor/80  p-2 mr-2 ring-1 ring-primary rounded-md active:scale-95 justify-center">
             <NotebookPen size={15} className="mr-1" /> Take note
           </button>
           <button

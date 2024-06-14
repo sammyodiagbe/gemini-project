@@ -16,7 +16,7 @@ const PossibleInteractionComponent: FC<ComponentType> = ({
   return (
     <div
       onClick={sendMessageToGemini}
-      className=" p-4 min-h-[80px] border shadow-sm text-md cursor-pointer hover:bg-gray-200 rounded-md grid grid-cols-[25px_1fr] items-start ring-1 ring-primary"
+      className=" p-4 min-h-[80px] text-md cursor-pointer hover:bg-onBackground rounded-md grid grid-cols-[25px_1fr] items-start ring-1 ring-onBackground/10"
     >
       <Lightbulb
         size={18}

@@ -102,7 +102,7 @@ const ConversationComponent = () => {
         </div>
         {/* this woudl contain the textarea and other action btn */}
         <div className=" sticky bottom-3 w-full">
-          <div className="w-full  flex items-center py-4 bg-gray-200 px-4 rounded-full">
+          <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
             <div className="flex">
               <button className={buttonClass} onClick={startQuiz}>
                 <BookText size={18} className="mr-1 " /> Quiz Me
@@ -125,7 +125,7 @@ const ConversationComponent = () => {
               ></textarea>
               <button
                 type="submit"
-                className="w-[50px] h-[50px] text-white hover:bg-secondary rounded-full hover:text-white flex items-center justify-center bg-accentColor"
+                className="w-[50px] h-[50px] text-white hover:bg-primary/70 rounded-full hover:text-white flex items-center justify-center bg-primary"
               >
                 <Send size={24} />
               </button>

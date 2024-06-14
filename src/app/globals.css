@@ -18,18 +18,29 @@
     }
 
     :root {
-      --color-primary: 173 58 39;
+      --color-primary: 265 83 57;
       --color-secondary: 43 74 66;
-      --color-backgroundColor: 204 20 95;
+      --color-backgroundColor: 208 96 17;
       --color-accentColor: 27 87 67: 
-      --color-textColor: 197 37 24;
+      --color-textColor: 255 255 255;
+      --color-inputBackground: 208 72 22;
+      --color-onBackground: 208 75 21;
+
     }
 
-    :root body {
-      background-color: var(--color-backgroundColor);
-      color: var(--color-textColor);
-    }
 
+    .dark {
+      --color-backgroundColor: 2 48 87;
+      --color-inputBackground: 255 0 0;
+
+      --color-textColor: 255 255 255;
+      --color-primary: 58 134 255;
+      --color-onBackground: 16 60 98;
+      --color-secondary: 43 74 66;
+      --color-accentColor: 27 87 67: 
+
+    }
+/* 
     .ocean-breeze {
       --color-primary: 42 157 143;
       --color-secondary: 233 196 106;
@@ -70,7 +81,7 @@
       --color-accentColor: 242 92 84;
       --color-backgroundColor: 33 43 54;
       --color-textColor: 217 226 236;
-    }
+    } */
   }
 
   /* @layer base {

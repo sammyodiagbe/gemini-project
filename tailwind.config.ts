@@ -25,6 +25,7 @@ const config = {
         backgroundColor: "rgb(var(--color-backgroundColor) / <alpha-value>)",
         textColor: "rgb(var(--color-textColor) / <alpha-value>)",
         onBackground: "rgb(var(--color-onBackground) / <alpha-value)",
+        inputBackground: "rgb(var(--color-inputBackground) / <alpha-value)",
       },
       backgroundColor: {
         primary: "rgb(var(--color-primary) / <alpha-value>)",
@@ -33,6 +34,7 @@ const config = {
         backgroundColor: "rgb(var(--color-backgroundColor) / <alpha-value>)",
         textColor: "rgb(var(--color-textColor) / <alpha-value>)",
         onBackground: "rgb(var(--color-onBackground) / <alpha-value>)",
+        inputBackground: "rgb(var(--color-inputBackground) / <alpha-value)",
       },
     },
   },
