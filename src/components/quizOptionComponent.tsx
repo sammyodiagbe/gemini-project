@@ -28,7 +28,7 @@ const QuizOptionComponent: FC<QuizOptionPropsType> = ({
   return (
     <button
       className={cn(
-        "ring-1 ring-gray-300 grid gap-2 items-center grid-cols-[20px_1fr] hover:scale-95 active:scale-95 p-5 rounded-md transition bg-onBackground",
+        "ring-1 ring-gray-300 grid gap-2 items-center grid-cols-[20px_1fr] active:scale-95 p-5 rounded-md transition bg-onBackground",
         isSelected && rightAnswer && " ring-primary bg-primary/5",
         isSelected && !rightAnswer && "bg-red-100 ring-red-500",
         answered && !isSelected && isRight && "ring-primary bg-primary/5"

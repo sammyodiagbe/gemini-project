@@ -12,6 +12,7 @@ const PopupComponent = () => {
       const selection = document.getSelection();
       if (selection && selection.toString().length > 0) {
         const rect = selection?.getRangeAt(0).getBoundingClientRect();
+
         const { left, top, width } = rect;
         setCoord({
           x: left + width / 2 - 50,
@@ -37,20 +38,16 @@ const PopupComponent = () => {
   if (!selected) return null;
   return (
     <motion.div
-      initial={{
-        transform: `translate3d(${coord.x}px, ${coord.y}px, 0) scale(0)`,
-        opacity: 0,
-      }}
-      animate={{
-        transform: `translate3d(${coord.x}px, ${coord.y}px, 0) scale(1)`,
-        opacity: 1,
-      }}
-      className="absolute -top-[50px] left-0 bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white grid grid-cols-2 gap-[20px] py-3 p-2 z-30 rounded-md"
+      className="absolute -top-[65px] left-0 bg-gradient-to-r space-x-2 from-fuchsia-600 to-purple-600  flex py-3 p-2 z-30 rounded-md"
+      style={{ transform: `translate3d(${coord.x}px, ${coord.y}px, 0)` }}
     >
-      <span>
-        <NotebookPen />
-      </span>
-      <MessageCircleQuestion />
+      <button className="flex  juify-center items-center space-x-1 text-white/80 hover:text-white">
+        <MessageCircleQuestion size={14} /> <span className="">Explain</span>
+      </button>
+      <button className="flex justify-center items-center space-x-1 text-white/80 hover:text-white">
+        <NotebookPen size={14} />
+        <span className="">Add to note</span>
+      </button>
     </motion.div>
   );
 };
