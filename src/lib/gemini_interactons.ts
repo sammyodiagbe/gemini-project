@@ -96,3 +96,46 @@ export const generateFlashcardGemini = (): string => {
     Dont repeat questions please (This bit is crucial and very important)
   `;
 };
+
+export const beginQuizmode = (
+  multiplechoice: boolean,
+  shortAnswer: boolean
+): string => {
+  let prompt: string;
+  if (multiplechoice && !shortAnswer) {
+    prompt = `
+    Generate quiz questions
+    Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
+    now this question can only be one  type, multiplechoice
+    you need to add a type in your response which is quiztype:multiplechoice
+
+    you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice}
+
+
+     
+  `;
+    return prompt;
+  } else if (!multiplechoice && shortAnswer) {
+    prompt = `
+    Generate quiz questions
+    Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
+    now this question can only be one  type, short Answer
+    you need to add a type in your response which is quiztype:shortanswer
+    Keep it short and simple
+
+    you response should include the quiz which is an object like quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortanswer}
+
+    Now on this part we are more focused on understanding and not accuracy
+  `;
+  }
+
+  prompt = `
+    Generate quiz questions
+    Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
+    now this question can only be one o two type, multiplechoice or short answer question
+    you need to add a type in your response at the root of your json response which is quiztype:multiplechoice | shortanswer
+
+    now on this part if you have decided to ask the user a short answer you json response should a quiz structure quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortAnswer} but if you have decided to go with multiplechoice your json response should be like this { question: "...",options:[...], answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice}
+  `;
+  return prompt;
+};

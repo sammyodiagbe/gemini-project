@@ -1,4 +1,5 @@
 "use client";
+import { useQuizContext } from "@/context/quizContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import { buttonIconSize, cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -16,6 +17,11 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
   const [variant, setVariant] = useState<"hidden" | "visible">("hidden");
   const [multipleChoice, setMultipleChoice] = useState(true);
   const [shortAnswer, setShortAnswer] = useState(false);
+  const { startQuiz: beginQuiz } = useQuizContext();
+  const startQuiz = () => {
+    beginQuiz(multipleChoice, shortAnswer);
+    setVariant("hidden");
+  };
   return (
     <div className="relative">
       <motion.div
@@ -46,7 +52,9 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
           />
           <span className="text-sm">Short answer</span>
         </div>
-        <button className={cn(buttonClass, " w-full")}>Start Quiz</button>
+        <button className={cn(buttonClass, " w-full")} onClick={startQuiz}>
+          Start Quiz
+        </button>
       </motion.div>
       <button
         className={cn(buttonClass)}

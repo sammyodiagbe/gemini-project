@@ -33,6 +33,7 @@ type ContextType = {
   nextQuestion: Function;
   getFlashCard: Function;
   setConversation: Dispatch<SetStateAction<ConversationType[]>>;
+  chat: ChatSession | null;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -46,6 +47,7 @@ const conversationContext = createContext<ContextType>({
   nextQuestion: () => {},
   getFlashCard: () => {},
   setConversation: () => {},
+  chat: null,
 });
 
 type ConversationContextType = {
@@ -57,7 +59,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 }) => {
   const [interactions, setInteractions] = useState<interaction[]>([]);
   const [extractedText, setExtractedText] = useState<string>();
-  const [chat, setChat] = useState<ChatSession>();
+  const [chat, setChat] = useState<ChatSession | null>(null);
   const [conversation, setConversation] = useState<ConversationType[]>([]);
 
   useEffect(() => {
@@ -191,6 +193,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         nextQuestion,
         getFlashCard,
         setConversation,
+        chat,
       }}
     >
       {children}
