@@ -15,12 +15,16 @@ type QuizContextType = {
   quizmode: boolean;
   setQuizmode: Dispatch<SetStateAction<boolean>>;
   startQuiz: Function;
+  checkShortAnswer: Function;
+  nextQuestion: Function;
 };
 
 const quizContext = createContext<QuizContextType>({
   quizmode: false,
   setQuizmode: () => {},
   startQuiz: () => {},
+  checkShortAnswer: () => {},
+  nextQuestion: () => {},
 });
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -29,15 +33,11 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const startQuiz = async (multipleChoice: boolean, shortAnswer: boolean) => {
     const prompt = beginQuizmode(multipleChoice, shortAnswer);
-
-    console.log(prompt);
     try {
       const result = await chat?.sendMessage(prompt);
       const response = await result?.response;
       const text = await response?.text();
-      console.log(text);
       const responseData = jsonDecode(text!);
-      console.log(responseData);
       const { quiz, response: aiRes } = responseData;
       const res: ConversationType = {
         type: "quiz",
@@ -50,8 +50,63 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       console.log(error);
     }
   };
+
+  const checkShortAnswer = async (
+    userAnswer: string,
+    aiAnswer: string,
+    question: string
+  ) => {
+    const prompt = `User has sent back there answer to the shortquestion quiz, now the focus and main purpose of this software is understanding. So Analyze the user response and the question, plus actual answer and determine if they understand what the question is about, then give appropriate response based on your analysis, once the main purpose of this app is to focus on Understanding and not being right. Your response should not have no questions.
+
+    Make you analysis short and concise and no questions please
+    Make your responses very fun and goofy with emojis
+    your response here should only include the response entry { response: ....}
+    
+    question=${question}
+    userAnswer=${userAnswer}
+    yourGeneratedAnswer=${aiAnswer}
+    `;
+    try {
+      const result = await chat?.sendMessage(prompt);
+      const response = await result?.response;
+      const text = await response?.text();
+      const json = jsonDecode(text!);
+      return json.response;
+    } catch (error: any) {
+      console.log(error);
+    }
+    return "";
+  };
+
+  const nextQuestion = async () => {
+    const prompt = "Next question please.";
+    try {
+      const result = await chat?.sendMessage(prompt);
+      const response = await result?.response;
+      const text = await response?.text();
+      const json = jsonDecode(text!);
+      const { quiz, response: aiRes } = json;
+      const res: ConversationType = {
+        type: "quiz",
+        quiz: quiz,
+        sender: "ai",
+        message: aiRes,
+      };
+      setConversation((prev) => [...prev, res]);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
   return (
-    <quizContext.Provider value={{ quizmode, setQuizmode, startQuiz }}>
+    <quizContext.Provider
+      value={{
+        quizmode,
+        setQuizmode,
+        startQuiz,
+        checkShortAnswer,
+        nextQuestion,
+      }}
+    >
       {children}
     </quizContext.Provider>
   );
