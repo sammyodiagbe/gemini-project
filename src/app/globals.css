@@ -40,6 +40,11 @@
       --color-accentColor: 27 87 67: 
 
     }
+
+    body {
+      background: var(--color-backgroundColor);
+      color: var(--color-textColor);
+    }
 /* 
     .ocean-breeze {
       --color-primary: 42 157 143;

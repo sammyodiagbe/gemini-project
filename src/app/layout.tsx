@@ -19,7 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className=" relative">
-      <body className={cn(inter.className, "dark")}>
+      <body
+        className={cn(
+          inter.className,
+          "dark bg-backgroundColor text-textColor"
+        )}
+      >
         <LoadingStateContextProvider>
           <Navbar />
           {children}

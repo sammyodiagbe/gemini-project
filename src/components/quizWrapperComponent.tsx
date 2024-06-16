@@ -19,6 +19,7 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
   return (
     <div className="relative">
       <motion.div
+        initial={{ opacity: 0, scale: 0 }}
         className="absolute -top-[180px] z-30 p-4 left-[-75px] w-[200px]  bg-onBackground  rounded-lg shadow-md after: space-y-4"
         variants={variants}
         animate={variant}

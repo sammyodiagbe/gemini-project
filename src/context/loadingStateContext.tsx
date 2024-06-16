@@ -21,6 +21,8 @@ type ContextType = {
   setSendingChatMessage: Dispatch<SetStateAction<boolean>>;
   setGettingQuizQuestion: Dispatch<SetStateAction<boolean>>;
   setGettingFlashCard: Dispatch<SetStateAction<boolean>>;
+  quizmode: boolean;
+  setQuizmode: Dispatch<SetStateAction<boolean>>;
 };
 
 const loadingContext = createContext<ContextType>({
@@ -32,6 +34,8 @@ const loadingContext = createContext<ContextType>({
   setSendingChatMessage: () => {},
   setGettingQuizQuestion: () => {},
   setGettingFlashCard: () => {},
+  quizmode: false,
+  setQuizmode: () => {},
 });
 
 const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
@@ -39,6 +43,7 @@ const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
   const [sendingChatMessage, setSendingChatMessage] = useState(false);
   const [gettingQuizQuestion, setGettingQuizQuestion] = useState(false);
   const [gettingFlashCard, setGettingFlashCard] = useState(false);
+  const [quizmode, setQuizmode] = useState(false);
 
   return (
     <loadingContext.Provider
@@ -51,6 +56,8 @@ const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
         setSendingChatMessage,
         setGettingFlashCard,
         setGettingQuizQuestion,
+        quizmode,
+        setQuizmode,
       }}
     >
       {children}
