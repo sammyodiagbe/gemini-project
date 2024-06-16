@@ -104,7 +104,7 @@ export const beginQuizmode = (
   let prompt: string;
   if (multiplechoice && !shortAnswer) {
     prompt = `
-    Generate quiz questions
+    Generate multiplechoice quiz questions
     Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
     now this question can only be one  type, multiplechoice
     you need to add a type in your response which is quiztype:multiplechoice
@@ -117,7 +117,7 @@ export const beginQuizmode = (
     return prompt;
   } else if (!multiplechoice && shortAnswer) {
     prompt = `
-    Generate quiz questions
+    Generate showanswer quiz questions
     Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
     now this question can only be one  type, short Answer
     you need to add a type in your response which is quiztype:shortanswer
@@ -135,7 +135,9 @@ export const beginQuizmode = (
     now this question can only be one o two type, multiplechoice or short answer question
     you need to add a type in your response at the root of your json response which is quiztype:multiplechoice | shortanswer
 
-    now on this part if you have decided to ask the user a short answer you json response should a quiz structure quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortAnswer} but if you have decided to go with multiplechoice your json response should be like this { question: "...",options:[...], answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice}
+    now on this part if you have decided to ask the user a shortanswer quiz your json response should a quiz structure quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortanswer} but if you have decided to go with multiplechoice quiz your json response should be like this quiz: { question: "...",options:[...], answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice
+
+    You randomly choose if you want to ask the user shortanswer questions or multiplechoice per question
   `;
   return prompt;
 };

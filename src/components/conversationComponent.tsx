@@ -71,7 +71,13 @@ const ConversationComponent = () => {
                 case "chat":
                   return <ChatMessageComponent conv={conv} key={index} />;
                 case "quiz":
-                  return <QuizMessageComponent quiz={quiz!} key={index} />;
+                  return (
+                    <QuizMessageComponent
+                      message={message}
+                      quiz={quiz!}
+                      key={index}
+                    />
+                  );
                 case "flashcard":
                   return (
                     <FlashCardComponent

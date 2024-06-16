@@ -8,6 +8,8 @@ import {
 } from "react";
 import { useConversationContext } from "./conversationContext";
 import { beginQuizmode } from "@/lib/gemini_interactons";
+import { jsonDecode } from "@/lib/utils";
+import { ConversationType } from "@/lib/type";
 
 type QuizContextType = {
   quizmode: boolean;
@@ -23,17 +25,27 @@ const quizContext = createContext<QuizContextType>({
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [quizmode, setQuizmode] = useState(false);
-  const { chat } = useConversationContext();
+  const { chat, setConversation } = useConversationContext();
 
   const startQuiz = async (multipleChoice: boolean, shortAnswer: boolean) => {
     const prompt = beginQuizmode(multipleChoice, shortAnswer);
-    console.log();
+
+    console.log(prompt);
     try {
       const result = await chat?.sendMessage(prompt);
-      console.log(result);
       const response = await result?.response;
       const text = await response?.text();
       console.log(text);
+      const responseData = jsonDecode(text!);
+      console.log(responseData);
+      const { quiz, response: aiRes } = responseData;
+      const res: ConversationType = {
+        type: "quiz",
+        quiz: quiz,
+        sender: "ai",
+        message: aiRes,
+      };
+      setConversation((prev) => [...prev, res]);
     } catch (error: any) {
       console.log(error);
     }

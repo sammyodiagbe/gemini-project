@@ -19,6 +19,7 @@ export type QuizType = {
   question: string;
   options: string[];
   answer: string;
+  quiztype: "multiplechoice" | "shortanswer";
 };
 
 export type GeminiResponseType = {
