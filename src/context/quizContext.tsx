@@ -17,6 +17,7 @@ type QuizContextType = {
   startQuiz: Function;
   checkShortAnswer: Function;
   nextQuestion: Function;
+  endSession: Function;
 };
 
 const quizContext = createContext<QuizContextType>({
@@ -25,6 +26,7 @@ const quizContext = createContext<QuizContextType>({
   startQuiz: () => {},
   checkShortAnswer: () => {},
   nextQuestion: () => {},
+  endSession: () => {},
 });
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -97,6 +99,29 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       console.log(error);
     }
   };
+
+  const endSession = async () => {
+    const prompt =
+      "End session and give me insight create a breakdown that can be viewed visually on a chart, include a insights entry and include data that I can put on a chart like how well the user understands the documents, also use percentage to measure user understanding of a topic";
+    try {
+      const result = await chat?.sendMessage(prompt);
+      const response = await result?.response;
+      const text = await response?.text();
+      const json = jsonDecode(text!);
+
+      console.log(json);
+      // const { quiz, response: aiRes } = json;
+      // const res: ConversationType = {
+      //   type: "quiz",
+      //   quiz: quiz,
+      //   sender: "ai",
+      //   message: aiRes,
+      // };
+      // setConversation((prev) => [...prev, res]);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
   return (
     <quizContext.Provider
       value={{
@@ -105,6 +130,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         startQuiz,
         checkShortAnswer,
         nextQuestion,
+        endSession,
       }}
     >
       {children}

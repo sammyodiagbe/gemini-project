@@ -1,7 +1,7 @@
 "use client";
 
 import { useConversationContext } from "@/context/conversationContext";
-import { BookText, SendHorizonal, Gamepad, Send } from "lucide-react";
+import { Gamepad, Send } from "lucide-react";
 import {
   FormEvent,
   FormEventHandler,
@@ -63,7 +63,7 @@ const ConversationComponent = () => {
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
-        <div className=" pb-[30px]">
+        <div className=" pb-[30px] space-y-8">
           {conversation.length ? (
             conversation.map((conv, index) => {
               const { type, quiz, message, flashcard } = conv;

@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import Confetti from "react-confetti";
 
 import QuizOptionComponent from "./quizOptionComponent";
+import QuizActionComponent from "./quizActionComponent";
 
 type ComponentType = {
   quiz: QuizType;
@@ -49,15 +50,7 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ quiz }) => {
           );
         })}
       </div>
-      <div className="flex justify-end py-5">
-        <button
-          className="p-3 px-7 font-semibold rounded-md disabled:bg-gray-50 disabled:text-gray-400 ring-1 ring-secondary70"
-          onClick={() => {}}
-          disabled={!answered}
-        >
-          Another Question
-        </button>
-      </div>
+      <QuizActionComponent />
     </div>
   );
 };

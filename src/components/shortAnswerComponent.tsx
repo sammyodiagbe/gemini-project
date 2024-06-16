@@ -5,6 +5,7 @@ import { QuizType } from "@/lib/type";
 import { cn } from "@/lib/utils";
 import { FC, useState } from "react";
 import { ReactTyped } from "react-typed";
+import QuizActionComponent from "./quizActionComponent";
 
 type ComponentType = {
   message: string;
@@ -48,11 +49,7 @@ const ShortAnswerComponent: FC<ComponentType> = ({ quiz }) => {
         <div className="space-y-4">
           <p className="mb-2">Answer: {answer}</p>
           <p>{feedback}</p>
-          <div className="flex justify-end">
-            <button className={buttonClass} onClick={() => nextQuestion()}>
-              Next Question
-            </button>
-          </div>
+          <QuizActionComponent />
         </div>
       )}
     </div>
