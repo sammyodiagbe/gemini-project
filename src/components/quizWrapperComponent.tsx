@@ -1,8 +1,8 @@
 "use client";
 import { buttonClass } from "@/lib/tailwind_classes";
-import { cn } from "@/lib/utils";
+import { buttonIconSize, cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { BookText } from "lucide-react";
+import { BookText, X } from "lucide-react";
 import { FC, useState } from "react";
 
 type ComponentType = {};
@@ -19,10 +19,16 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
   return (
     <div className="relative">
       <motion.div
-        className="absolute -top-[160px] z-30 p-4 left-[-75px] w-[200px]  bg-onBackground  rounded-lg shadow-md after: space-y-3"
+        className="absolute -top-[180px] z-30 p-4 left-[-75px] w-[200px]  bg-onBackground  rounded-lg shadow-md after: space-y-4"
         variants={variants}
         animate={variant}
       >
+        <button
+          className="absolute top-[-10px] text-white/60 shadow-md hover:text-white right-[-10px] h-[40px] w-[40px] bg-onBackground flex justify-center items-center rounded-full"
+          onClick={() => setVariant("hidden")}
+        >
+          <X size={buttonIconSize} />
+        </button>
         <div className="space-x-1 flex items-center">
           <input
             type="checkbox"
@@ -39,7 +45,7 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
           />
           <span className="text-sm">Short answer</span>
         </div>
-        <button className={cn(buttonClass, "py-1 w-full")}>Start Quiz</button>
+        <button className={cn(buttonClass, " w-full")}>Start Quiz</button>
       </motion.div>
       <button
         className={cn(buttonClass)}
