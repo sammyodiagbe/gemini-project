@@ -15,6 +15,7 @@ import FlashCardComponent from "./flashCardComponent";
 import QueryErrorComponent from "./errorComponent";
 import PossibleInteractionComponent from "./possibleInteractionComponent";
 import { buttonClass } from "@/lib/tailwind_classes";
+import QuizWrapperComponent from "./quizWrapperComponent";
 
 const ConversationComponent = () => {
   const {
@@ -104,9 +105,7 @@ const ConversationComponent = () => {
         <div className=" sticky bottom-3 w-full">
           <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
             <div className="flex">
-              <button className={buttonClass} onClick={startQuiz}>
-                <BookText size={18} className="mr-1 " /> Quiz Me
-              </button>
+              <QuizWrapperComponent />
               <button className={buttonClass} onClick={() => getFlashCard()}>
                 <Gamepad className="mr-1" size={18} /> Flashcard
               </button>
