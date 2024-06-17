@@ -1,5 +1,16 @@
-export type MessageType = "chat" | "quiz" | "flashcard" | "error";
+export type MessageType = "chat" | "quiz" | "flashcard" | "error" | "insights";
 type senderType = "ai" | "user" | "system";
+
+type TopicBreakdownType = {
+  topic: string;
+  understanding: number;
+  explanation: string;
+};
+export type InsightType = {
+  overall_understanding: string;
+  recommended_topics: string[];
+  breakdowns: TopicBreakdownType[];
+};
 
 export type ConversationType = {
   type: MessageType;
@@ -8,6 +19,7 @@ export type ConversationType = {
   quiz?: QuizType;
   flashcard?: FlashCardType;
   retryQuery?: string;
+  insights?: InsightType;
 };
 
 export type FlashCardType = {

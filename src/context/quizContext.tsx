@@ -101,23 +101,35 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const endSession = async () => {
-    const prompt =
-      "End session and give me insight create a breakdown that can be viewed visually on a chart, include a insights entry and include data that I can put on a chart like how well the user understands the documents, also use percentage to measure user understanding of a topic";
+    const prompt = `End session and give me insight create a breakdown that can be viewed visually on a chart, include a insights entry and include data that I can put on a chart like how well the user understands the documents, also use percentage to measure user understanding of a topic
+      
+      Your json response should look like this
+      {
+        response: ...,
+        insights: {
+          overall_understanding: ...,
+          understanding_breakdowns: [
+            { topic: ..., understanding: 40, explanation: ...},
+             ....
+          ],
+          recommended_topics: [....]
+        }
+      }
+      `;
     try {
       const result = await chat?.sendMessage(prompt);
       const response = await result?.response;
       const text = await response?.text();
       const json = jsonDecode(text!);
-
+      const { response: res, insights } = json;
       console.log(json);
-      // const { quiz, response: aiRes } = json;
-      // const res: ConversationType = {
-      //   type: "quiz",
-      //   quiz: quiz,
-      //   sender: "ai",
-      //   message: aiRes,
-      // };
-      // setConversation((prev) => [...prev, res]);
+      const chatData: ConversationType = {
+        type: "insights",
+        insights,
+        sender: "ai",
+        message: res,
+      };
+      setConversation((prev) => [...prev, chatData]);
     } catch (error: any) {
       console.log(error);
     }

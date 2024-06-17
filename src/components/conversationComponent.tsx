@@ -16,6 +16,7 @@ import QueryErrorComponent from "./errorComponent";
 import PossibleInteractionComponent from "./possibleInteractionComponent";
 import { buttonClass } from "@/lib/tailwind_classes";
 import QuizWrapperComponent from "./quizWrapperComponent";
+import InsightComponent from "./insightComponent";
 
 const ConversationComponent = () => {
   const {
@@ -66,7 +67,7 @@ const ConversationComponent = () => {
         <div className=" pb-[30px] space-y-8">
           {conversation.length ? (
             conversation.map((conv, index) => {
-              const { type, quiz, message, flashcard } = conv;
+              const { type, quiz, message, flashcard, insights } = conv;
               switch (type) {
                 case "chat":
                   return <ChatMessageComponent conv={conv} key={index} />;
@@ -88,6 +89,10 @@ const ConversationComponent = () => {
                   );
                 case "error":
                   return <QueryErrorComponent data={conv} key={index} />;
+                case "insights":
+                  return (
+                    <InsightComponent message={message} insights={insights!} />
+                  );
                 default:
                   break;
               }
