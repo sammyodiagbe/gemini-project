@@ -87,6 +87,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await result?.response;
       const text = await response?.text();
       const json = jsonDecode(text!);
+      console.log(json);
       const { quiz, response: aiRes } = json;
       const res: ConversationType = {
         type: "quiz",
