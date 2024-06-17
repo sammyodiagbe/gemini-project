@@ -1,5 +1,6 @@
 "use client";
-
+// import Lottie from "lottie-react";
+// import loadingMonkey from "../lottie/loading_monkey.json";
 //
 
 const LoaderComponent = () => {
@@ -10,7 +11,7 @@ const LoaderComponent = () => {
           animationData={loadingMonkey}
           className=" w-[280px] mb-0 self-auto"
           marginHeight={0}
-        /> */}
+        />
         {/* <h1 className="text-2xl text-center font-bold text-primary w-[280px]">
           Analyzing your file.
         </h1> */}

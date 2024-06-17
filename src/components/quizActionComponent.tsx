@@ -4,7 +4,7 @@ import { buttonClass } from "@/lib/tailwind_classes";
 const QuizActionComponent = () => {
   const { nextQuestion, endSession } = useQuizContext();
   return (
-    <div className="flex justify-end">
+    <div className="mt-7 flex justify-end">
       <button className={buttonClass} onClick={() => nextQuestion()}>
         Next Question
       </button>

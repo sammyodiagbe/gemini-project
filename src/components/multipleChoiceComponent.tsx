@@ -33,7 +33,7 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ quiz }) => {
         />
       )}
       <h1 className="text-xl font-medium mb-8 leading-8">{question}</h1>
-      <div className="grid gap-8">
+      <div className="grid grid-cols-2 gap-5">
         {options.map((option, index) => {
           return (
             <QuizOptionComponent

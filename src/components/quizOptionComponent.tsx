@@ -28,22 +28,22 @@ const QuizOptionComponent: FC<QuizOptionPropsType> = ({
   return (
     <button
       className={cn(
-        "ring-1 ring-gray-300 grid gap-2 items-center grid-cols-[20px_1fr] active:scale-95 p-5 rounded-md transition bg-onBackground",
+        "ring-1 text-left ring-textColor/20 active:scale-95 p-3 rounded-md transition bg-onBackground hover:ring-textColor/70 flex items-start",
         isSelected && rightAnswer && " ring-primary bg-primary/5",
         isSelected && !rightAnswer && "bg-red-100 ring-red-500",
         answered && !isSelected && isRight && "ring-primary bg-primary/5"
       )}
       onClick={() => pickOption(position)}
     >
-      <span
+      {/* <span
         className={cn(
           "h-[20px] w-[20px] bg-gray-200 mr-2 rounded-md transition delay-200",
           isSelected && rightAnswer && "bg-primary ",
           isSelected && !rightAnswer && "bg-red-300",
           answered && !isSelected && isRight && " ring-primay bg-primary"
         )}
-      />
-      <span className=" text-left">{text}</span>
+      /> */}
+      <span className="">{text}</span>
     </button>
   );
 };
