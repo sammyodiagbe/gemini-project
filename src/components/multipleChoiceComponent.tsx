@@ -4,6 +4,7 @@ import Confetti from "react-confetti";
 
 import QuizOptionComponent from "./quizOptionComponent";
 import QuizActionComponent from "./quizActionComponent";
+import { useQuizContext } from "@/context/quizContext";
 
 type ComponentType = {
   quiz: QuizType;
@@ -11,6 +12,7 @@ type ComponentType = {
 
 const MultipleChoiceComponent: FC<ComponentType> = ({ quiz }) => {
   const { options, question, answer } = quiz;
+  const { sendMultipleChoiceResponse } = useQuizContext();
   const [selected, setSelected] = useState<number>(-1);
   const [answered, setAnswered] = useState<boolean>(false);
   const [rightAnswer, setRightAnswer] = useState<boolean>(false);
@@ -19,7 +21,14 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ quiz }) => {
     if (answered) return;
     if (options[position] === answer) {
       setRightAnswer(true);
+      sendMultipleChoiceResponse(
+        `User answered right, keep track of this for chart population later, question was ${question}`
+      );
+      return;
     }
+    sendMultipleChoiceResponse(
+      `User answered wrong, keep track of this question was ${question}, answer was ${answer}`
+    );
     setSelected(position);
     setAnswered(true);
   };

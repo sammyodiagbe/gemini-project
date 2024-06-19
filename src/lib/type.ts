@@ -9,7 +9,7 @@ type TopicBreakdownType = {
 export type InsightType = {
   overall_understanding: string;
   recommended_topics: string[];
-  breakdowns: TopicBreakdownType[];
+  understanding_breakdowns: TopicBreakdownType[];
 };
 
 export type ConversationType = {

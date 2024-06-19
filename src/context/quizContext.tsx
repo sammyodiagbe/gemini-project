@@ -18,6 +18,7 @@ type QuizContextType = {
   checkShortAnswer: Function;
   nextQuestion: Function;
   endSession: Function;
+  sendMultipleChoiceResponse: Function;
 };
 
 const quizContext = createContext<QuizContextType>({
@@ -27,6 +28,7 @@ const quizContext = createContext<QuizContextType>({
   checkShortAnswer: () => {},
   nextQuestion: () => {},
   endSession: () => {},
+  sendMultipleChoiceResponse: () => {},
 });
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -101,6 +103,19 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const sendMultipleChoiceResponse = async (message: string) => {
+    try {
+      const result = await chat?.sendMessage(message);
+      const response = result?.response;
+      const text = response?.text();
+      const { response: res } = jsonDecode(text!);
+      console.log(res);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const endSession = async () => {
     const prompt = `End session and give me insight create a breakdown that can be viewed visually on a chart, include a insights entry and include data that I can put on a chart like how well the user understands the documents, also use percentage to measure user understanding of a topic
       
@@ -110,7 +125,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         insights: {
           overall_understanding: ...,
           understanding_breakdowns: [
-            { topic: ..., understanding: 40, explanation: ...},
+            { topic: ..., understanding: 40 (should of type number), explanation: ...},
              ....
           ],
           recommended_topics: [....]
@@ -144,6 +159,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         checkShortAnswer,
         nextQuestion,
         endSession,
+        sendMultipleChoiceResponse,
       }}
     >
       {children}

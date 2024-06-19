@@ -1,5 +1,6 @@
 import { InsightType } from "@/lib/type";
 import { FC } from "react";
+import InsightChartComponent from "./insightChartComponent";
 
 type InsightPropsType = {
   insights: InsightType;
@@ -7,12 +8,15 @@ type InsightPropsType = {
 };
 
 const InsightComponent: FC<InsightPropsType> = ({ message, insights }) => {
-  const { recommended_topics } = insights;
+  const { recommended_topics, understanding_breakdowns } = insights;
+
+  console.log(understanding_breakdowns);
   return (
     <div className="">
       <p>{message}</p>
 
       <div className="mt-5">
+        <InsightChartComponent breakdowns={understanding_breakdowns} />
         <h1 className="text-2xl text-textColor/80">Recommended topics</h1>
         <div className="space-x-2 space-y-4">
           {recommended_topics.map((topic, index) => {
