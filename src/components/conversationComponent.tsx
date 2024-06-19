@@ -19,13 +19,8 @@ import QuizWrapperComponent from "./quizWrapperComponent";
 import InsightComponent from "./insightComponent";
 
 const ConversationComponent = () => {
-  const {
-    interactions,
-    chatWithGemini,
-    conversation,
-    startQuizMode,
-    getFlashCard,
-  } = useConversationContext();
+  const { interactions, chatWithGemini, conversation, getFlashCard } =
+    useConversationContext();
   const [message, setMessage] = useState("");
   const convoContainerRef = useRef<HTMLDivElement>(null);
 
@@ -47,11 +42,6 @@ const ConversationComponent = () => {
     setMessage("");
     await chatWithGemini(message);
     setMessage("");
-  };
-
-  const startQuiz = () => {
-    console.log("Attempting to start the quiz");
-    startQuizMode();
   };
 
   return (
@@ -113,7 +103,7 @@ const ConversationComponent = () => {
           )}
         </div>
         {/* this woudl contain the textarea and other action btn */}
-        <div className=" sticky bottom-3 w-full">
+        <div className=" sticky bottom-1 w-full">
           <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
             <div className="flex">
               <QuizWrapperComponent />

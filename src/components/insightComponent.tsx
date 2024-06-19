@@ -18,7 +18,7 @@ const InsightComponent: FC<InsightPropsType> = ({ message, insights }) => {
           {recommended_topics.map((topic, index) => {
             return (
               <button
-                className="p-4 rounded-full mr-2 ring-1 hover:ring-primary text-textColor/75"
+                className="p-2 rounded-full mr-2 ring-1 hover:ring-primary text-textColor/75 text-md"
                 key={index}
               >
                 {topic}
