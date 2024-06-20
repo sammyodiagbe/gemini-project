@@ -1,4 +1,3 @@
-import PomodoroTimerComponent from "@/components/pomodoroTimerComponent";
 import PopupComponent from "@/components/popupComponent";
 import ConversationContextProvider from "@/context/conversationContext";
 import PopupContextProvider from "@/context/popupContext";
@@ -15,7 +14,6 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
       <PopupContextProvider>
         <QuizContextProvider>
           <PopupComponent />
-          <PomodoroTimerComponent />
           {children}
         </QuizContextProvider>
       </PopupContextProvider>

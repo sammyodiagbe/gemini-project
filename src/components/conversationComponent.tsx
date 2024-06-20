@@ -17,6 +17,7 @@ import PossibleInteractionComponent from "./possibleInteractionComponent";
 import { buttonClass } from "@/lib/tailwind_classes";
 import QuizWrapperComponent from "./quizWrapperComponent";
 import InsightComponent from "./insightComponent";
+import PomodoroTimerComponent from "./pomodoroTimerComponent";
 
 const ConversationComponent = () => {
   const { interactions, chatWithGemini, conversation, getFlashCard } =
@@ -135,6 +136,7 @@ const ConversationComponent = () => {
               </button>
             </form>
           </div>
+          <PomodoroTimerComponent />
         </div>
       </div>
     </div>

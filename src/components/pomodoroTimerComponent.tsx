@@ -1,8 +1,8 @@
 "use client";
 import { buttonClass } from "@/lib/tailwind_classes";
-import { cn } from "@/lib/utils";
+import { buttonIconSize, cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Pause, Play, RotateCcw } from "lucide-react";
+import { ChevronDown, ChevronUp, Pause, Play, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const PomodoroTimerComponent = () => {
@@ -11,6 +11,7 @@ const PomodoroTimerComponent = () => {
   const [timeLeft, setTimeLeft] = useState(workTime);
   const [isActive, setIsActive] = useState(false);
   const [isWorkTime, setIsWorkTime] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     let timer: any;
@@ -45,13 +46,31 @@ const PomodoroTimerComponent = () => {
   };
 
   const radius = 80;
-  const circumference = 2 * radius * Math.PI;
+  // const circumference = 2 * radius * Math.PI;
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  const getPercentage = () => {
-    const p = (timeLeft / (isWorkTime ? workTime : breakTime)) * 100;
+  // const getPercentage = () => {
+  //   const p = (timeLeft / (isWorkTime ? workTime : breakTime)) * 100;
 
-    return circumference - (p / 100) * circumference;
+  //   return circumference - (p / 100) * circumference;
+  // };
+
+  const menu = {
+    closed: {
+      scale: 0,
+      transition: {
+        delay: 0.15,
+      },
+    },
+    open: {
+      scale: 1,
+      transition: {
+        type: "spring",
+        duration: 0.4,
+        delayChildren: 0.2,
+        staggerChildren: 0.05,
+      },
+    },
   };
 
   return (
@@ -79,49 +98,49 @@ const PomodoroTimerComponent = () => {
         </AnimatePresence>
       )}
       <div
-        className="absolute bottom-[100px]  right-0 rounded-lg bg-white z-20 shadow-lg rign-1 ring-secondary cursor-grab"
+        className="absolute px-2 h-full bottom-0 left-full  rounded-lg z-20 shadow-lg font-bolder grid items-center"
         draggable
       >
-        <svg viewBox="0 0 200 200">
-          <circle
-            cx="80"
-            cy="80"
-            r={radius}
-            fill="none"
-            className="stroke-primary/15"
-            strokeWidth="8"
-            strokeLinecap="round"
-          />
-          <circle
-            cx="80"
-            cy="80"
-            r={radius}
-            className="stroke-primary"
-            fill="none"
-            strokeWidth="8"
-            strokeDasharray={circumference}
-            strokeDashoffset={`${getPercentage()}`}
-            strokeLinecap="round"
-          />
-          <text
-            x="80"
-            y="80"
-            textAnchor="middle"
-            fontSize="24"
-            fill="#fff"
-          >{`${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}</text>
-        </svg>
-        <div className="grid grid-cols-3 gap-2 place-items-center">
-          <button onClick={startTimer}>
-            <Play />
-          </button>
-          <button onClick={pauseTimer}>
-            <Pause />
-          </button>
-          <button onClick={resetTimer}>
-            <RotateCcw />
-          </button>
-        </div>
+        <motion.button
+          variants={menu}
+          className="relative ring-1 hover:ring-primary/60 p-2 rounded-md text-xl  text-center  text-textColor/90 flex items-center space-x-2"
+          onClick={() => setShowMenu(!showMenu)}
+        >
+          <span>
+            {minutes <= 9 ? `0${minutes}` : minutes}:
+            {seconds <= 9 ? `0${seconds}` : seconds}
+          </span>
+          {showMenu ? <ChevronDown /> : <ChevronUp />}
+
+          <motion.span
+            className="absolute flex space-x-2 -top-[80px] -left-[150px] bg-onBackground p-4 w-[300px] text-sm justify-evenly shadow-md rounded-md"
+            variants={menu}
+            animate={showMenu ? "open" : "closed"}
+          >
+            <button
+              onClick={startTimer}
+              className="flex space-x-2 items-center text-textColor/65 hover:text-textColor"
+            >
+              <Play size={buttonIconSize} /> Start
+            </button>
+            <button
+              onClick={pauseTimer}
+              className="flex space-x-4 items-center text-textColor/65 hover:text-textColor"
+            >
+              <Pause size={buttonIconSize} /> Pause
+            </button>
+            <button
+              onClick={resetTimer}
+              className="flex space-x-2 items-center text-textColor/65 hover:text-textColor"
+            >
+              <RotateCcw size={buttonIconSize} /> Reset
+            </button>
+          </motion.span>
+        </motion.button>
+
+        {/* <div className="grid grid-cols-3 gap-2 place-items-center">
+          
+        </div> */}
       </div>
     </>
   );

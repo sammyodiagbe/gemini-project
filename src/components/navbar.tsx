@@ -8,9 +8,6 @@ const Navbar = () => {
       <div className="">
         <ul className="flex space-x-3 items-center">
           <li>
-            <PomodoroTimerComponent />
-          </li>
-          <li>
             <b>Hi, Samson</b>
           </li>
           <li>
