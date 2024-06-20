@@ -23,6 +23,8 @@ type ContextType = {
   setGettingFlashCard: Dispatch<SetStateAction<boolean>>;
   quizmode: boolean;
   setQuizmode: Dispatch<SetStateAction<boolean>>;
+  isBreakTime: boolean;
+  setIsBreakTime: Dispatch<SetStateAction<boolean>>;
 };
 
 const loadingContext = createContext<ContextType>({
@@ -36,6 +38,8 @@ const loadingContext = createContext<ContextType>({
   setGettingFlashCard: () => {},
   quizmode: false,
   setQuizmode: () => {},
+  isBreakTime: false,
+  setIsBreakTime: () => {},
 });
 
 const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
@@ -44,6 +48,7 @@ const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
   const [gettingQuizQuestion, setGettingQuizQuestion] = useState(false);
   const [gettingFlashCard, setGettingFlashCard] = useState(false);
   const [quizmode, setQuizmode] = useState(false);
+  const [isBreakTime, setIsBreakTime] = useState(false);
 
   return (
     <loadingContext.Provider
@@ -58,6 +63,8 @@ const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
         setGettingQuizQuestion,
         quizmode,
         setQuizmode,
+        isBreakTime,
+        setIsBreakTime,
       }}
     >
       {children}

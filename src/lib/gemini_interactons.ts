@@ -111,7 +111,7 @@ export const beginQuizmode = (
     now this question can only be one  type, multiplechoice
     you need to add a type in your response which is quiztype:multiplechoice
 
-    Always make sure to include quiz type
+    Always make sure to include quiztype entry
     you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice}
 
 
@@ -130,7 +130,7 @@ export const beginQuizmode = (
 
     you response should include the quiz which is an object like quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortanswer}
 
-    Always make sure to include quiz type
+    Always make sure to include quiztype entry
 
     Now on this part we are more focused on understanding and not accuracy
   `;
@@ -145,7 +145,7 @@ export const beginQuizmode = (
 
     now on this part if you have decided to ask the user a shortanswer quiz your json response should a quiz structure quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortanswer} but if you have decided to go with multiplechoice quiz your json response should be like this quiz: { question: "...",options:[...], answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice |  shortanswer}
 
-    Always make sure to include quiz type
+    Always make sure to include quiztype entry
 
     You randomly choose if you want to ask the user shortanswer questions or multiplechoice per question
   `;
