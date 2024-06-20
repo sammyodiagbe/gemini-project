@@ -15,6 +15,7 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
       <PopupContextProvider>
         <QuizContextProvider>
           <PopupComponent />
+          <PomodoroTimerComponent />
           {children}
         </QuizContextProvider>
       </PopupContextProvider>

@@ -2,6 +2,7 @@
 import { buttonClass } from "@/lib/tailwind_classes";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { Pause, Play, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const PomodoroTimerComponent = () => {
@@ -43,9 +44,15 @@ const PomodoroTimerComponent = () => {
     setTimeLeft(workTime);
   };
 
+  const radius = 80;
+  const circumference = 2 * radius * Math.PI;
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  const percentage = (timeLeft / (isWorkTime ? workTime : breakTime)) * 100;
+  const getPercentage = () => {
+    const p = (timeLeft / (isWorkTime ? workTime : breakTime)) * 100;
+
+    return circumference - (p / 100) * circumference;
+  };
 
   return (
     <>
@@ -72,50 +79,49 @@ const PomodoroTimerComponent = () => {
         </AnimatePresence>
       )}
       <div
-        className="absolute bottom-0  right-0 rounded-lg bg-backgroundColor z-10 shadow-lg rign-1 ring-secondary cursor-grab"
+        className="absolute bottom-[100px]  right-0 rounded-lg bg-white z-20 shadow-lg rign-1 ring-secondary cursor-grab"
         draggable
       >
-        <svg viewBox="0 0 100 100">
+        <svg viewBox="0 0 200 200">
           <circle
-            cx="50"
-            cy="50"
-            r="15"
+            cx="80"
+            cy="80"
+            r={radius}
             fill="none"
             className="stroke-primary/15"
-            strokeWidth="2"
+            strokeWidth="8"
             strokeLinecap="round"
           />
           <circle
-            cx="50"
-            cy="50"
-            r="14"
-            className=" stroke-primary"
+            cx="80"
+            cy="80"
+            r={radius}
+            className="stroke-primary"
             fill="none"
-            strokeWidth="2"
-            strokeDasharray={`${percentage} ${100 - percentage}`}
-            strokeDashoffset="0"
-            transform="rotate(90 50 50)"
+            strokeWidth="8"
+            strokeDasharray={circumference}
+            strokeDashoffset={`${getPercentage()}`}
             strokeLinecap="round"
           />
           <text
-            x="50"
-            y="55"
+            x="80"
+            y="80"
             textAnchor="middle"
-            fontSize="14"
-            fill="#333"
+            fontSize="24"
+            fill="#fff"
           >{`${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}</text>
         </svg>
-        {/* <div className="grid grid-cols-3 gap-2 place-items-center">
-        <button onClick={startTimer}>
-          <Play />
-        </button>
-        <button onClick={pauseTimer}>
-          <Pause />
-        </button>
-        <button onClick={resetTimer}>
-          <RotateCcw />
-        </button>
-      </div> */}
+        <div className="grid grid-cols-3 gap-2 place-items-center">
+          <button onClick={startTimer}>
+            <Play />
+          </button>
+          <button onClick={pauseTimer}>
+            <Pause />
+          </button>
+          <button onClick={resetTimer}>
+            <RotateCcw />
+          </button>
+        </div>
       </div>
     </>
   );

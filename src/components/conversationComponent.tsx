@@ -81,7 +81,11 @@ const ConversationComponent = () => {
                   return <QueryErrorComponent data={conv} key={index} />;
                 case "insights":
                   return (
-                    <InsightComponent message={message} insights={insights!} />
+                    <InsightComponent
+                      message={message}
+                      insights={insights!}
+                      key={index}
+                    />
                   );
                 default:
                   break;
