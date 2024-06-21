@@ -20,6 +20,7 @@ export type ConversationType = {
   flashcard?: FlashCardType;
   retryQuery?: string;
   insights?: InsightType;
+  errorOrigin?: string;
 };
 
 export type FlashCardType = {

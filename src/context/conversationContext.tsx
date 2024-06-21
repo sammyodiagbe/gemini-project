@@ -34,6 +34,7 @@ type ContextType = {
   getFlashCard: Function;
   setConversation: Dispatch<SetStateAction<ConversationType[]>>;
   chat: ChatSession | null;
+  attemptQueryRetry: Function;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -47,6 +48,7 @@ const conversationContext = createContext<ContextType>({
   nextQuestion: () => {},
   getFlashCard: () => {},
   setConversation: () => {},
+  attemptQueryRetry: () => {},
   chat: null,
 });
 
@@ -99,6 +101,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           message: "Something went wrong, please try again",
           retryQuery: message,
           type: "error",
+          errorOrigin: "chat",
         },
       ]);
     }
@@ -125,6 +128,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           message: "Something went wrong, please try again",
           retryQuery: message,
           type: "error",
+          errorOrigin: "quiz",
         },
       ]);
     }
@@ -147,6 +151,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           message: "Something went wrong, please try again",
           retryQuery: message,
           type: "error",
+          errorOrigin: "quiz",
         },
       ]);
     }
@@ -175,8 +180,26 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
           message: "Something went wrong, please try again",
           retryQuery: message,
           type: "error",
+          errorOrigin: "flashcard",
         },
       ]);
+    }
+  };
+
+  const attemptQueryRetry = async (retryQuery: string, errorOrigin: string) => {
+    try {
+      const result = await chat?.sendMessage(retryQuery);
+      const response = await result?.response;
+      const text = response?.text();
+
+      const json = jsonDecode(text!);
+      setConversation((prev) =>
+        [...prev, { ...json, type: errorOrigin }].filter(
+          (entry) => entry.type != "errror"
+        )
+      );
+    } catch (error: any) {
+      console.log(error);
     }
   };
 
@@ -194,6 +217,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         getFlashCard,
         setConversation,
         chat,
+        attemptQueryRetry,
       }}
     >
       {children}

@@ -119,6 +119,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const endSession = async () => {
     const prompt = `End session and give me insight create a breakdown that can be viewed visually on a chart, include a insights entry and include data that I can put on a chart like how well the user understands the documents, also use percentage to measure user understanding of a topic
       
+      Recommendation topics should be short and concise please
       Your json response should look like this
       {
         response: ...,
