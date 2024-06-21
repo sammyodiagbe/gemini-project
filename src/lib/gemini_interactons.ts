@@ -43,7 +43,7 @@ export const geminiDocumentInitInstruction = (text: string): string => {
     for the structure of the response you send back it should always be 
     and you should include sources in the response if the user ask for that,
     you should also include a seperate entry called text if the user ask you to do some article or essay writting , you response are short like 'Yes i can definitely do that' then your actions lets say writing the article should be in the text entry of the json response
-    {response: ".....", sources: [...], text:"", type: 'chat' },
+    {response: ".....", sources: [...], text:"" },
 
     Always include sources anytime possible
     And always go straight to action for example if a user ask you to summarize all of some points in the document, don't ask questions just summarize the text
@@ -73,6 +73,7 @@ export const generateQuizGemini = (text?: string): string => {
     you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "...", currentQuestion: 2, totalQuestions: number, score: 0}
     remember the answer has to be an option
     the type entry in this case would be quiz i.e type: "quiz"
+    multiplechoice questions can only have on answer in the option
 
     Keep track of the totalQuestion, Keep sending questions until the user sends in a stop request
 

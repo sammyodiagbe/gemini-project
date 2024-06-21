@@ -13,7 +13,7 @@ type ComponentType = {
 };
 
 const ShortAnswerComponent: FC<ComponentType> = ({ quiz }) => {
-  const { question, answer } = quiz;
+  const { question, answer, currentQuestion, totalQuestions } = quiz;
   const [userResponded, setUserResponded] = useState(false);
   const [checkingAnswer, setCheckingAnswer] = useState(false);
   const { checkShortAnswer, nextQuestion } = useQuizContext();
@@ -30,6 +30,9 @@ const ShortAnswerComponent: FC<ComponentType> = ({ quiz }) => {
 
   return (
     <div className="bg-onBackground space-y-4 p-4 rounded-md">
+      <h1>
+        Question {currentQuestion} of {totalQuestions}
+      </h1>
       <h1 className="text-xl">{question}</h1>
       <textarea
         className=" w-full bg-backgroundColor text-textColor p-2 rounded-md resize-none"
@@ -49,7 +52,10 @@ const ShortAnswerComponent: FC<ComponentType> = ({ quiz }) => {
         <div className="space-y-4">
           <p className="mb-2">Answer: {answer}</p>
           <p>{feedback}</p>
-          <QuizActionComponent />
+          <QuizActionComponent
+            currentQuestion={currentQuestion}
+            totalQuestions={totalQuestions}
+          />
         </div>
       )}
     </div>

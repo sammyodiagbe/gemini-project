@@ -33,6 +33,9 @@ export type QuizType = {
   options: string[];
   answer: string;
   quiztype: "multiplechoice" | "shortanswer";
+  currentQuestion: number;
+  totalQuestions: number;
+  score: number;
 };
 
 export type GeminiResponseType = {

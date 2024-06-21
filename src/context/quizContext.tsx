@@ -43,6 +43,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       const text = await response?.text();
       const responseData = jsonDecode(text!);
       const { quiz, response: aiRes } = responseData;
+      console.log(quiz);
       const res: ConversationType = {
         type: "quiz",
         quiz: quiz,
@@ -104,10 +105,18 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const sendMultipleChoiceResponse = async (message: string) => {
+    const prompt = `User has sent back their response 
+    just keep track of this response, 
+
+
+      ${message}
+      you don't need need to send back a quiz object in your response, because user has to click on next question to get the next question, 
+    `;
     try {
-      const result = await chat?.sendMessage(message);
+      const result = await chat?.sendMessage(prompt);
       const response = result?.response;
       const text = response?.text();
+      console.log(text);
       const { response: res } = jsonDecode(text!);
       console.log(res);
       return;

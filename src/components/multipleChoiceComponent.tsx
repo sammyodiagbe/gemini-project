@@ -11,7 +11,7 @@ type ComponentType = {
 };
 
 const MultipleChoiceComponent: FC<ComponentType> = ({ quiz }) => {
-  const { options, question, answer } = quiz;
+  const { options, question, answer, currentQuestion, totalQuestions } = quiz;
   const { sendMultipleChoiceResponse } = useQuizContext();
   const [selected, setSelected] = useState<number>(-1);
   const [answered, setAnswered] = useState<boolean>(false);
@@ -41,6 +41,9 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ quiz }) => {
           gravity={0.8}
         />
       )}
+      <h1 className="">
+        Question {currentQuestion} of {totalQuestions}
+      </h1>
       <h1 className="text-xl font-medium mb-8 leading-8">{question}</h1>
       <div className="grid grid-cols-2 gap-5">
         {options.map((option, index) => {
@@ -59,7 +62,10 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ quiz }) => {
           );
         })}
       </div>
-      <QuizActionComponent />
+      <QuizActionComponent
+        currentQuestion={currentQuestion}
+        totalQuestions={totalQuestions}
+      />
     </div>
   );
 };

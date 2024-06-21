@@ -11,7 +11,6 @@ type QuizData = {
 
 const QuizMessageComponent: FC<QuizData> = ({ quiz, message }) => {
   const { quiztype } = quiz;
-  console.log(quiztype);
   if (quiztype === "multiplechoice") {
     return <MultipleChoiceComponent quiz={quiz} />;
   }
