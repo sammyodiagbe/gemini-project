@@ -20,7 +20,7 @@ const QueryErrorComponent: FC<QueryErrorComponentType> = ({ data }) => {
       <p>{message}</p>
 
       <button
-        className="p-3 py-2  ring-1 mx-auto hover:bg-red-50 ring-red-500 rounded-md flex items-center space-x-2 hover:text-black/80"
+        className="p-3 py-2  ring-1 mx-auto hover:bg-red-400/35 ring-red-500 rounded-md flex items-center space-x-2 active:scale-95"
         onClick={retryQ}
       >
         <span>Retry query</span> <RotateCcw size={15} />

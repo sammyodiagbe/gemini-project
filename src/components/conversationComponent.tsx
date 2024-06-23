@@ -56,15 +56,7 @@ const ConversationComponent = () => {
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
-        <QueryErrorComponent
-          data={
-            {
-              message: "Oh shoot that didn't work",
-              retryQuery: "",
-              errorOrigin: "",
-            } as ConversationType
-          }
-        />
+
         <div className=" pb-[30px] space-y-8">
           {conversation.length ? (
             conversation.map((conv, index) => {
