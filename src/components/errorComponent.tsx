@@ -15,12 +15,12 @@ const QueryErrorComponent: FC<QueryErrorComponentType> = ({ data }) => {
     attemptQueryRetry(retryQuery, errorOrigin);
   };
   return (
-    <div className="space-y-2 text-center max-w-[300px]">
+    <div className="space-y-2 text-center">
       <h1>Oh Snap that didn't seem to work</h1>
       <p>{message}</p>
 
       <button
-        className="p-3 py-2  ring-1 ring-red-500 rounded-md flex items-center space-x-2 hover:bg-red-200"
+        className="p-3 py-2  ring-1 mx-auto hover:bg-red-50 ring-red-500 rounded-md flex items-center space-x-2 hover:text-black/80"
         onClick={retryQ}
       >
         <span>Retry query</span> <RotateCcw size={15} />

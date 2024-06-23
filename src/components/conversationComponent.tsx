@@ -18,6 +18,7 @@ import { buttonClass } from "@/lib/tailwind_classes";
 import QuizWrapperComponent from "./quizWrapperComponent";
 import InsightComponent from "./insightComponent";
 import PomodoroTimerComponent from "./pomodoroTimerComponent";
+import { ConversationType } from "@/lib/type";
 
 const ConversationComponent = () => {
   const { interactions, chatWithGemini, conversation, getFlashCard } =
@@ -55,6 +56,15 @@ const ConversationComponent = () => {
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
+        <QueryErrorComponent
+          data={
+            {
+              message: "Oh shoot that didn't work",
+              retryQuery: "",
+              errorOrigin: "",
+            } as ConversationType
+          }
+        />
         <div className=" pb-[30px] space-y-8">
           {conversation.length ? (
             conversation.map((conv, index) => {
