@@ -193,13 +193,24 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const text = response?.text();
 
       const json = jsonDecode(text!);
+      console.log(json);
       setConversation((prev) =>
-        [...prev, { ...json, type: errorOrigin }].filter(
-          (entry) => entry.type != "errror"
-        )
+        [
+          ...prev,
+          { ...json, message: json.response, type: errorOrigin },
+        ].filter((entry) => entry.type != "errror")
       );
     } catch (error: any) {
-      console.log(error);
+      setConversation((prev) => [
+        ...conversation,
+        {
+          sender: "system",
+          message: "Something went wrong, please try again",
+          retryQuery: retryQuery,
+          type: "error",
+          errorOrigin: "flashcard",
+        },
+      ]);
     }
   };
 
