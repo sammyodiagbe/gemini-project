@@ -81,8 +81,9 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const chatWithGemini = async (message: string) => {
     const obj = createConversationObject("chat", "user", message);
-    setBusyAI(true);
     setConversation((prev) => [...prev, obj]);
+    setBusyAI(true);
+
     try {
       const result = await chat?.sendMessage(message);
       const response = await result?.response;

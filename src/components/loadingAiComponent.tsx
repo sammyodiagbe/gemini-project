@@ -6,7 +6,7 @@ const ThinkingAI = () => {
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="absolute bottom-[100px] right-4 flex space-x-2 justify-center items-center h-[8] w-26"
+        className="absolute bottom-[100px] ring-1 ring-purple/70 z-30 right-4 flex justify-evenly items-center h-[30px] w-[60px] rounded-full bg-onBackground"
       >
         <span className="sr-only">Loading...</span>
         <div className="h-2 w-2 bg-gradient-to-r from-fuchsia-600 to-purple-600  rounded-full animate-bounce [animation-delay:-0.3s]"></div>

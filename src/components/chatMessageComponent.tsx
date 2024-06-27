@@ -32,13 +32,13 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
       className={cn(
-        "p-4rounded-md mb-5 bg-onBackground p-4 rounded-lg py-3 grid",
-        sender === "user" && "max-w-[80%] justify-start"
+        "p-4rounded-md mb-5 bg-onBackground/50 p-4 rounded-lg py-3 grid",
+        sender === "user" && "max-w-[80%] justify-start rounded-full"
       )}
     >
-      <p className="pb-3 text-sm">
+      {/* <p className="pb-3 text-sm">
         {sender === "ai" ? "Rafikki" : sender === "system" ? "" : "you"}
-      </p>
+      </p> */}
       {/* {sender === "ai" ? (
         <ReactTyped
           strings={[message]}
