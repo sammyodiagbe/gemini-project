@@ -98,15 +98,15 @@ const PomodoroTimerComponent = () => {
         </AnimatePresence>
       )}
       <div
-        className="absolute px-2 h-full bottom-0 left-full  rounded-lg z-20 shadow-lg font-bolder grid items-center"
+        className="mx-3 h-full text-sm rounded-lg z-20 shadow-lg font-bolder grid items-center"
         draggable
       >
         <motion.button
           variants={menu}
-          className="relative ring-1 hover:ring-primary/60 p-2 rounded-md text-xl  text-center  text-textColor/90 flex items-center space-x-2"
+          className="relative w-[90px] ring-1 ring-textColor/20 hover:ring-primary/60 p-2 rounded-full text-sm  text-center justify-center  text-textColor/90 flex items-center space-x-2"
           onClick={() => setShowMenu(!showMenu)}
         >
-          <span>
+          <span className="font-bold flex-1">
             {minutes <= 9 ? `0${minutes}` : minutes}:
             {seconds <= 9 ? `0${seconds}` : seconds}
           </span>

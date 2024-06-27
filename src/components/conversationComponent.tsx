@@ -51,7 +51,7 @@ const ConversationComponent = () => {
       ref={convoContainerRef}
       className="bg-backgroundColor text-textColor py-2 max-h-screen overflow-y-auto"
     >
-      <div className="relative grid grid-rows-[1fr_80px] grid-cols-1 w-[700px] h-full max-h-full mx-auto">
+      <div className="relative grid grid-rows-[1fr_80px] grid-cols-1 w-[800px] h-full max-h-full mx-auto">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}
 
@@ -137,8 +137,8 @@ const ConversationComponent = () => {
                 <Send size={24} />
               </button>
             </form>
+            <PomodoroTimerComponent />
           </div>
-          <PomodoroTimerComponent />
         </div>
       </div>
     </div>
