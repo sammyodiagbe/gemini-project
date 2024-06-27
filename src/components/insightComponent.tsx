@@ -10,9 +10,9 @@ type InsightPropsType = {
 const InsightComponent: FC<InsightPropsType> = ({ message, insights }) => {
   const { recommended_topics, understanding_breakdowns } = insights;
 
-  console.log(understanding_breakdowns);
   return (
-    <div className="">
+    <div className="space-y-3">
+      <h1 className="text-lg">Let's see how you did </h1>
       <p>{message}</p>
 
       <div className="mt-5">
