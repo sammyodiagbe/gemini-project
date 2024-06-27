@@ -15,6 +15,8 @@ const LoaderComponent = () => {
         {/* <h1 className="text-2xl text-center font-bold text-primary w-[280px]">
           Analyzing your file.
         </h1> */}
+        <h1 className="text-2xl">Hold on..</h1>
+        <p>Rafiki is analyzing your file</p>
       </div>
     </div>
   );
