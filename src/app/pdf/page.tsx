@@ -41,11 +41,15 @@ const Page = () => {
     try {
       const {
         data: { extracted_text },
-      } = await axios.post("http://localhost:5000/upload_file", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      } = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload_file`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       const result = await AI.generateContent(
         generateInitialPossibleInteractions(extracted_text)
