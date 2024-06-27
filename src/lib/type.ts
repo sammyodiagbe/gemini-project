@@ -1,5 +1,5 @@
 export type MessageType = "chat" | "quiz" | "flashcard" | "error" | "insights";
-type senderType = "ai" | "user" | "system";
+export type senderType = "ai" | "user" | "system";
 
 type TopicBreakdownType = {
   topic: string;
