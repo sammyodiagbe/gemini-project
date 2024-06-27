@@ -25,6 +25,8 @@ type ContextType = {
   setQuizmode: Dispatch<SetStateAction<boolean>>;
   isBreakTime: boolean;
   setIsBreakTime: Dispatch<SetStateAction<boolean>>;
+  setBusyAI: Dispatch<SetStateAction<boolean>>;
+  busyAI: boolean;
 };
 
 const loadingContext = createContext<ContextType>({
@@ -40,10 +42,13 @@ const loadingContext = createContext<ContextType>({
   setQuizmode: () => {},
   isBreakTime: false,
   setIsBreakTime: () => {},
+  busyAI: false,
+  setBusyAI: () => {},
 });
 
 const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
   const [workingOnPdf, setWorkingOnPdf] = useState(false);
+  const [busyAI, setBusyAI] = useState(false);
   const [sendingChatMessage, setSendingChatMessage] = useState(false);
   const [gettingQuizQuestion, setGettingQuizQuestion] = useState(false);
   const [gettingFlashCard, setGettingFlashCard] = useState(false);
@@ -65,6 +70,8 @@ const LoadingStateContextProvider: FC<LoadingContextType> = ({ children }) => {
         setQuizmode,
         isBreakTime,
         setIsBreakTime,
+        busyAI,
+        setBusyAI,
       }}
     >
       {children}

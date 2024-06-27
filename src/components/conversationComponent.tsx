@@ -19,12 +19,15 @@ import QuizWrapperComponent from "./quizWrapperComponent";
 import InsightComponent from "./insightComponent";
 import PomodoroTimerComponent from "./pomodoroTimerComponent";
 import { ConversationType } from "@/lib/type";
+import ThinkingAI from "./loadingAiComponent";
+import { useLoadingContext } from "@/context/loadingStateContext";
 
 const ConversationComponent = () => {
   const { interactions, chatWithGemini, conversation, getFlashCard } =
     useConversationContext();
   const [message, setMessage] = useState("");
   const convoContainerRef = useRef<HTMLDivElement>(null);
+  const { busyAI } = useLoadingContext();
 
   useEffect(() => {
     if (convoContainerRef === null) return;
@@ -139,6 +142,7 @@ const ConversationComponent = () => {
             </form>
             <PomodoroTimerComponent />
           </div>
+          {busyAI && <ThinkingAI />}
         </div>
       </div>
     </div>

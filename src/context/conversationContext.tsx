@@ -17,6 +17,7 @@ import {
   generateFlashcardGemini,
   generateQuizGemini,
 } from "@/lib/gemini_interactons";
+import { useLoadingContext } from "./loadingStateContext";
 
 type interaction = {
   text: string;
@@ -64,6 +65,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [chat, setChat] = useState<ChatSession | null>(null);
   const [conversation, setConversation] = useState<ConversationType[]>([]);
 
+  const { setBusyAI, busyAI } = useLoadingContext();
+
   useEffect(() => {
     if (extractedText) {
       const initMessage = geminiDocumentInitInstruction(extractedText);
@@ -78,7 +81,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const chatWithGemini = async (message: string) => {
     const obj = createConversationObject("chat", "user", message);
-
+    setBusyAI(true);
     setConversation((prev) => [...prev, obj]);
     try {
       const result = await chat?.sendMessage(message);
@@ -105,11 +108,12 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         },
       ]);
     }
+    setBusyAI(false);
   };
 
   const startQuizMode = async () => {
     const message = generateQuizGemini();
-
+    setBusyAI(true);
     try {
       const result = await chat?.sendMessage(message);
       const response = await result?.response;
@@ -132,10 +136,12 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         },
       ]);
     }
+    setBusyAI(false);
   };
 
   const nextQuestion = async () => {
     const message = "Next Question please, Don't repeat questions.";
+    setBusyAI(true);
     try {
       const sendMessage = await chat?.sendMessage(message);
       const response = sendMessage?.response;
@@ -155,9 +161,11 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         },
       ]);
     }
+    setBusyAI(false);
   };
 
   const getFlashCard = async () => {
+    setBusyAI(true);
     const message = generateFlashcardGemini();
     try {
       const requestFlashCard = await chat?.sendMessage(message);
@@ -184,9 +192,11 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         },
       ]);
     }
+    setBusyAI(false);
   };
 
   const attemptQueryRetry = async (retryQuery: string, errorOrigin: string) => {
+    setBusyAI(true);
     try {
       const result = await chat?.sendMessage(retryQuery);
       const response = await result?.response;
@@ -212,6 +222,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         },
       ]);
     }
+    setBusyAI(false);
   };
 
   return (

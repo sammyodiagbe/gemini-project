@@ -10,6 +10,7 @@ import { useConversationContext } from "./conversationContext";
 import { beginQuizmode } from "@/lib/gemini_interactons";
 import { jsonDecode } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
+import { useLoadingContext } from "./loadingStateContext";
 
 type QuizContextType = {
   quizmode: boolean;
@@ -34,9 +35,11 @@ const quizContext = createContext<QuizContextType>({
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [quizmode, setQuizmode] = useState(false);
   const { chat, setConversation } = useConversationContext();
+  const { busyAI, setBusyAI } = useLoadingContext();
 
   const startQuiz = async (multipleChoice: boolean, shortAnswer: boolean) => {
     const prompt = beginQuizmode(multipleChoice, shortAnswer);
+    setBusyAI(true);
     try {
       const result = await chat?.sendMessage(prompt);
       const response = await result?.response;
@@ -54,6 +57,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       console.log(error);
     }
+    setBusyAI(false);
   };
 
   const checkShortAnswer = async (
