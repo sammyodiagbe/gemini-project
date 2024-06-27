@@ -115,6 +115,7 @@ const PomodoroTimerComponent = () => {
           <motion.span
             className="absolute flex space-x-2 -top-[80px] -left-[150px] bg-onBackground p-4 w-[300px] text-sm justify-evenly shadow-md rounded-md"
             variants={menu}
+            initial={{ scale: 0 }}
             animate={showMenu ? "open" : "closed"}
           >
             <button
