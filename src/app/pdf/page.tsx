@@ -72,7 +72,7 @@ const Page = () => {
 
   if (workingOnPdf) return <LoaderComponent />;
   return (
-    <main className="grid grid-cols-[46.875rem_1fr] h-screen max-h-[calc(100vh-70px)] w-screen ">
+    <main className="flex h-screen max-h-[calc(100vh-70px)] w-screen ">
       {/* <div className="">
         <form onSubmit={handleFileUpload}>
           <input
@@ -83,7 +83,7 @@ const Page = () => {
           <button type="submit">Upload Pdf</button>
         </form>
       </div> */}
-      <div className="w-full h-full ">
+      <div className="w-[46.875rem] max-w-[46.875rem] h-full ">
         {!fileUrl ? (
           <>
             <div className="h-full">
