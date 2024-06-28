@@ -74,6 +74,7 @@ const ConversationComponent = () => {
                   return (
                     <QuizMessageComponent
                       message={message}
+                      conv={conv}
                       quiz={quiz!}
                       key={index}
                     />
@@ -104,15 +105,16 @@ const ConversationComponent = () => {
             <div className="py-2 h-full  grid justify-center items-end ">
               {
                 <div className="grid grid-cols-2 gap-[1.25rem]">
-                  {!busyAI &&
-                    interactions.map((interaction, index) => {
-                      return (
-                        <PossibleInteractionComponent
-                          interactionMessage={interaction.text}
-                          key={index}
-                        />
-                      );
-                    })}
+                  {!busyAI ||
+                    (conversation.length < 0 &&
+                      interactions.map((interaction, index) => {
+                        return (
+                          <PossibleInteractionComponent
+                            interactionMessage={interaction.text}
+                            key={index}
+                          />
+                        );
+                      }))}
                 </div>
               }
             </div>

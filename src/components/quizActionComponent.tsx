@@ -1,27 +1,26 @@
 import { useQuizContext } from "@/context/quizContext";
 import { buttonClass } from "@/lib/tailwind_classes";
+import { ConversationType } from "@/lib/type";
 import { FC, useState } from "react";
 
 type ComponentProps = {
-  currentQuestion: number;
-  totalQuestions: number;
+  conv: ConversationType;
 };
 
-const QuizActionComponent: FC<ComponentProps> = ({
-  currentQuestion,
-  totalQuestions,
-}) => {
+const QuizActionComponent: FC<ComponentProps> = ({ conv }) => {
   const { nextQuestion, endSession } = useQuizContext();
+  const { quiz } = conv;
+  const { currentQuestion, totalQuestions } = quiz!;
+
+  console.log(currentQuestion, "  ", totalQuestions);
   const lastQuestion = currentQuestion === totalQuestions;
-  const [hideButton, setHideButton] = useState<boolean>(false);
   return (
     <div className="mt-7 flex justify-end -z-10">
-      {!lastQuestion && !hideButton && (
+      {!lastQuestion && (
         <button
           className={buttonClass}
           onClick={async () => {
-            await nextQuestion();
-            setHideButton(true);
+            await nextQuestion(conv);
           }}
         >
           Next Question

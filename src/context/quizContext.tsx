@@ -34,7 +34,7 @@ const quizContext = createContext<QuizContextType>({
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [quizmode, setQuizmode] = useState(false);
-  const { chat, setConversation } = useConversationContext();
+  const { chat, setConversation, conversation } = useConversationContext();
   const { busyAI, setBusyAI } = useLoadingContext();
 
   const startQuiz = async (
@@ -93,7 +93,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     return "";
   };
 
-  const nextQuestion = async () => {
+  const nextQuestion = async (prevConversation: ConversationType) => {
     const prompt = "Next question please.";
     try {
       const result = await chat?.sendMessage(prompt);
@@ -108,7 +108,12 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         sender: "ai",
         message: aiRes,
       };
-      setConversation((prev) => [...prev, res]);
+      setConversation((prev) =>
+        prev.filter((convo) => convo !== prevConversation)
+      );
+      setTimeout(() => {
+        setConversation((prev) => [...prev, res]);
+      }, 100);
     } catch (error: any) {
       console.log(error);
     }
