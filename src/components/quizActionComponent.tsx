@@ -15,7 +15,7 @@ const QuizActionComponent: FC<ComponentProps> = ({
   const lastQuestion = currentQuestion === totalQuestions;
   const [hideButton, setHideButton] = useState<boolean>(false);
   return (
-    <div className="mt-7 flex justify-end">
+    <div className="mt-7 flex justify-end -z-10">
       {!lastQuestion && !hideButton && (
         <button
           className={buttonClass}

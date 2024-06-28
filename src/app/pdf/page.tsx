@@ -11,12 +11,14 @@ import { Upload, UploadCloudIcon } from "lucide-react";
 import { useLoadingContext } from "@/context/loadingStateContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import LoaderComponent from "@/components/loader";
+import { useQuizContext } from "@/context/quizContext";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string>();
   const { setExtractedText, setInteractions, setConversation } =
     useConversationContext()!;
-  const { setWorkingOnPdf, workingOnPdf } = useLoadingContext()!;
+  const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
+  const { quizmode } = useQuizContext();
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
@@ -109,6 +111,7 @@ const Page = () => {
           <div className="absolute h-full w-full">
             <label
               htmlFor="pdf_file"
+              aria-disabled={quizmode || busyAI}
               className={cn(
                 buttonClass,
                 "absolute   bottom-10 ring-2 ring-purple-600 right-[50px] text-purple-600 bg-white hover:scale-110 cursor-pointer z-5"

@@ -18,9 +18,11 @@ import { buttonClass } from "@/lib/tailwind_classes";
 import QuizWrapperComponent from "./quizWrapperComponent";
 import InsightComponent from "./insightComponent";
 import PomodoroTimerComponent from "./pomodoroTimerComponent";
-import { ConversationType } from "@/lib/type";
 import ThinkingAI from "./loadingAiComponent";
 import { useLoadingContext } from "@/context/loadingStateContext";
+import { useQuizContext } from "@/context/quizContext";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 const ConversationComponent = () => {
   const { interactions, chatWithGemini, conversation, getFlashCard } =
@@ -28,6 +30,7 @@ const ConversationComponent = () => {
   const [message, setMessage] = useState("");
   const convoContainerRef = useRef<HTMLDivElement>(null);
   const { busyAI } = useLoadingContext();
+  const { quizmode } = useQuizContext();
 
   useEffect(() => {
     if (convoContainerRef === null) return;
@@ -42,7 +45,7 @@ const ConversationComponent = () => {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-
+    if (quizmode) return;
     if (!message || message === "") return;
     setMessage("");
     await chatWithGemini(message);
@@ -99,28 +102,39 @@ const ConversationComponent = () => {
             })
           ) : (
             <div className="py-2 h-full  grid justify-center items-end ">
-              <div className="grid grid-cols-2 gap-[1.25rem]">
-                {interactions.map((interaction, index) => {
-                  return (
-                    <PossibleInteractionComponent
-                      interactionMessage={interaction.text}
-                      key={index}
-                    />
-                  );
-                })}
-              </div>
+              {
+                <div className="grid grid-cols-2 gap-[1.25rem]">
+                  {!busyAI &&
+                    interactions.map((interaction, index) => {
+                      return (
+                        <PossibleInteractionComponent
+                          interactionMessage={interaction.text}
+                          key={index}
+                        />
+                      );
+                    })}
+                </div>
+              }
             </div>
           )}
         </div>
         {/* this woudl contain the textarea and other action btn */}
         <div className=" sticky bottom-1 w-full max-w-full">
           <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
-            <div className="flex">
-              <QuizWrapperComponent />
-              <button className={buttonClass} onClick={() => getFlashCard()}>
-                <Gamepad className="mr-1" size={18} /> Flashcard
-              </button>
-            </div>
+            {!quizmode && (
+              <AnimatePresence>
+                <motion.div className="flex">
+                  <QuizWrapperComponent />
+                  <button
+                    className={buttonClass}
+                    onClick={() => getFlashCard()}
+                    disabled={quizmode || busyAI}
+                  >
+                    <Gamepad className="mr-1" size={18} /> Flashcard
+                  </button>
+                </motion.div>
+              </AnimatePresence>
+            )}
             <form
               className="w-full flex-1 flex items-center"
               onSubmit={sendMessage}
@@ -132,10 +146,15 @@ const ConversationComponent = () => {
                 onChange={({ target }) => setMessage(target.value)}
                 wrap="softwrap"
                 rows={1}
+                disabled={quizmode}
               ></textarea>
               <button
                 type="submit"
-                className="w-[3.125rem] h-[3.125rem] text-white hover:bg-primary/70 rounded-full hover:text-white flex items-center justify-center bg-gradient-to-r from-fuchsia-600 to-purple-600"
+                disabled={quizmode}
+                className={cn(
+                  "w-[3.125rem] h-[3.125rem] text-white hover:bg-primary/70 rounded-full hover:text-white flex items-center justify-center bg-gradient-to-r from-fuchsia-600 to-purple-600",
+                  quizmode && "cursor-not-allowed bg-gray-300 text-gray-700"
+                )}
               >
                 <Send size={24} />
               </button>

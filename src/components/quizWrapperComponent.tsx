@@ -1,4 +1,5 @@
 "use client";
+import { useLoadingContext } from "@/context/loadingStateContext";
 import { useQuizContext } from "@/context/quizContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import { buttonIconSize, cn } from "@/lib/utils";
@@ -17,7 +18,8 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
   const [variant, setVariant] = useState<"hidden" | "visible">("hidden");
   const [multipleChoice, setMultipleChoice] = useState(true);
   const [shortAnswer, setShortAnswer] = useState(false);
-  const { startQuiz: beginQuiz } = useQuizContext();
+  const { startQuiz: beginQuiz, quizmode } = useQuizContext();
+  const { busyAI } = useLoadingContext();
   const [difficulty, setDifficultyLevel] = useState<"easy" | "medium" | "hard">(
     "easy"
   );
@@ -101,6 +103,7 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
         onClick={() => {
           setVariant((prev) => (prev === "hidden" ? "visible" : "hidden"));
         }}
+        disabled={busyAI || quizmode}
       >
         <BookText size={18} className="mr-1 relative" /> Quiz Me
       </button>

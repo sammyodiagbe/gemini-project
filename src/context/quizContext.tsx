@@ -58,6 +58,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         sender: "ai",
         message: aiRes,
       };
+      setQuizmode(true);
       setConversation((prev) => [...prev, res]);
     } catch (error: any) {
       console.log(error);
@@ -164,6 +165,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         sender: "ai",
         message: res,
       };
+      setQuizmode(false);
       setConversation((prev) => [...prev, chatData]);
     } catch (error: any) {
       console.log(error);
