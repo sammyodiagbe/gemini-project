@@ -72,7 +72,7 @@ const Page = () => {
 
   if (workingOnPdf) return <LoaderComponent />;
   return (
-    <main className="grid grid-cols-[46.875rem_1fr] h-screen max-h-[calc(100vh-70px)] w-screen">
+    <main className="grid grid-cols-[46.875rem_1fr] h-screen max-h-[calc(100vh-70px)] w-screen ">
       {/* <div className="">
         <form onSubmit={handleFileUpload}>
           <input
@@ -83,16 +83,12 @@ const Page = () => {
           <button type="submit">Upload Pdf</button>
         </form>
       </div> */}
-      <div className="relative w-full h-full ">
+      <div className="w-full h-full ">
         {!fileUrl ? (
           <>
-            {workingOnPdf ? (
-              <div className="h-full w-full">
-                <p>Working on the pdf yo</p>
-              </div>
-            ) : (
+            <div className="h-full">
               <label
-                className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:ring-primary/70 ring-inset cursor-pointer border-r border-textColor/10"
+                className="bg-bg-red-500 grid items-center justify-center  h-full top-0 left-0 hover:ring-primary/70 ring-inset cursor-pointer border-r border-textColor/10 w-full"
                 htmlFor="pdf_file"
               >
                 <span className="grid place-items-center max-w-[350px] space-y-4">
@@ -105,10 +101,10 @@ const Page = () => {
                   </span>
                 </span>
               </label>
-            )}
+            </div>
           </>
         ) : (
-          <div className="absolute h-full w-full">
+          <div className="relative h-full ">
             <label
               htmlFor="pdf_file"
               aria-disabled={quizmode || busyAI}
@@ -122,15 +118,15 @@ const Page = () => {
             <MyPdfViewer filePath={fileUrl!} />
           </div>
         )}
+        <input
+          type="file"
+          accept="application/pdf"
+          name="pdf_file"
+          id="pdf_file"
+          className="appearance-none hidden"
+          onChange={handleFileChange}
+        />
       </div>
-      <input
-        type="file"
-        accept="application/pdf"
-        name="pdf_file"
-        id="pdf_file"
-        className="appearance-none hidden"
-        onChange={handleFileChange}
-      />
 
       <ConversationComponent />
     </main>
