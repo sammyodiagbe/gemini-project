@@ -54,13 +54,13 @@ const ConversationComponent = () => {
       ref={convoContainerRef}
       className="bg-backgroundColor text-textColor py-2 max-h-screen overflow-y-auto"
     >
-      <div className="relative grid grid-rows-[1fr_80px] grid-cols-1 w-[700px] h-full max-h-full mx-auto">
+      <div className="relative grid grid-rows-[1fr_5rem] grid-cols-1 w-[46.87rem] h-full max-h-full mx-auto">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
 
-        <div className=" pb-[30px] space-y-8">
+        <div className=" pb-[1.875rem] space-y-8">
           {conversation.length ? (
             conversation.map((conv, index) => {
               const { type, quiz, message, flashcard, insights } = conv;
@@ -99,7 +99,7 @@ const ConversationComponent = () => {
             })
           ) : (
             <div className="py-2 h-full  grid justify-center items-end ">
-              <div className="grid grid-cols-2 gap-[20px]">
+              <div className="grid grid-cols-2 gap-[1.25rem]">
                 {interactions.map((interaction, index) => {
                   return (
                     <PossibleInteractionComponent
@@ -135,7 +135,7 @@ const ConversationComponent = () => {
               ></textarea>
               <button
                 type="submit"
-                className="w-[50px] h-[50px] text-white hover:bg-primary/70 rounded-full hover:text-white flex items-center justify-center bg-gradient-to-r from-fuchsia-600 to-purple-600"
+                className="w-[3.125rem] h-[3.125rem] text-white hover:bg-primary/70 rounded-full hover:text-white flex items-center justify-center bg-gradient-to-r from-fuchsia-600 to-purple-600"
               >
                 <Send size={24} />
               </button>

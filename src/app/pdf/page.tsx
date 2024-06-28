@@ -70,7 +70,7 @@ const Page = () => {
 
   if (workingOnPdf) return <LoaderComponent />;
   return (
-    <main className="grid grid-cols-[750px_1fr] h-screen max-h-[calc(100vh-70px)] w-screen">
+    <main className="grid grid-cols-[46.875rem_1fr] h-screen max-h-[calc(100vh-70px)] w-screen">
       {/* <div className="">
         <form onSubmit={handleFileUpload}>
           <input
