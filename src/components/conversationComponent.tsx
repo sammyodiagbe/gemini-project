@@ -113,7 +113,7 @@ const ConversationComponent = () => {
           )}
         </div>
         {/* this woudl contain the textarea and other action btn */}
-        <div className=" sticky bottom-1 w-full">
+        <div className=" sticky bottom-1 w-full max-w-full">
           <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
             <div className="flex">
               <QuizWrapperComponent />

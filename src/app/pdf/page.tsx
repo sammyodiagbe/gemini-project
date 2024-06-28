@@ -85,12 +85,12 @@ const Page = () => {
         {!fileUrl ? (
           <>
             {workingOnPdf ? (
-              <div className="h-full w-full bg-orange-400">
+              <div className="h-full w-full">
                 <p>Working on the pdf yo</p>
               </div>
             ) : (
               <label
-                className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:ring-primary/70 ring-inset cursor-pointer border-r border-onBackground"
+                className="bg-backgroundColor grid items-center justify-center absolute h-full w-full  top-0 left-0 hover:ring-primary/70 ring-inset cursor-pointer border-r border-textColor/10"
                 htmlFor="pdf_file"
               >
                 <span className="grid place-items-center max-w-[350px] space-y-4">

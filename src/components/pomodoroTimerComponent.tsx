@@ -118,7 +118,7 @@ const PomodoroTimerComponent = () => {
             initial={{ scale: 0 }}
             animate={showMenu ? "open" : "closed"}
           >
-            <button
+            {/* <button
               onClick={startTimer}
               className="flex space-x-2 items-center text-textColor/65 hover:text-textColor"
             >
@@ -135,7 +135,7 @@ const PomodoroTimerComponent = () => {
               className="flex space-x-2 items-center text-textColor/65 hover:text-textColor"
             >
               <RotateCcw size={buttonIconSize} /> Reset
-            </button>
+            </button> */}
           </motion.span>
         </motion.button>
 
