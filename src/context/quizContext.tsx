@@ -37,9 +37,14 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { chat, setConversation } = useConversationContext();
   const { busyAI, setBusyAI } = useLoadingContext();
 
-  const startQuiz = async (multipleChoice: boolean, shortAnswer: boolean) => {
-    const prompt = beginQuizmode(multipleChoice, shortAnswer);
+  const startQuiz = async (
+    multipleChoice: boolean,
+    shortAnswer: boolean,
+    difficulty: "easy" | "medium" | "hard"
+  ) => {
+    const prompt = beginQuizmode(multipleChoice, shortAnswer, difficulty);
     setBusyAI(true);
+    console.log(difficulty);
     try {
       const result = await chat?.sendMessage(prompt);
       const response = await result?.response;

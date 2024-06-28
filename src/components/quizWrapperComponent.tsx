@@ -18,12 +18,15 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
   const [multipleChoice, setMultipleChoice] = useState(true);
   const [shortAnswer, setShortAnswer] = useState(false);
   const { startQuiz: beginQuiz } = useQuizContext();
+  const [difficulty, setDifficultyLevel] = useState<"easy" | "medium" | "hard">(
+    "easy"
+  );
   const startQuiz = () => {
-    beginQuiz(multipleChoice, shortAnswer);
+    beginQuiz(multipleChoice, shortAnswer, difficulty);
     setVariant("hidden");
   };
   return (
-    <div className="">
+    <div className="select-none">
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         className="fixed left-0 top-0 w-screen h-screen flex items-center justify-center  -bottom-full z-30 p-5  bg-onBackground/80  rounded-lg shadow-md after: space-y-4"
@@ -45,7 +48,7 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
               checked={multipleChoice}
               onChange={(event) => setMultipleChoice(event.target.checked)}
             />{" "}
-            <span className="">Multiple choice</span>
+            <span className="text-lg">Multiple choice</span>
           </div>
           <div className="space-x-1 flex items-center">
             <input
@@ -53,33 +56,36 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
               checked={shortAnswer}
               onChange={(event) => setShortAnswer(event.target.checked)}
             />
-            <span className="">Short answer</span>
+            <span className="text-lg">Short answer</span>
           </div>
           <div className="mt-8 border-t border-textColor/20 py-3 space-y-3">
             <h1 className="text-lg font-bold">Select difficulty level</h1>
             <div className="space-x-1 flex items-center">
               <input
-                type="checkbox"
-                checked={shortAnswer}
-                onChange={(event) => setShortAnswer(event.target.checked)}
+                type="radio"
+                name="difficulty"
+                checked={difficulty === "easy"}
+                onChange={(_) => setDifficultyLevel("easy")}
               />
-              <span className="">Giggle Grove (Least Hard)</span>
+              <span className="text-lg">Giggle Grove (Least Hard)</span>
             </div>
             <div className="space-x-1 flex items-center">
               <input
-                type="checkbox"
-                checked={shortAnswer}
-                onChange={(event) => setShortAnswer(event.target.checked)}
+                type="radio"
+                name="difficulty"
+                checked={difficulty === "medium"}
+                onChange={(_) => setDifficultyLevel("medium")}
               />
-              <span className="">Chuckle Canyon (Medium)</span>
+              <span className="text-lg">Chuckle Canyon (Medium)</span>
             </div>
             <div className="space-x-1 flex items-center">
               <input
-                type="checkbox"
-                checked={shortAnswer}
-                onChange={(event) => setShortAnswer(event.target.checked)}
+                type="radio"
+                name="difficulty"
+                checked={difficulty === "hard"}
+                onChange={(_) => setDifficultyLevel("hard")}
               />
-              <span className="">Laughing Lava(Hard)</span>
+              <span className="text-lg">Laughing Lava(Hard)</span>
             </div>
           </div>
           <button

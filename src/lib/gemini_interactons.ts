@@ -102,7 +102,8 @@ export const generateFlashcardGemini = (): string => {
 
 export const beginQuizmode = (
   multiplechoice: boolean,
-  shortAnswer: boolean
+  shortAnswer: boolean,
+  difficulty: "easy" | "medium" | "hard"
 ): string => {
   let prompt: string;
   if (multiplechoice && !shortAnswer) {
@@ -150,5 +151,5 @@ export const beginQuizmode = (
 
     You randomly choose if you want to ask the user shortanswer questions or multiplechoice per question
   `;
-  return prompt;
+  return prompt + `\n difficulty level is ${difficulty}`;
 };
