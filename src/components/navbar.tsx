@@ -1,9 +1,12 @@
+import Link from "next/link";
 import PomodoroTimerComponent from "./pomodoroTimerComponent";
 
 const Navbar = () => {
   return (
     <nav className="flex justify-between bg-backgroundColor text-textColor items-center p-4 h-[4.375rem]">
-      <h1 className="font-bold text-xl">Rafikiai</h1>
+      <h1 className="font-bold text-xl">
+        <Link href={"/"}>Rafikiai</Link>
+      </h1>
 
       <div className="">
         <ul className="flex space-x-3 items-center">
