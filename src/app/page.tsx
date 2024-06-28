@@ -1,6 +1,9 @@
 "use client";
 
 import { Gemini as AI } from "@/gemini/gemini";
+import { buttonClass } from "@/lib/tailwind_classes";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { FormEvent, FormEventHandler, useEffect, useState } from "react";
 
 export default function Home() {
@@ -25,18 +28,14 @@ export default function Home() {
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="h-full w-full">
-        <form onSubmit={handleSubmit}>
-          <textarea
-            value={message}
-            className="resize-none border"
-            onChange={({ target }) => setMessage(target.value)}
-            placeholder="Ask ally anything..."
-          ></textarea>
-          <div>
-            <button>Send message</button>
-          </div>
-        </form>
+      <div className="h-full w-[800px] mx-auto text-center">
+        <h1 className="text-8xl">Rafikiai Landing page is coming soon</h1>
+        <Link
+          href="/pdf"
+          className={cn(buttonClass, "mt-10 inline-flex font-lg")}
+        >
+          Try the App now
+        </Link>
       </div>
     </main>
   );
