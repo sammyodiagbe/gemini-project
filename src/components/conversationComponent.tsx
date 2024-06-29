@@ -106,16 +106,15 @@ const ConversationComponent = () => {
             <div className="py-2 h-full  grid justify-center items-end ">
               {
                 <div className="grid grid-cols-2 gap-[1.25rem]">
-                  {!busyAI ||
-                    (conversation.length < 0 &&
-                      interactions.map((interaction, index) => {
-                        return (
-                          <PossibleInteractionComponent
-                            interactionMessage={interaction.text}
-                            key={index}
-                          />
-                        );
-                      }))}
+                  {!busyAI &&
+                    interactions.map((interaction, index) => {
+                      return (
+                        <PossibleInteractionComponent
+                          interactionMessage={interaction.text}
+                          key={index}
+                        />
+                      );
+                    })}
                 </div>
               }
             </div>

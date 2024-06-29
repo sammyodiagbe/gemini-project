@@ -24,16 +24,21 @@ const QuizOptionComponent: FC<QuizOptionPropsType> = ({
 }) => {
   const isSelected = selected === position;
   const isRight = options[position] === answer;
-  console.log(selected === position);
+  if (isSelected) {
+    console.log(answered, isSelected, rightAnswer, isRight);
+  }
   return (
     <button
       className={cn(
-        "ring-1 text-left ring-textColor/20 active:scale-95 p-3 rounded-md transition bg-onBackground hover:ring-textColor/70 flex items-start",
-        isSelected && rightAnswer && " ring-primary bg-primary/5",
-        isSelected && !rightAnswer && "bg-red-100 ring-red-500",
-        answered && !isSelected && isRight && "ring-primary bg-primary/5"
+        "ring-1 text-left ring-textColor/20 active:scale-95 p-3 rounded-md transition bg-onBackground hover:bg-onBackground/40 flex items-start",
+        answered && isSelected && rightAnswer && "ring-green-500",
+        answered && isSelected && !rightAnswer && " ring-red-500",
+        !isSelected && rightAnswer && "ring-green-500"
       )}
-      onClick={() => pickOption(position)}
+      onClick={async () => {
+        await pickOption(position);
+        console.log(answered, isSelected, rightAnswer, isRight);
+      }}
     >
       {/* <span
         className={cn(
@@ -44,6 +49,7 @@ const QuizOptionComponent: FC<QuizOptionPropsType> = ({
         )}
       /> */}
       <span className="">{text}</span>
+      <span>{answer}</span>
     </button>
   );
 };

@@ -22,17 +22,22 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ conv }) => {
   const { conversation } = useConversationContext();
 
   const pickOption = (position: number) => {
+    console.log("check");
+
     if (answered) return;
     if (options[position] === answer) {
       setRightAnswer(true);
       sendMultipleChoiceResponse(
         `User answered right, keep track of this for chart population later, question was ${question}`
       );
-      return;
+    } else {
+      setRightAnswer(false);
+
+      sendMultipleChoiceResponse(
+        `User answered wrong, keep track of this question was ${question}, answer was ${answer}`
+      );
     }
-    sendMultipleChoiceResponse(
-      `User answered wrong, keep track of this question was ${question}, answer was ${answer}`
-    );
+
     setSelected(position);
     setAnswered(true);
   };

@@ -38,7 +38,7 @@ const ShortAnswerComponent: FC<ComponentType> = ({ conv }) => {
   };
 
   return (
-    <div className="min-h-[6.25rem]">
+    <div className="min-h-[7.25rem]">
       <AnimatePresence>
         <motion.div
           initial={{ x: -500, opacity: 0 }}
