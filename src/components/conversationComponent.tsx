@@ -107,6 +107,7 @@ const ConversationComponent = () => {
               {
                 <div className="grid grid-cols-2 gap-[1.25rem]">
                   {!busyAI &&
+                    !quizmode &&
                     interactions.map((interaction, index) => {
                       return (
                         <PossibleInteractionComponent
