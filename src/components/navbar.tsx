@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PomodoroTimerComponent from "./pomodoroTimerComponent";
+import NetworkStatusComponent from "./networkStatusComponent";
 
 const Navbar = () => {
   return (
@@ -12,6 +12,9 @@ const Navbar = () => {
         <ul className="flex space-x-3 items-center">
           <li>
             <b>Hi, Samson</b>
+          </li>
+          <li>
+            <NetworkStatusComponent />
           </li>
           <li>
             <div className="h-[2.5rem] w-[2.5rem] rounded-full bg-onBackground" />

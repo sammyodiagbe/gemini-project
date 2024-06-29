@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const NetworkStatusComponent = () => {
@@ -20,7 +21,11 @@ const NetworkStatusComponent = () => {
   });
 
   return (
-    <div className="">you are currently {isOnline ? "Online" : "Offline"}</div>
+    <div
+      className={cn("font-bold", isOnline ? "text-green-500" : "text-red-600")}
+    >
+      {isOnline ? "Online" : "Offline"}
+    </div>
   );
 };
 
