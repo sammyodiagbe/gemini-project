@@ -22,12 +22,22 @@ const ShortAnswerComponent: FC<ComponentType> = ({ conv }) => {
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState<string>();
 
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
     setCheckingAnswer(true);
-    const feedback = checkShortAnswer(userAnswer, answer, question);
+    const feedback = await checkShortAnswer(userAnswer, answer, question);
     setFeedback(feedback);
     setCheckingAnswer(false);
     setUserResponded(true);
+    const convoElement = document.getElementById("conversation")!;
+    console.log(convoElement.scrollTop);
+    console.log(convoElement.scrollHeight);
+    console.log(convoElement);
+    setTimeout(() => {
+      convoElement.scrollTo({
+        top: convoElement.scrollHeight,
+        behavior: "smooth",
+      });
+    }, 100);
   };
 
   return (

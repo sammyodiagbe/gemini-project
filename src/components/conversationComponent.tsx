@@ -55,6 +55,7 @@ const ConversationComponent = () => {
   return (
     <div
       ref={convoContainerRef}
+      id="conversation"
       className="flex-1 text-textColor py-2 max-h-screen overflow-y-auto"
     >
       <div className="relative grid grid-rows-[1fr_5rem] grid-cols-1 w-[46.87rem] h-full max-h-full mx-auto">
