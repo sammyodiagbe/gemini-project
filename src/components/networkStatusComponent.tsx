@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const NetworkStatusComponent = () => {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(window.navigator.onLine);
 
   const updateNetworkStatus = () => {
     setIsOnline(window.navigator.onLine);
