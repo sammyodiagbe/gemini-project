@@ -30,10 +30,10 @@ const QuizOptionComponent: FC<QuizOptionPropsType> = ({
   return (
     <button
       className={cn(
-        "ring-1 text-left ring-textColor/20 active:scale-95 p-3 rounded-md transition bg-onBackground hover:bg-onBackground/40 flex items-start",
-        answered && isSelected && rightAnswer && "ring-green-500",
-        answered && isSelected && !rightAnswer && " ring-red-500",
-        !isSelected && rightAnswer && "ring-green-500"
+        "ring-2 text-left ring-textColor/20 active:scale-95 p-3 rounded-md transition bg-onBackground hover:bg-onBackground/40 flex items-start",
+        answered && isSelected && isRight && "ring-purple-500",
+        answered && isSelected && !isRight && " ring-pink-500",
+        answered && isSelected === false && isRight && "ring-purple-500"
       )}
       onClick={async () => {
         await pickOption(position);
@@ -49,7 +49,6 @@ const QuizOptionComponent: FC<QuizOptionPropsType> = ({
         )}
       /> */}
       <span className="">{text}</span>
-      <span>{answer}</span>
     </button>
   );
 };
