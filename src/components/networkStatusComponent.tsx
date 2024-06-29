@@ -4,13 +4,14 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const NetworkStatusComponent = () => {
-  const [isOnline, setIsOnline] = useState(window.navigator.onLine);
+  const [isOnline, setIsOnline] = useState(false);
 
   const updateNetworkStatus = () => {
     setIsOnline(window.navigator.onLine);
   };
 
   useState(() => {
+    setIsOnline(window.navigator.onLine);
     window.addEventListener("online", updateNetworkStatus);
     window.addEventListener("offline", updateNetworkStatus);
 
@@ -18,7 +19,7 @@ const NetworkStatusComponent = () => {
       window.removeEventListener("online", () => {});
       window.removeEventListener("offline", () => {});
     };
-  });
+  }, []);
 
   return (
     <div
