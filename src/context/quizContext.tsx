@@ -94,6 +94,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const nextQuestion = async (prevConversation: ConversationType) => {
+    setBusyAI(true);
     const prompt = "Next question please.";
     try {
       const result = await chat?.sendMessage(prompt);
@@ -117,6 +118,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       console.log(error);
     }
+    setBusyAI(false);
   };
 
   const sendMultipleChoiceResponse = async (message: string) => {
