@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NetworkStatusComponent = () => {
   const [isOnline, setIsOnline] = useState(false);
@@ -10,7 +10,7 @@ const NetworkStatusComponent = () => {
     setIsOnline(window.navigator.onLine);
   };
 
-  useState(() => {
+  useEffect(() => {
     setIsOnline(window.navigator.onLine);
     window.addEventListener("online", updateNetworkStatus);
     window.addEventListener("offline", updateNetworkStatus);
