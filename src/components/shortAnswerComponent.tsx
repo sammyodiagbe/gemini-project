@@ -29,9 +29,6 @@ const ShortAnswerComponent: FC<ComponentType> = ({ conv }) => {
     setCheckingAnswer(false);
     setUserResponded(true);
     const convoElement = document.getElementById("conversation")!;
-    console.log(convoElement.scrollTop);
-    console.log(convoElement.scrollHeight);
-    console.log(convoElement);
     setTimeout(() => {
       convoElement.scrollTo({
         top: convoElement.scrollHeight,
