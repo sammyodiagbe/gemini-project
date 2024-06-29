@@ -7,7 +7,7 @@ const NetworkStatusComponent = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   const updateNetworkStatus = () => {
-    setIsOnline(navigator.onLine);
+    setIsOnline(window.navigator.onLine);
   };
 
   useState(() => {
