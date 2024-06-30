@@ -1,5 +1,6 @@
 import PopupComponent from "@/components/popupComponent";
 import ConversationContextProvider from "@/context/conversationContext";
+import NoteContextProvider from "@/context/noteContext";
 import PopupContextProvider from "@/context/popupContext";
 import QuizContextProvider from "@/context/quizContext";
 import { FC } from "react";
@@ -13,8 +14,10 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
     <ConversationContextProvider>
       <PopupContextProvider>
         <QuizContextProvider>
-          <PopupComponent />
-          {children}
+          <NoteContextProvider>
+            <PopupComponent />
+            {children}
+          </NoteContextProvider>
         </QuizContextProvider>
       </PopupContextProvider>
     </ConversationContextProvider>

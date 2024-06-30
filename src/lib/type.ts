@@ -6,6 +6,12 @@ type TopicBreakdownType = {
   understanding: number;
   explanation: string;
 };
+
+export type NoteType = {
+  topic?: string;
+  content: string;
+  type?: string;
+};
 export type InsightType = {
   overall_understanding: string;
   recommended_topics: string[];
