@@ -58,7 +58,7 @@ const ConversationComponent = () => {
     <div
       ref={convoContainerRef}
       id="conversation"
-      className="flex-1 text-textColor py-2 max-h-screen overflow-y-auto"
+      className="flex-1 text-textColor pt-1 pb-0 max-h-screen overflow-y-auto"
     >
       <div className="relative grid grid-rows-[3rem_1fr_5rem] grid-cols-1 w-[46.87rem] h-full max-h-full mx-auto">
         {/* this would be the header of the chat */}
