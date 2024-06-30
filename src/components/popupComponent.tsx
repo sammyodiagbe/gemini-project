@@ -48,7 +48,6 @@ const PopupComponent = () => {
     const data: NoteType = { content: selectedText };
 
     await takeNote(data);
-    console.log("note taken");
     setSelected(false);
     setSelectedText("");
   };

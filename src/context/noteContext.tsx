@@ -18,7 +18,6 @@ const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
   const takeNote = (note: NoteType) => {
     if (note.content.trim() === "") return;
     updateNotes((prev) => [...prev, note]);
-    console.log(notes);
   };
   return (
     <noteContext.Provider value={{ notes, takeNote }}>
