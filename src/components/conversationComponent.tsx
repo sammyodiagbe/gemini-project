@@ -23,6 +23,8 @@ import { useLoadingContext } from "@/context/loadingStateContext";
 import { useQuizContext } from "@/context/quizContext";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNoteContext } from "@/context/noteContext";
+import ConversationHeader from "./convoHeaderComponent";
 
 const ConversationComponent = () => {
   const { interactions, chatWithGemini, conversation, getFlashCard } =
@@ -58,12 +60,12 @@ const ConversationComponent = () => {
       id="conversation"
       className="flex-1 text-textColor py-2 max-h-screen overflow-y-auto"
     >
-      <div className="relative grid grid-rows-[1fr_5rem] grid-cols-1 w-[46.87rem] h-full max-h-full mx-auto">
+      <div className="relative grid grid-rows-[3rem_1fr_5rem] grid-cols-1 w-[46.87rem] h-full max-h-full mx-auto">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
-
+        <ConversationHeader />
         <div className=" pb-[1.875rem] space-y-8">
           {conversation.length ? (
             conversation.map((conv, index) => {

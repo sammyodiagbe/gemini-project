@@ -4,6 +4,7 @@ import MarkdownView from "react-showdown";
 import { FC } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useNoteContext } from "@/context/noteContext";
 
 type ChatComponentType = {
   conv: ConversationType;
@@ -12,6 +13,7 @@ type ChatComponentType = {
 const ChatMessageComponent: FC<ChatComponentType> = ({
   conv: { message, type, sender },
 }) => {
+  const { takeNote } = useNoteContext();
   const handleSpeak = () => {
     try {
       const synth = window.speechSynthesis;
@@ -26,6 +28,10 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
     } catch (error: any) {
       console.log(error);
     }
+  };
+  const addNote = async () => {
+    const data = { content: message };
+    await takeNote(data);
   };
   return (
     <motion.div
@@ -56,7 +62,10 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
 
       {sender === "ai" && (
         <div className="flex items-center mt-6">
-          <button className="flex items-center  text-textColor/80  p-2 mr-2 rounded-md active:scale-95 justify-center">
+          <button
+            className="flex items-center  text-textColor/80  p-2 mr-2 rounded-md active:scale-95 justify-center"
+            onClick={addNote}
+          >
             <NotebookPen size={15} className="mr-1" />
           </button>
           <button
