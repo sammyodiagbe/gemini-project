@@ -14,7 +14,7 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
   const [flip, setFlip] = useState(false);
   return (
     <motion.div
-      className=""
+      className="select-none"
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
     >
