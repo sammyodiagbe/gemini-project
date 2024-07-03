@@ -105,8 +105,13 @@ const Page = () => {
         </div>
       ) : (
         <>
-          <div className="w-[46.875rem] max-w-[46.875rem] h-full select-none">
-            <div className="relative h-full ">
+          <div
+            className={cn(
+              "w-[46.875rem] max-w-[46.875rem] h-full select-none transition-all duration-300 ease-in-out",
+              openSidebar ? "w-0" : "w-[46.875rem"
+            )}
+          >
+            <div className={cn("relative h-full transition-all")}>
               <label
                 htmlFor="pdf_file"
                 aria-disabled={quizmode || busyAI}
@@ -127,7 +132,7 @@ const Page = () => {
               >
                 <ChevronFirst
                   className={cn(
-                    "transition-all",
+                    "transition-all delay-300 duration-300 ease-in-out",
                     openSidebar ? " rotate-180" : "rotate-0"
                   )}
                 />
