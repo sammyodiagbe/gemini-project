@@ -14,7 +14,7 @@ import LoaderComponent from "@/components/loader";
 import { useQuizContext } from "@/context/quizContext";
 
 const Page = () => {
-  const [fileUrl, setFile] = useState<string>();
+  const [fileUrl, setFile] = useState<string | null>(null);
   const { setExtractedText, setInteractions, setConversation } =
     useConversationContext()!;
   const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
@@ -72,63 +72,59 @@ const Page = () => {
 
   if (workingOnPdf) return <LoaderComponent />;
   return (
-    <main className="flex h-screen max-h-[calc(100vh-70px)] w-screen ">
-      {/* <div className="">
-        <form onSubmit={handleFileUpload}>
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-          />
-          <button type="submit">Upload Pdf</button>
-        </form>
-      </div> */}
-      <div className="w-[46.875rem] max-w-[46.875rem] h-full ">
-        {!fileUrl ? (
-          <>
-            <div className="h-full">
-              <label
-                className="bg-bg-red-500 grid items-center justify-center  h-full top-0 left-0 hover:ring-primary/70 ring-inset cursor-pointer border-r border-textColor/10 w-full"
-                htmlFor="pdf_file"
-              >
-                <span className="grid place-items-center max-w-[350px] space-y-4">
-                  <UploadCloudIcon
-                    size={120}
-                    className="font-thin text-textColor/30"
-                  />
-                  <span className="text-center text-2xl text-textColor/60">
-                    Click here to choose a file to upload (pdf only)
-                  </span>
-                </span>
-              </label>
-            </div>
-          </>
-        ) : (
-          <div className="relative h-full ">
+    <main
+      className={cn(
+        "flex h-screen max-h-[calc(100vh-70px)] w-screen ",
+        !fileUrl ? "" : ""
+      )}
+    >
+      {fileUrl === null ? (
+        <div className="flex-1 w-full h-full flex items-center justify-center">
+          <div className="max-w-[600px] space-y-5 text-center">
+            <h1 className="text-7xl text-center mb-5">
+              What are we <span className="text-purple-500/90">studying</span>{" "}
+              today?
+            </h1>
             <label
               htmlFor="pdf_file"
-              aria-disabled={quizmode || busyAI}
               className={cn(
                 buttonClass,
-                "absolute   bottom-10 ring-2 ring-purple-600 right-[50px] text-purple-600 bg-white hover:scale-110 cursor-pointer z-5"
+                "inline-flex mx-auto text-lg px-9 cursor-pointer"
               )}
             >
-              <Upload size={buttonIconSize} className="mr-2" /> Upload New File
+              Upload a file
             </label>
-            <MyPdfViewer filePath={fileUrl!} />
           </div>
-        )}
-        <input
-          type="file"
-          accept="application/pdf"
-          name="pdf_file"
-          id="pdf_file"
-          className="appearance-none hidden"
-          onChange={handleFileChange}
-        />
-      </div>
-
-      <ConversationComponent />
+        </div>
+      ) : (
+        <>
+          <div className="w-[46.875rem] max-w-[46.875rem] h-full select-none">
+            <div className="relative h-full ">
+              <label
+                htmlFor="pdf_file"
+                aria-disabled={quizmode || busyAI}
+                className={cn(
+                  buttonClass,
+                  "absolute   bottom-10 ring-2 ring-purple-600 right-[50px] text-purple-600 bg-white hover:scale-110 cursor-pointer z-5"
+                )}
+              >
+                <Upload size={buttonIconSize} className="mr-2" /> Upload New
+                File
+              </label>
+              <MyPdfViewer filePath={fileUrl!} />
+            </div>
+          </div>
+          <ConversationComponent />
+        </>
+      )}
+      <input
+        type="file"
+        accept="application/pdf"
+        name="pdf_file"
+        id="pdf_file"
+        className="appearance-none hidden"
+        onChange={handleFileChange}
+      />
     </main>
   );
 };
