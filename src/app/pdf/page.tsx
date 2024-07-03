@@ -7,7 +7,12 @@ import ConversationComponent from "@/components/conversationComponent";
 import { useConversationContext } from "@/context/conversationContext";
 import { buttonIconSize, cn, jsonDecode } from "@/lib/utils";
 import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
-import { Upload, UploadCloudIcon } from "lucide-react";
+import {
+  ChevronFirst,
+  ChevronLast,
+  Upload,
+  UploadCloudIcon,
+} from "lucide-react";
 import { useLoadingContext } from "@/context/loadingStateContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import LoaderComponent from "@/components/loader";
@@ -15,6 +20,7 @@ import { useQuizContext } from "@/context/quizContext";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string | null>(null);
+  const [openSidebar, setOpenSidebar] = useState<boolean>(false);
   const { setExtractedText, setInteractions, setConversation } =
     useConversationContext()!;
   const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
@@ -113,6 +119,19 @@ const Page = () => {
                 File
               </label>
               <MyPdfViewer filePath={fileUrl!} />
+              <button
+                className={cn(
+                  "w-14 h-14 flex items-center justify-center absolute  left-full rounded-md top-0 bg-purple-400 hover:bg-purple-500"
+                )}
+                onClick={() => setOpenSidebar((prev) => !prev)}
+              >
+                <ChevronFirst
+                  className={cn(
+                    "transition-all",
+                    openSidebar ? " rotate-180" : "rotate-0"
+                  )}
+                />
+              </button>
             </div>
           </div>
           <ConversationComponent />
