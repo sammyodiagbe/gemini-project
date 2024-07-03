@@ -1,7 +1,15 @@
 import { useNoteContext } from "@/context/noteContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import { buttonIconSize, cn } from "@/lib/utils";
-import { ChevronLeft, Download, Pencil, Plus, X } from "lucide-react";
+import {
+  ChevronLeft,
+  Download,
+  Notebook,
+  Pen,
+  Pencil,
+  Plus,
+  X,
+} from "lucide-react";
 import NoteComponent from "./noteComponent";
 import { FormEventHandler, useState } from "react";
 
@@ -17,23 +25,23 @@ const ConversationHeader = () => {
     setNoteText("");
   };
   return (
-    <div className="sticky -top-1 select-none bg-backgroundColor z-10 py-2">
-      <div className="">
+    <div className="sticky -top-1 select-none bg-backgroundColor z-5 py-2">
+      <div className="flex space-x-1">
         <button
-          className="text-textColor/80 hover:text-textColor text-sm  font-medium py-1 px-3 rounded-full active:scale-95"
+          className="flex space-x-1 items-center text-textColor/80 hover:text-textColor text-sm  font-medium py-1 px-3 rounded-full active:scale-95"
           onClick={() => {
             setShowNote(true);
           }}
         >
-          My notes ( {notes.length} )
+          <Notebook size={14} /> <span> My notes ( {notes.length} )</span>
         </button>
         <button
-          className="text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95"
+          className="flex items-center space-x-1 text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95"
           onClick={() => {
             showNewNote(true);
           }}
         >
-          Write note
+          <Pen size={14} /> <span>Write Note</span>
         </button>
         {newNote && (
           <div className=" w-[450px] fixed top-[70px] right-[100px] p-3 rounded-lg bg-onBackground  space-y-3 z-[200]">

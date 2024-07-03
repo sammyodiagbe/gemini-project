@@ -47,12 +47,12 @@ const Page = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload_file`,
         formData,
         {
+          onDownloadProgress: (event) => console.log(event),
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-
       const result = await AI.generateContent(
         generateInitialPossibleInteractions(extracted_text)
       );
