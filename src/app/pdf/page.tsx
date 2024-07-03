@@ -126,7 +126,7 @@ const Page = () => {
               <MyPdfViewer filePath={fileUrl!} />
               <button
                 className={cn(
-                  "w-14 h-14 flex items-center justify-center absolute  left-full rounded-md top-0 bg-purple-400 hover:bg-purple-500"
+                  "w-14 h-14 flex items-center justify-center absolute  left-full rounded-r-md top-0 bg-purple-400 hover:bg-purple-500"
                 )}
                 onClick={() => setOpenSidebar((prev) => !prev)}
               >
