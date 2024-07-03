@@ -132,7 +132,7 @@ const Page = () => {
               >
                 <ChevronFirst
                   className={cn(
-                    "transition-all delay-300 duration-300 ease-in-out",
+                    "transition-all delay-500 duration-500 ease-in-out",
                     openSidebar ? " rotate-180" : "rotate-0"
                   )}
                 />
