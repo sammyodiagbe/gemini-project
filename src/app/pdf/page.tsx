@@ -79,10 +79,11 @@ const Page = () => {
       )}
     >
       {fileUrl === null ? (
-        <div className="flex-1 w-full h-full flex items-center justify-center">
+        <div className="flex-1 w-full h-full flex items-center justify-center select-none">
           <div className="max-w-[600px] space-y-5 text-center">
-            <h1 className="text-7xl text-center mb-5">
-              What are we <span className="text-purple-500/90">studying</span>{" "}
+            <h1 className="text-8xl text-center mb-5 font-light ">
+              What are we{" "}
+              <span className="text-fuchsia-500/90 font-black">studying</span>{" "}
               today?
             </h1>
             <label
@@ -92,7 +93,7 @@ const Page = () => {
                 "inline-flex mx-auto text-lg px-9 cursor-pointer"
               )}
             >
-              Upload a file
+              Upload a study file
             </label>
           </div>
         </div>
