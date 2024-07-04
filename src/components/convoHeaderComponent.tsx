@@ -25,7 +25,7 @@ const ConversationHeader = () => {
     setNoteText("");
   };
   return (
-    <div className="absolute  top-[5rem] left-0 -translate-x-[6rem]  select-none z-[120] 0">
+    <div className="absolute  top-[5rem] left-0 -translate-x-[6rem]  select-none z-[120]">
       <div className="py-2 space-y-4 ">
         <button
           className="btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-onBackground group"

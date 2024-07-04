@@ -104,7 +104,7 @@ const ConversationComponent = () => {
               }
             })
           ) : (
-            <div className="py-2 h-full  grid justify-center items-end z-10">
+            <div className="py-2 h-full  grid justify-center items-end z-10 ">
               {
                 <div className="grid grid-cols-2 gap-[1.25rem]">
                   {!busyAI &&
