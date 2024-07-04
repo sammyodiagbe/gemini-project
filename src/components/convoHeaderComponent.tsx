@@ -17,6 +17,7 @@ const ConversationHeader = () => {
   const { notes, setShowNote, showNote, takeNote } = useNoteContext();
   const [noteText, setNoteText] = useState("");
   const [newNote, showNewNote] = useState(false);
+  const { toggleCreateNote } = useNoteContext();
 
   const saveNote: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -25,7 +26,7 @@ const ConversationHeader = () => {
     setNoteText("");
   };
   return (
-    <div className="absolute  top-[5rem] left-0 -translate-x-[6rem]  select-none z-[120]">
+    <div className="h-full sticky top-0 left-[5rem] flex items-center justify-center  select-none z-[120]">
       <div className="py-2 space-y-4 ">
         <button
           className="btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-onBackground group"
@@ -35,22 +36,22 @@ const ConversationHeader = () => {
         >
           <Notebook size={18} />{" "}
           <span
-            className="absolute  overflow-hidden w-[100px]  left-full top-full/2 transition-all ml-2  bg-purple-500 py-2 px-2 invisible rounded-md 
-           group-hover:visible group-hover:w-[100px] group-hover:opacity-1 btn-hover:visible"
+            className="absolute w-auto  overflow-hidden   left-full top-full/2 transition-all ml-2  bg-purple-500 py-2 px-2 invisible rounded-md whitespace-nowrap
+           group-hover:visible  group-hover:opacity-1 btn-hover:visible"
           >
-            Your notes
+            Your notes ({notes.length})
           </span>
         </button>
         <button
           className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
-            showNewNote(true);
+            toggleCreateNote(true);
           }}
         >
           <Pen size={18} />
           <span
-            className="absolute  overflow-hidden w-[100px]  left-full top-full/2 transition-all ml-2  bg-purple-500 py-2 px-2 invisible rounded-md 
-           group-hover:visible group-hover:w-[100px] group-hover:opacity-1 btn-hover:visible"
+            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
+           group-hover:visible group-hover:opacity-1 btn-hover:visible"
           >
             Write Note
           </span>

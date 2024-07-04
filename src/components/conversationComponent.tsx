@@ -57,14 +57,15 @@ const ConversationComponent = () => {
     <div
       ref={convoContainerRef}
       id="conversation"
-      className="flex-1 text-textColor pb-0 max-h-screen relative overflow-y-auto"
+      className="flex-1 flex text-textColor pb-0 max-h-screen relative overflow-y-auto px-8"
     >
+      <ConversationHeader />
+
       <div className="relative grid grid-rows-[1fr_5rem] grid-cols-1 w-[46.87rem] h-full max-h-full mx-auto">
         {/* this would be the header of the chat */}
         {/* <div className=""></div> */}
 
         {/* this would be the conversation body */}
-        <ConversationHeader />
         <div className=" pb-[1.875rem] space-y-8">
           {conversation.length ? (
             conversation.map((conv, index) => {

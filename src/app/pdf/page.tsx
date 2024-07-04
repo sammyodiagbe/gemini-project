@@ -17,6 +17,8 @@ import { useLoadingContext } from "@/context/loadingStateContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import LoaderComponent from "@/components/loader";
 import { useQuizContext } from "@/context/quizContext";
+import { useNoteContext } from "@/context/noteContext";
+import NewNoteComponent from "@/components/notes-components/newNote";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string | null>(null);
@@ -25,6 +27,7 @@ const Page = () => {
     useConversationContext()!;
   const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
   const { quizmode } = useQuizContext();
+  const { createNewNote } = useNoteContext();
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
@@ -84,6 +87,7 @@ const Page = () => {
         !fileUrl ? "" : ""
       )}
     >
+      <NewNoteComponent />
       {fileUrl === null ? (
         <div className="flex-1 w-full h-full flex items-center justify-center select-none">
           <div className="max-w-[600px] space-y-5 text-center">

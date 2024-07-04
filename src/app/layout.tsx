@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import LoadingStateContextProvider from "@/context/loadingStateContext";
 import Navbar from "@/components/navbar";
 import { Analytics } from "@vercel/analytics/react";
+import ToastProvider from "@/context/toastContext";
 
 const inter = Outfit({ subsets: ["latin"] });
 
@@ -27,9 +28,11 @@ export default function RootLayout({
         )}
       >
         <LoadingStateContextProvider>
-          <Navbar />
-          {children}
-          <Analytics />
+          <ToastProvider>
+            <Navbar />
+            {children}
+            <Analytics />
+          </ToastProvider>
         </LoadingStateContextProvider>
       </body>
     </html>

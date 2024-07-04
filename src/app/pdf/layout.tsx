@@ -16,6 +16,7 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
         <QuizContextProvider>
           <NoteContextProvider>
             <PopupComponent />
+
             {children}
           </NoteContextProvider>
         </QuizContextProvider>

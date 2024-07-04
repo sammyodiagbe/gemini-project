@@ -14,6 +14,8 @@ type NoteContextType = {
   showNote: boolean;
   setShowNote: Dispatch<SetStateAction<boolean>>;
   deleteNote: Function;
+  createNewNote: boolean;
+  toggleCreateNote: Function;
 };
 
 const noteContext = createContext<NoteContextType>({
@@ -22,11 +24,14 @@ const noteContext = createContext<NoteContextType>({
   showNote: false,
   setShowNote: () => {},
   deleteNote: () => {},
+  createNewNote: false,
+  toggleCreateNote: () => {},
 });
 
 const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [notes, updateNotes] = useState<NoteType[]>([]);
   const [showNote, setShowNote] = useState<boolean>(false);
+  const [createNewNote, setCreateNoteNote] = useState<boolean>(false);
 
   const takeNote = (note: NoteType) => {
     if (note.content.trim() === "") return;
@@ -36,9 +41,21 @@ const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteNote = (note: NoteType) => {
     updateNotes((prev) => prev.filter((n) => n != note));
   };
+
+  const toggleCreateNote = (state: boolean) => {
+    setCreateNoteNote(state);
+  };
   return (
     <noteContext.Provider
-      value={{ notes, showNote, setShowNote, takeNote, deleteNote }}
+      value={{
+        notes,
+        showNote,
+        setShowNote,
+        takeNote,
+        deleteNote,
+        createNewNote,
+        toggleCreateNote,
+      }}
     >
       {children}
     </noteContext.Provider>
