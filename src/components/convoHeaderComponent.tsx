@@ -25,26 +25,38 @@ const ConversationHeader = () => {
     setNoteText("");
   };
   return (
-    <div className="select-none bg-backgroundColor z-[120] py-2">
-      <div className="sticky top-0 flex space-x-1">
+    <div className="absolute  top-[5rem] left-0 -translate-x-[6rem]  select-none z-[120] 0">
+      <div className="py-2 space-y-4 ">
         <button
-          className="flex space-x-1 items-center text-textColor/80 hover:text-textColor text-sm  font-medium py-1 px-3 rounded-full active:scale-95"
+          className="btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-onBackground group"
           onClick={() => {
             setShowNote(true);
           }}
         >
-          <Notebook size={14} /> <span> My notes ( {notes.length} )</span>
+          <Notebook size={18} />{" "}
+          <span
+            className="absolute  overflow-hidden w-[100px]  left-full top-full/2 transition-all ml-2  bg-purple-500 py-2 px-2 invisible rounded-md 
+           group-hover:visible group-hover:w-[100px] group-hover:opacity-1 btn-hover:visible"
+          >
+            Your notes
+          </span>
         </button>
         <button
-          className="flex items-center space-x-1 text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95"
+          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
             showNewNote(true);
           }}
         >
-          <Pen size={14} /> <span>Write Note</span>
+          <Pen size={18} />
+          <span
+            className="absolute  overflow-hidden w-[100px]  left-full top-full/2 transition-all ml-2  bg-purple-500 py-2 px-2 invisible rounded-md 
+           group-hover:visible group-hover:w-[100px] group-hover:opacity-1 btn-hover:visible"
+          >
+            Write Note
+          </span>
         </button>
-        {newNote && (
-          <div className=" w-[450px] fixed top-[70px] right-[100px] p-3 rounded-lg bg-onBackground  space-y-3 z-[200]">
+        {/* {newNote && (
+          <div className=" w-[full] fixed top-0 right-[100px] p-3 rounded-lg bg-onBackground  space-y-3 z-[200]">
             <div className="flex py-3 justify-between items-center">
               <h1 className="text-2xl">Create a new note</h1>
               <button
@@ -74,44 +86,8 @@ const ConversationHeader = () => {
               </form>
             </div>
           </div>
-        )}
+        )} */}
       </div>
-
-      {showNote && (
-        <div className="fixed left-0 bg-backgroundColor top-0 z-[150] w-screen h-screen overflow-auto">
-          <div className="w-[45.7rem] mx-auto">
-            <div className="sticky top-0 flex justify-between py-5 border-b-2 border-textColor/10 bg-backgroundColor">
-              <div className="flex items-center space-x-5">
-                <button className=" flex " onClick={() => setShowNote(false)}>
-                  <ChevronLeft className="text-textColor/70" /> Go back
-                </button>
-
-                <h1 className="text-2xl text-purple-500 font-semibold">
-                  Your notes
-                </h1>
-              </div>
-
-              <div className="flex space-x-1 ">
-                <button className={cn(buttonClass, "space-x-2")}>
-                  <Download size={buttonIconSize} className="mr-1" /> Download
-                  note
-                </button>
-                <button
-                  className={cn(buttonClass, "space-x-2")}
-                  onClick={() => showNewNote(true)}
-                >
-                  <Pencil size={buttonIconSize} className="mr-1" /> New note
-                </button>
-              </div>
-            </div>
-            <div className="space-y-5 py-2 ">
-              {notes.map((note, index) => {
-                return <NoteComponent note={note} index={index} key={index} />;
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
