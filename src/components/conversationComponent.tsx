@@ -23,7 +23,6 @@ import { useLoadingContext } from "@/context/loadingStateContext";
 import { useQuizContext } from "@/context/quizContext";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useNoteContext } from "@/context/noteContext";
 import ConversationHeader from "./convoHeaderComponent";
 
 const ConversationComponent = () => {
@@ -105,7 +104,7 @@ const ConversationComponent = () => {
               }
             })
           ) : (
-            <div className="py-2 h-full  grid justify-center items-end ">
+            <div className="py-2 h-full  grid justify-center items-end z-10">
               {
                 <div className="grid grid-cols-2 gap-[1.25rem]">
                   {!busyAI &&
@@ -124,7 +123,7 @@ const ConversationComponent = () => {
           )}
         </div>
         {/* this woudl contain the textarea and other action btn */}
-        <div className=" sticky bottom-1 w-full max-w-full">
+        <div className=" absolute left-0 bottom-1 w-full max-w-full z-10">
           <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
             {!quizmode && (
               <AnimatePresence>

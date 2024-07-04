@@ -17,11 +17,11 @@ const PossibleInteractionComponent: FC<ComponentType> = ({
   return (
     <motion.div
       onClick={sendMessageToGemini}
-      className=" p-4 min-h-[80px] text-md cursor-pointer rounded-md grid grid-cols-[25px_1fr] items-start ring-1 ring-onBackground/10 hover:bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:text-white transition-all duration-1000"
+      className="-z-0 p-4 min-h-[80px] text-md cursor-pointer rounded-md grid grid-cols-[25px_1fr] items-start ring-1 ring-onBackground/10 hover:bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:text-white transition-all duration-100"
     >
       <Lightbulb
-        size={18}
-        className=" text-textColor font-bold relative top-[5px]"
+        size={16}
+        className="  text-textColor font-bold relative top-[5px]"
       />
       <p>{interactionMessage}</p>
     </motion.div>

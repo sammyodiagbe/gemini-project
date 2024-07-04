@@ -25,8 +25,8 @@ const ConversationHeader = () => {
     setNoteText("");
   };
   return (
-    <div className="sticky -top-1 select-none bg-backgroundColor z-5 py-2">
-      <div className="flex space-x-1">
+    <div className="select-none bg-backgroundColor z-[120] py-2">
+      <div className="sticky top-0 flex space-x-1">
         <button
           className="flex space-x-1 items-center text-textColor/80 hover:text-textColor text-sm  font-medium py-1 px-3 rounded-full active:scale-95"
           onClick={() => {
@@ -78,7 +78,7 @@ const ConversationHeader = () => {
       </div>
 
       {showNote && (
-        <div className="fixed left-0 bg-backgroundColor top-0 z-50 w-screen h-screen overflow-auto">
+        <div className="fixed left-0 bg-backgroundColor top-0 z-[150] w-screen h-screen overflow-auto">
           <div className="w-[45.7rem] mx-auto">
             <div className="sticky top-0 flex justify-between py-5 border-b-2 border-textColor/10 bg-backgroundColor">
               <div className="flex items-center space-x-5">
