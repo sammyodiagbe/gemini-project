@@ -108,7 +108,7 @@ const Page = () => {
           <div
             className={cn(
               "w-[46.875rem] max-w-[46.875rem] h-full select-none transition-all duration-300 ease-in-out",
-              openSidebar ? "w-0" : "w-[46.875rem"
+              openSidebar ? "w-0" : "w-[46.875rem]"
             )}
           >
             <div className={cn("relative h-full transition-all")}>
@@ -117,7 +117,7 @@ const Page = () => {
                 aria-disabled={quizmode || busyAI}
                 className={cn(
                   buttonClass,
-                  "absolute   bottom-10 ring-2 ring-purple-600 right-[50px] text-purple-600 bg-white hover:scale-110 cursor-pointer z-5"
+                  "absolute   bottom-10 ring-2 ring-purple-600 right-[50px] text-purple-600 bg-white hover:scale-1 cursor-pointer z-5"
                 )}
               >
                 <Upload size={buttonIconSize} className="mr-2" /> Upload New
@@ -126,7 +126,7 @@ const Page = () => {
               <MyPdfViewer filePath={fileUrl!} />
               <button
                 className={cn(
-                  "w-14 h-14 flex items-center justify-center absolute  left-full rounded-r-md top-0 bg-purple-400 hover:bg-purple-500"
+                  "w-14 h-14 flex items-center cursor-pointer justify-center absolute  left-full rounded-r-md top-0 bg-purple-400 hover:bg-purple-500 z-10"
                 )}
                 onClick={() => setOpenSidebar((prev) => !prev)}
               >
