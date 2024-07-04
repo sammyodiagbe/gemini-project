@@ -51,3 +51,9 @@ export type GeminiResponseType = {
   quiz?: QuizType;
   text?: string;
 };
+
+export type ToastType = {
+  title: string;
+  body: string;
+  type: "error" | "success" | "warning";
+};

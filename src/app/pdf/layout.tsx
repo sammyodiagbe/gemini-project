@@ -1,8 +1,10 @@
 import PopupComponent from "@/components/popupComponent";
+import ToastWrapperProvider from "@/components/toast-components/toastWrapperProvider";
 import ConversationContextProvider from "@/context/conversationContext";
 import NoteContextProvider from "@/context/noteContext";
 import PopupContextProvider from "@/context/popupContext";
 import QuizContextProvider from "@/context/quizContext";
+import ToastProvider from "@/context/toastContext";
 import { FC } from "react";
 
 type LayoutType = {
@@ -15,9 +17,11 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
       <PopupContextProvider>
         <QuizContextProvider>
           <NoteContextProvider>
-            <PopupComponent />
+            <ToastProvider>
+              <ToastWrapperProvider />
 
-            {children}
+              {children}
+            </ToastProvider>
           </NoteContextProvider>
         </QuizContextProvider>
       </PopupContextProvider>

@@ -14,17 +14,9 @@ import NoteComponent from "./noteComponent";
 import { FormEventHandler, useState } from "react";
 
 const ConversationHeader = () => {
-  const { notes, setShowNote, showNote, takeNote } = useNoteContext();
-  const [noteText, setNoteText] = useState("");
-  const [newNote, showNewNote] = useState(false);
+  const { notes, setShowNote } = useNoteContext();
   const { toggleCreateNote } = useNoteContext();
 
-  const saveNote: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    if (noteText.trim() === "") return;
-    takeNote({ content: noteText });
-    setNoteText("");
-  };
   return (
     <div className="h-full sticky top-0 left-[5rem] flex items-center justify-center  select-none z-[120]">
       <div className="py-2 space-y-4 ">

@@ -10,19 +10,27 @@ type ToastType = {
 type ComponentType = {
   toasts: ToastType[];
   updateToasts: Function;
+  removeToast: Function;
 };
 
 const toastContext = createContext<ComponentType>({
   toasts: [],
   updateToasts: () => {},
+  removeToast: () => {},
 });
 
 const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [toasts, setToasts] = useState<ToastType[]>([]);
 
-  const updateToasts = (toast: ToastType) => {};
+  const updateToasts = (toast: ToastType) => {
+    setToasts((prev) => [...prev, toast]);
+  };
+
+  const removeToast = (toast: ToastType) => {
+    setToasts((prev) => prev.filter((t) => t != toast));
+  };
   return (
-    <toastContext.Provider value={{ toasts, updateToasts }}>
+    <toastContext.Provider value={{ toasts, updateToasts, removeToast }}>
       {children}
     </toastContext.Provider>
   );

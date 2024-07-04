@@ -4,17 +4,26 @@ import { FormEventHandler, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useNoteContext } from "@/context/noteContext";
-import { NoteType } from "@/lib/type";
+import { NoteType, ToastType } from "@/lib/type";
+import { useToastContext } from "@/context/toastContext";
 
 const NewNoteComponent = () => {
   const [text, setText] = useState("");
   const { toggleCreateNote, createNewNote, takeNote } = useNoteContext();
+  const { updateToasts } = useToastContext();
 
   const addNewNote: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     if (!text || text.trim() === "") return;
     const note: NoteType = { content: text };
     await takeNote(note);
+    setText("");
+    const toast: ToastType = {
+      title: "Note",
+      body: "Note has been added successfully",
+      type: "success",
+    };
+    updateToasts(toast);
   };
   return (
     <AnimatePresence>
@@ -23,7 +32,7 @@ const NewNoteComponent = () => {
           initial={{ x: 0 }}
           animate={{ x: "-28rem" }}
           exit={{ x: "28rem" }}
-          className="fixed h-auto bottom-0 left-full p-5 min-w-[28rem] bg-onBackground z-30 shadow-lg"
+          className="fixed h-auto bottom-0 left-full p-5 min-w-[28rem] bg-onBackground z-30 shadow-lg rounder-lg"
         >
           <button
             className="w-12 h-12 absolute flex items-center justify-center right-2 top-2 "
