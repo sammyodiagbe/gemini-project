@@ -41,6 +41,12 @@
 
     }
 
+    .light {
+      --color-backgroundColor: 241 250 238;
+      --color-textColor: 0 8 20;
+      --color-onBackground: 247 250 244;
+    }
+
     body {
       background: var(--color-backgroundColor);
       color: var(--color-textColor);

@@ -5,9 +5,7 @@ import { cn } from "@/lib/utils";
 import LoadingStateContextProvider from "@/context/loadingStateContext";
 import Navbar from "@/components/navbar";
 import { Analytics } from "@vercel/analytics/react";
-import ToastProvider, { useToastContext } from "@/context/toastContext";
-import Toast from "@/components/toast-components/toastComponent";
-import ToastWrapperProvider from "@/components/toast-components/toastWrapperProvider";
+import ThemeProvider, { useThemeContext } from "@/context/themeContext";
 
 const inter = Outfit({ subsets: ["latin"] });
 
@@ -23,18 +21,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className=" relative">
-      <body
-        className={cn(
-          inter.className,
-          "dark bg-backgroundColor text-textColor"
-        )}
-      >
-        <LoadingStateContextProvider>
-          <Navbar />
-          {children}
-          <Analytics />
-        </LoadingStateContextProvider>
-      </body>
+      <ThemeProvider>
+        <body
+          className={cn(
+            inter.className,
+            "light bg-backgroundColor text-textColor"
+          )}
+        >
+          <LoadingStateContextProvider>
+            <Navbar />
+            {children}
+            <Analytics />
+          </LoadingStateContextProvider>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
