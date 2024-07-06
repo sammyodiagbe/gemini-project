@@ -57,3 +57,8 @@ export type ToastType = {
   body: string;
   type: "error" | "success" | "warning";
 };
+
+export type ImageDataType = {
+  img_type: string;
+  base_64_data: string;
+};

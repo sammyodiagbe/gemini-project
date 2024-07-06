@@ -1,5 +1,8 @@
+import { ImageDataType } from "./type";
+
 export const generateInitialPossibleInteractions = (
-  articleText: string
+  articleText: string,
+  images?: ImageDataType[]
 ): string => {
   if (articleText.replace(/\n+/, "") === "") {
     console.log("empty dataset");
@@ -23,6 +26,7 @@ export const generateInitialPossibleInteractions = (
     Never send back the text above this line........
     You are only responding based of the text here
     Always add fun by using emojis
+    And always refer to the user in first person
     In the case where text isn't provided then you can simply respond to the user saying There is not context provided, come up with some response to let them know there is nothing to work with
     text=${articleText}`;
 };
@@ -152,4 +156,11 @@ export const beginQuizmode = (
     You randomly choose if you want to ask the user shortanswer questions or multiplechoice per question
   `;
   return prompt + `\n difficulty level is ${difficulty}`;
+};
+
+export const generateTopics = () => {
+  return `
+    Analyze the text that has been extracted from the document, then use this to generate possible topics the user might want to talk about, the reason is so a user can lock unto a topic, remember to send your response in json format and topics should be an array of topics { topics: [...]}
+    
+  `;
 };

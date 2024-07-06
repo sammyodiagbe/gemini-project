@@ -3,7 +3,7 @@ import NetworkStatusComponent from "./networkStatusComponent";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between bg-backgroundColor text-textColor items-center p-4 h-[4.375rem]">
+    <nav className="flex justify-between bg-backgroundColor text-textColor items-center p-4 h-[4.375rem] border-b-1 border-b-textColor">
       <h1 className="font-bold text-xl">
         <Link href={"/"}>Rafikiai</Link>
       </h1>

@@ -1,7 +1,13 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ConversationType, MessageType, QuizType, senderType } from "./type";
-import { TextPart } from "@google/generative-ai";
+import {
+  ConversationType,
+  ImageDataType,
+  MessageType,
+  QuizType,
+  senderType,
+} from "./type";
+import { FileDataPart, InlineDataPart, TextPart } from "@google/generative-ai";
 import { geminiDocumentInitInstruction } from "./gemini_interactons";
 
 export function cn(...inputs: ClassValue[]) {
@@ -30,3 +36,19 @@ export function processText(text: string): TextPart {
 
   return initialText;
 }
+
+export function processImage(imageData: ImageDataType) {
+  const { base_64_data, img_type } = imageData;
+  const mimetype = `image/${img_type}`;
+  const imagePart: InlineDataPart = {
+    inlineData: {
+      mimeType: mimetype,
+      data: base_64_data,
+    },
+  };
+  return imagePart;
+}
+
+// const createDataURI = (base64String: string, mimetype: string) => {
+//   return `data:${mimetype};base64,${base64String}`;
+// };

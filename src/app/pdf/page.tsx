@@ -23,11 +23,15 @@ import NewNoteComponent from "@/components/notes-components/newNote";
 const Page = () => {
   const [fileUrl, setFile] = useState<string | null>(null);
   const [openSidebar, setOpenSidebar] = useState<boolean>(false);
-  const { setExtractedText, setInteractions, setConversation } =
-    useConversationContext()!;
+  const {
+    setConversation,
+    updateExtractedText,
+    updateImagesData,
+    updateDataState,
+    reset,
+  } = useConversationContext()!;
   const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
   const { quizmode } = useQuizContext();
-  const { createNewNote } = useNoteContext();
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
@@ -37,11 +41,9 @@ const Page = () => {
     const { target } = event;
     const file = target.files!;
     if (!file) return;
+    reset();
     handleFileUpload(file[0]);
-
-    setWorkingOnPdf(true);
     setConversation([]);
-    setInteractions([]);
   };
 
   const handleFileUpload = async (file: File) => {
@@ -51,9 +53,13 @@ const Page = () => {
 
     try {
       const {
-        data: { extracted_text },
+        data: { extracted_text, images },
       } = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload_file`,
+        `${
+          process.env.NEXT_PUBLIC_DEV_MODE === "development"
+            ? process.env.NEXT_PUBLIC_DEV_BACKEND_URL
+            : process.env.NEXT_PUBLIC_BACKEND_URL
+        }/upload_file`,
         formData,
         {
           onDownloadProgress: (event) => console.log(event),
@@ -62,20 +68,26 @@ const Page = () => {
           },
         }
       );
-      const result = await AI.generateContent(
-        generateInitialPossibleInteractions(extracted_text)
-      );
-      const response = await result.response;
-      const text = await response.text();
-      const json = jsonDecode(text);
 
-      const { interactions } = json;
-      setInteractions(interactions);
+      console.log(images);
+
+      updateExtractedText(extracted_text);
+      updateImagesData(images);
+      updateDataState(true);
+      // const result = await AI.generateContent(
+      //   generateInitialPossibleInteractions(extracted_text)
+      // );
+      // const response = await result.response;
+      // const text = await response.text();
+      // const json = jsonDecode(text);
+
+      // const { interactions } = json;
+      // setInteractions(interactions);
       setFile(fileUrl);
-      setExtractedText(extracted_text);
-      setWorkingOnPdf(false);
+      // setExtractedText(extracted_text);
     } catch (error: any) {
       setWorkingOnPdf(false);
+      console.log(error);
     }
   };
 
