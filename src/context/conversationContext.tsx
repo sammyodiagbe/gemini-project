@@ -182,7 +182,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     const prompt = `
       Make this your focus topics from here on, until you get other instruction
       Topics are below, quiz and flashcards should be based on this topics
-      ${topics.join(",")}
+      ${topics.join(",")}, you don't have to respond to this now, but note this.
     `;
     try {
       const result = await chat?.sendMessage(prompt);
@@ -200,16 +200,16 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     const focus = [...focusTopics.filter((t) => t !== topic)];
     console.log(focus);
     const prompt = !focus.length
-      ? "Now shift focus back on entire article gotten from document"
+      ? "Now shift focus back on entire article gotten from document, note this"
       : `
       Make this your focus topics from here on, until you get other instruction
-      Topics are below
+      Topics are below, you don't have to respond to this, just note this.
       ${focus.join(",")}
     `;
     try {
       const result = await chat?.sendMessage(prompt);
       const response = await result?.response;
-
+      console.log(response?.text());
       setFocusTopics((prev) => prev.filter((t) => t !== topic));
     } catch (error: any) {
       console.log(error);

@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   Download,
   FileQuestion,
+  LayoutList,
   Notebook,
   Pen,
   Pencil,
@@ -30,7 +31,7 @@ const ConversationHeader = () => {
         >
           <Notebook size={18} />{" "}
           <span
-            className="absolute w-auto  overflow-hidden   left-full top-full/2 transition-all ml-2  bg-purple-500 py-2 px-2 invisible rounded-md whitespace-nowrap
+            className="absolute w-auto  overflow-hidden   left-full top-full/2 transition-all ml-2  bg-purple-500 text-white py-2 px-2 invisible rounded-md whitespace-nowrap
            group-hover:visible  group-hover:opacity-1 btn-hover:visible"
           >
             Your notes ({notes.length})
@@ -42,23 +43,37 @@ const ConversationHeader = () => {
             toggleCreateNote(true);
           }}
         >
-          <Pen size={18} />
+          <LayoutList size={18} />
           <span
             className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
+           group-hover:visible group-hover:opacity-1 btn-hover:visible text-white"
+          >
+            Show Generated Topics
+          </span>
+        </button>
+        <button
+          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm  font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          onClick={() => {
+            toggleCreateNote(true);
+          }}
+        >
+          <Pen size={18} />
+          <span
+            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
            group-hover:visible group-hover:opacity-1 btn-hover:visible"
           >
             Write Note
           </span>
         </button>
         <button
-          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
             toggleCreateNote(true);
           }}
         >
           <FileQuestion size={18} />
           <span
-            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
+            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
            group-hover:visible group-hover:opacity-1 btn-hover:visible"
           >
             Quiz Me
@@ -72,7 +87,7 @@ const ConversationHeader = () => {
         >
           <Zap size={18} />
           <span
-            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
+            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
            group-hover:visible group-hover:opacity-1 btn-hover:visible"
           >
             Flashcard

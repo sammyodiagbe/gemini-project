@@ -1,24 +1,15 @@
 "use client";
 import axios from "axios";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
-import { Gemini as AI } from "@/gemini/gemini";
 import MyPdfViewer from "@/components/pdfViewer";
 import ConversationComponent from "@/components/conversationComponent";
 import { useConversationContext } from "@/context/conversationContext";
-import { buttonIconSize, cn, jsonDecode } from "@/lib/utils";
-import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
-import {
-  ChevronFirst,
-  ChevronLast,
-  MenuSquareIcon,
-  Upload,
-  UploadCloudIcon,
-} from "lucide-react";
+import { buttonIconSize, cn } from "@/lib/utils";
+import { ChevronFirst, Upload } from "lucide-react";
 import { useLoadingContext } from "@/context/loadingStateContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import LoaderComponent from "@/components/loader";
 import { useQuizContext } from "@/context/quizContext";
-import { useNoteContext } from "@/context/noteContext";
 import NewNoteComponent from "@/components/notes-components/newNote";
 import TopicsComponent from "@/components/pdf_components/topicsComponent";
 
@@ -154,18 +145,6 @@ const Page = () => {
                     className={cn(
                       "transition-all delay-500 duration-500 ease-in-out",
                       openSidebar ? " rotate-180" : "rotate-0"
-                    )}
-                  />
-                </button>
-                <button
-                  className={cn(
-                    "w-14 h-14 flex text-white items-center cursor-pointer justify-center rounded-r-md  bg-purple-400 hover:bg-purple-500 z-10"
-                  )}
-                  onClick={() => setOpenSidebar((prev) => !prev)}
-                >
-                  <MenuSquareIcon
-                    className={cn(
-                      "transition-all delay-500 duration-500 ease-in-out"
                     )}
                   />
                 </button>
