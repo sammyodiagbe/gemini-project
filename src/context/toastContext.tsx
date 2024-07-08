@@ -1,11 +1,6 @@
 "use client";
+import { ToastType } from "@/lib/type";
 import { createContext, useContext, useState } from "react";
-
-type ToastType = {
-  title: string;
-  body: string;
-  type: "error" | "success" | "warning";
-};
 
 type ComponentType = {
   toasts: ToastType[];
@@ -28,6 +23,7 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 
   const removeToast = (toast: ToastType) => {
     setToasts((prev) => prev.filter((t) => t != toast));
+    console.log(toasts);
   };
   return (
     <toastContext.Provider value={{ toasts, updateToasts, removeToast }}>

@@ -160,7 +160,7 @@ export const beginQuizmode = (
 
 export const generateTopics = () => {
   return `
-    Analyze the text that has been extracted from the document, then use this to generate possible topics the user might want to talk about, the reason is so a user can lock unto a topic, remember to send your response in json format and topics should be an array of topics { topics: [...]}
+    Analyze the text that has been extracted from the document, then use this to generate possible topics the user might want to talk about, the reason is so a user can lock unto a topic, remember to send your response in json format and topics should be an array of topics { topics: [...]} if there are no topics from the text document then return an empty list only return an empty list if there are no topics to work with or if the type of text is not a textbook, school work 
     
   `;
 };

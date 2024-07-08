@@ -10,6 +10,7 @@ import { generateInitialPossibleInteractions } from "@/lib/gemini_interactons";
 import {
   ChevronFirst,
   ChevronLast,
+  MenuSquareIcon,
   Upload,
   UploadCloudIcon,
 } from "lucide-react";
@@ -19,6 +20,7 @@ import LoaderComponent from "@/components/loader";
 import { useQuizContext } from "@/context/quizContext";
 import { useNoteContext } from "@/context/noteContext";
 import NewNoteComponent from "@/components/notes-components/newNote";
+import TopicsComponent from "@/components/pdf_components/topicsComponent";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string | null>(null);
@@ -95,7 +97,7 @@ const Page = () => {
   return (
     <main
       className={cn(
-        "flex h-screen max-h-[calc(100vh-70px)] w-screen ",
+        "flex h-screen max-h-[calc(100vh-70px)] w-screen overflow-x-hidden",
         !fileUrl ? "" : ""
       )}
     >
@@ -140,19 +142,34 @@ const Page = () => {
                 File
               </label>
               <MyPdfViewer filePath={fileUrl!} />
-              <button
-                className={cn(
-                  "w-14 h-14 flex items-center cursor-pointer justify-center absolute  left-full rounded-r-md top-0 bg-purple-400 hover:bg-purple-500 z-10"
-                )}
-                onClick={() => setOpenSidebar((prev) => !prev)}
-              >
-                <ChevronFirst
+              <TopicsComponent />
+              <div className="absolute left-full top-0 space-y-1 z-10">
+                <button
                   className={cn(
-                    "transition-all delay-500 duration-500 ease-in-out",
-                    openSidebar ? " rotate-180" : "rotate-0"
+                    "w-14 h-14 flex text-white items-center cursor-pointer justify-center rounded-r-md  bg-purple-400 hover:bg-purple-500 "
                   )}
-                />
-              </button>
+                  onClick={() => setOpenSidebar((prev) => !prev)}
+                >
+                  <ChevronFirst
+                    className={cn(
+                      "transition-all delay-500 duration-500 ease-in-out",
+                      openSidebar ? " rotate-180" : "rotate-0"
+                    )}
+                  />
+                </button>
+                <button
+                  className={cn(
+                    "w-14 h-14 flex text-white items-center cursor-pointer justify-center rounded-r-md  bg-purple-400 hover:bg-purple-500 z-10"
+                  )}
+                  onClick={() => setOpenSidebar((prev) => !prev)}
+                >
+                  <MenuSquareIcon
+                    className={cn(
+                      "transition-all delay-500 duration-500 ease-in-out"
+                    )}
+                  />
+                </button>
+              </div>
             </div>
           </div>
           <ConversationComponent />

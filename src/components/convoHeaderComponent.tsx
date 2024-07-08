@@ -4,11 +4,13 @@ import { buttonIconSize, cn } from "@/lib/utils";
 import {
   ChevronLeft,
   Download,
+  FileQuestion,
   Notebook,
   Pen,
   Pencil,
   Plus,
   X,
+  Zap,
 } from "lucide-react";
 import NoteComponent from "./noteComponent";
 import { FormEventHandler, useState } from "react";
@@ -46,6 +48,34 @@ const ConversationHeader = () => {
            group-hover:visible group-hover:opacity-1 btn-hover:visible"
           >
             Write Note
+          </span>
+        </button>
+        <button
+          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          onClick={() => {
+            toggleCreateNote(true);
+          }}
+        >
+          <FileQuestion size={18} />
+          <span
+            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
+           group-hover:visible group-hover:opacity-1 btn-hover:visible"
+          >
+            Quiz Me
+          </span>
+        </button>
+        <button
+          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          onClick={() => {
+            toggleCreateNote(true);
+          }}
+        >
+          <Zap size={18} />
+          <span
+            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
+           group-hover:visible group-hover:opacity-1 btn-hover:visible"
+          >
+            Flashcard
           </span>
         </button>
         {/* {newNote && (

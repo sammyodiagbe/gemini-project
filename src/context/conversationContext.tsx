@@ -16,7 +16,7 @@ import {
   processImage,
   processText,
 } from "@/lib/utils";
-import { ConversationType, ImageDataType } from "@/lib/type";
+import { ConversationType, ImageDataType, ToastType } from "@/lib/type";
 import {
   geminiDocumentInitInstruction,
   generateFlashcardGemini,
@@ -25,6 +25,7 @@ import {
   generateTopics,
 } from "@/lib/gemini_interactons";
 import { useLoadingContext } from "./loadingStateContext";
+import { useToastContext } from "./toastContext";
 
 type interaction = {
   text: string;
@@ -49,6 +50,10 @@ type ContextType = {
   reset: Function;
   topics: string[];
   docType: string;
+  focusTopics: string[];
+  addTopicToFocus: Function;
+  removeTopicFromFocus: Function;
+  removeAllFocusTopics: Function;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -70,6 +75,10 @@ const conversationContext = createContext<ContextType>({
   updateExtractedText: () => {},
   topics: [],
   docType: "",
+  focusTopics: [],
+  addTopicToFocus: () => {},
+  removeTopicFromFocus: () => {},
+  removeAllFocusTopics: () => {},
 });
 
 type ConversationContextType = {
@@ -89,6 +98,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [topics, setTopics] = useState<string[]>([]);
   const [docType, setDocType] = useState<string>("");
   const { setWorkingOnPdf } = useLoadingContext();
+  const [focusTopics, setFocusTopics] = useState<string[]>([]);
+  const { updateToasts } = useToastContext();
 
   useEffect(() => {
     if (gotData) {
@@ -166,6 +177,49 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     }
   };
 
+  const addTopicToFocus = async (text: string) => {
+    const topics = [...focusTopics, text];
+    const prompt = `
+      Make this your focus topics from here on, until you get other instruction
+      Topics are below, quiz and flashcards should be based on this topics
+      ${topics.join(",")}
+    `;
+    try {
+      const result = await chat?.sendMessage(prompt);
+      const response = await result?.response;
+
+      console.log(response?.text());
+
+      setFocusTopics((prev) => [...prev, text]);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const removeTopicFromFocus = async (topic: string) => {
+    const focus = [...focusTopics.filter((t) => t !== topic)];
+    console.log(focus);
+    const prompt = !focus.length
+      ? "Now shift focus back on entire article gotten from document"
+      : `
+      Make this your focus topics from here on, until you get other instruction
+      Topics are below
+      ${focus.join(",")}
+    `;
+    try {
+      const result = await chat?.sendMessage(prompt);
+      const response = await result?.response;
+
+      setFocusTopics((prev) => prev.filter((t) => t !== topic));
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const removeAllFocusTopics = () => {
+    setFocusTopics((prev) => []);
+  };
+
   const updateDataState = (state: boolean) => {
     setGotData(state);
   };
@@ -180,7 +234,9 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const response = await result?.response;
       const text = await response?.text();
       const decodejson = jsonDecode(text!);
+      console.log(decodejson);
       const { response: res } = decodejson;
+      console.log(res);
       const convoObj: ConversationType = {
         type: "chat",
         sender: "ai",
@@ -354,6 +410,10 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         reset,
         topics,
         docType,
+        addTopicToFocus,
+        focusTopics,
+        removeTopicFromFocus,
+        removeAllFocusTopics,
       }}
     >
       {children}

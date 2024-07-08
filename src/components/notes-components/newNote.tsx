@@ -10,7 +10,7 @@ import { useToastContext } from "@/context/toastContext";
 const NewNoteComponent = () => {
   const [text, setText] = useState("");
   const { toggleCreateNote, createNewNote, takeNote } = useNoteContext();
-  const { updateToasts } = useToastContext();
+  const { updateToasts, toasts } = useToastContext();
 
   const addNewNote: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
