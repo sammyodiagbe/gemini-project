@@ -26,7 +26,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import ConversationHeader from "./convoHeaderComponent";
 
 const ConversationComponent = () => {
-  const { interactions, chatWithGemini, conversation, getFlashCard } =
+  const { interactions, chatWithGemini, conversation } =
     useConversationContext();
   const [message, setMessage] = useState("");
   const convoContainerRef = useRef<HTMLDivElement>(null);
@@ -130,13 +130,6 @@ const ConversationComponent = () => {
               <AnimatePresence>
                 <motion.div className="flex">
                   <QuizWrapperComponent />
-                  <button
-                    className={buttonClass}
-                    onClick={() => getFlashCard()}
-                    disabled={quizmode || busyAI}
-                  >
-                    <Gamepad className="mr-1" size={18} /> Flashcard
-                  </button>
                 </motion.div>
               </AnimatePresence>
             )}

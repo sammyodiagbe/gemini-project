@@ -16,7 +16,12 @@ import {
   processImage,
   processText,
 } from "@/lib/utils";
-import { ConversationType, ImageDataType, ToastType } from "@/lib/type";
+import {
+  ConversationType,
+  ImageDataType,
+  MessageType,
+  ToastType,
+} from "@/lib/type";
 import {
   geminiDocumentInitInstruction,
   generateFlashcardGemini,
@@ -152,11 +157,14 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     text: string
   ) => {
     const message = generateInitialPossibleInteractions(text);
+    let jsonString = "";
     try {
-      const result = await chat?.sendMessage(message);
-      const response = await result.response;
-      const rawjson = response.text();
-      const { interactions, type } = jsonDecode(rawjson);
+      const result = await chat?.sendMessageStream(message);
+      for await (let chunk of result.stream) {
+        jsonString += chunk.text();
+      }
+
+      const { interactions, type } = jsonDecode(jsonString);
       setInteractions((prev) => interactions);
       setDocType(type);
     } catch (error: any) {
@@ -166,11 +174,13 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const generatePossibleTopics = async (chat: ChatSession) => {
     const prompt = generateTopics();
+    let resText = "";
     try {
-      const result = await chat?.sendMessage(prompt);
-      const response = await result.response;
-      const rawjson = response.text();
-      const { topics } = jsonDecode(rawjson);
+      const result = await chat?.sendMessageStream(prompt);
+      for await (const chunk of result.stream) {
+        resText += chunk?.text();
+      }
+      const { topics } = jsonDecode(resText);
       setTopics(topics);
     } catch (error: any) {
       console.log(error);
@@ -178,42 +188,11 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   };
 
   const addTopicToFocus = async (text: string) => {
-    const topics = [...focusTopics, text];
-    const prompt = `
-      Make this your focus topics from here on, until you get other instruction
-      Topics are below, quiz and flashcards should be based on this topics
-      ${topics.join(",")}, you don't have to respond to this now, but note this.
-    `;
-    try {
-      const result = await chat?.sendMessage(prompt);
-      const response = await result?.response;
-
-      console.log(response?.text());
-
-      setFocusTopics((prev) => [...prev, text]);
-    } catch (error: any) {
-      console.log(error);
-    }
+    setFocusTopics((prev) => [...prev, text]);
   };
 
   const removeTopicFromFocus = async (topic: string) => {
-    const focus = [...focusTopics.filter((t) => t !== topic)];
-    console.log(focus);
-    const prompt = !focus.length
-      ? "Now shift focus back on entire article gotten from document, note this"
-      : `
-      Make this your focus topics from here on, until you get other instruction
-      Topics are below, you don't have to respond to this, just note this.
-      ${focus.join(",")}
-    `;
-    try {
-      const result = await chat?.sendMessage(prompt);
-      const response = await result?.response;
-      console.log(response?.text());
-      setFocusTopics((prev) => prev.filter((t) => t !== topic));
-    } catch (error: any) {
-      console.log(error);
-    }
+    setFocusTopics((prev) => prev.filter((t) => t !== topic));
   };
 
   const removeAllFocusTopics = () => {
@@ -228,23 +207,32 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     const obj = createConversationObject("chat", "user", message);
     setConversation((prev) => [...prev, obj]);
     setBusyAI(true);
-
+    let res = "";
     try {
-      const result = await chat?.sendMessage(message);
-      const response = await result?.response;
-      const text = await response?.text();
-      const decodejson = jsonDecode(text!);
-      console.log(decodejson);
-      const { response: res } = decodejson;
+      const result = await chat?.sendMessageStream(message);
+      for await (const chunk of result?.stream!) {
+        res += chunk.text();
+      }
       console.log(res);
-      const convoObj: ConversationType = {
-        type: "chat",
+      const { response } = jsonDecode(res);
+      let aiResponse: ConversationType = {
+        message: response,
         sender: "ai",
-        message: res,
+        type: "chat",
       };
 
-      setConversation((prev) => [...prev, convoObj]);
+      // console.log(decodejson);
+      // const { response: res } = decodejson;
+      // console.log(res);
+      // const convoObj: ConversationType = {
+      //   type: "chat",
+      //   sender: "ai",
+      //   message: res,
+      // };
+
+      setConversation((prev) => [...prev, aiResponse]);
     } catch (error: any) {
+      console.log(error);
       setConversation((prev) => [
         ...conversation,
         {
@@ -264,18 +252,19 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setExtractedText("");
     setDocumentImages([]);
     setGotData(false);
+    setFocusTopics([]);
   };
 
   const startQuizMode = async () => {
     const message = generateQuizGemini();
     setBusyAI(true);
+    let jsonString = "";
     try {
-      const result = await chat?.sendMessage(message);
-      const response = await result?.response;
-      const text = await response?.text();
-
-      const jsonData = jsonDecode(text!);
-      console.log(jsonData);
+      const response = await chat?.sendMessageStream(message);
+      for await (let chunk of response?.stream!) {
+        jsonString += chunk.text();
+      }
+      const jsonData = jsonDecode(jsonString!);
       const { response: res, quiz } = jsonData;
       const convoobj = createConversationObject("quiz", "ai", res, quiz);
       setConversation((prev) => [...prev, convoobj]);
@@ -297,11 +286,13 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const nextQuestion = async () => {
     const message = "Next Question please, Don't repeat questions.";
     setBusyAI(true);
+    let jsonString = "";
     try {
-      const sendMessage = await chat?.sendMessage(message);
-      const response = sendMessage?.response;
-      const rawjson = response?.text();
-      const { response: res, quiz } = jsonDecode(rawjson!);
+      const response = await chat?.sendMessageStream(message);
+      for await (let chunk of response?.stream!) {
+        jsonString += chunk.text();
+      }
+      const { response: res, quiz } = jsonDecode(jsonString!);
       const obj = createConversationObject("quiz", "ai", res, quiz);
       setConversation((prev) => [...prev, obj]);
     } catch (error: any) {
@@ -322,11 +313,13 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const getFlashCard = async () => {
     setBusyAI(true);
     const message = generateFlashcardGemini();
+    let jsonString = "";
     try {
-      const requestFlashCard = await chat?.sendMessage(message);
-      const response = requestFlashCard?.response;
-      const rawJson = response?.text();
-      const { response: res, flashcard } = jsonDecode(rawJson!);
+      const requestFlashCard = await chat?.sendMessageStream(message);
+      for await (let chunk of requestFlashCard?.stream!) {
+        jsonString += chunk.text();
+      }
+      const { response: res, flashcard } = jsonDecode(jsonString!);
       const chatMessage: ConversationType = {
         message: res,
         flashcard,
@@ -336,6 +329,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
       setConversation((prev) => [...prev, chatMessage]);
     } catch (error: any) {
+      console.log(error);
       setConversation((prev) => [
         ...conversation,
         {

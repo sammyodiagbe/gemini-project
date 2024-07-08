@@ -1,3 +1,4 @@
+import { useConversationContext } from "@/context/conversationContext";
 import { useNoteContext } from "@/context/noteContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import { buttonIconSize, cn } from "@/lib/utils";
@@ -13,12 +14,10 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import NoteComponent from "./noteComponent";
-import { FormEventHandler, useState } from "react";
 
 const ConversationHeader = () => {
-  const { notes, setShowNote } = useNoteContext();
-  const { toggleCreateNote } = useNoteContext();
+  const { notes, setShowNote, toggleCreateNote } = useNoteContext();
+  const { getFlashCard } = useConversationContext();
 
   return (
     <div className="h-full sticky top-0 left-[5rem] flex items-center justify-center  select-none z-[120]">
@@ -82,7 +81,7 @@ const ConversationHeader = () => {
         <button
           className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
-            toggleCreateNote(true);
+            getFlashCard();
           }}
         >
           <Zap size={18} />
