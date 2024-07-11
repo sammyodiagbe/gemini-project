@@ -1,23 +1,14 @@
+import { useComponentInteractionsContext } from "@/context/componentInteractionContext";
 import { useConversationContext } from "@/context/conversationContext";
 import { useNoteContext } from "@/context/noteContext";
-import { buttonClass } from "@/lib/tailwind_classes";
-import { buttonIconSize, cn } from "@/lib/utils";
-import {
-  ChevronLeft,
-  Download,
-  FileQuestion,
-  LayoutList,
-  Notebook,
-  Pen,
-  Pencil,
-  Plus,
-  X,
-  Zap,
-} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { FileQuestion, LayoutList, Notebook, Pen, Zap } from "lucide-react";
 
 const ConversationHeader = () => {
   const { notes, setShowNote, toggleCreateNote } = useNoteContext();
   const { getFlashCard } = useConversationContext();
+  const { setOpenTopicsMenu, openTopicsMenu } =
+    useComponentInteractionsContext();
 
   return (
     <div className="h-full sticky top-0 left-[5rem] flex items-center justify-center  select-none z-[120]">
@@ -37,9 +28,12 @@ const ConversationHeader = () => {
           </span>
         </button>
         <button
-          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          className={cn(
+            "relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group",
+            openTopicsMenu && "bg-purple-500 text-white"
+          )}
           onClick={() => {
-            toggleCreateNote(true);
+            setOpenTopicsMenu();
           }}
         >
           <LayoutList size={18} />

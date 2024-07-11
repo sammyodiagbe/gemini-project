@@ -7,8 +7,7 @@ import {
   QuizType,
   senderType,
 } from "./type";
-import { FileDataPart, InlineDataPart, TextPart } from "@google/generative-ai";
-import { geminiDocumentInitInstruction } from "./gemini_interactons";
+import { InlineDataPart, TextPart } from "@google/generative-ai";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -29,9 +28,9 @@ export function createConversationObject(
 
 export const buttonIconSize = 15;
 
-export function processText(text: string): TextPart {
+export function processText(index: number, text: string): TextPart {
   const initialText: TextPart = {
-    text: geminiDocumentInitInstruction(text!),
+    text: `page(${index + 1}):  ${text}`,
   };
 
   return initialText;

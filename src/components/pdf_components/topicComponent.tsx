@@ -1,3 +1,4 @@
+import { useComponentInteractionsContext } from "@/context/componentInteractionContext";
 import { useConversationContext } from "@/context/conversationContext";
 import { useToastContext } from "@/context/toastContext";
 import { ToastType } from "@/lib/type";
@@ -15,6 +16,7 @@ const TopicComponent: FC<ComponenentType> = ({ topic }) => {
   const [working, setWorking] = useState<boolean>(false);
   const lockedin = focusTopics.includes(topic);
   const { updateToasts, toasts } = useToastContext();
+  const { openTopicsMenu } = useComponentInteractionsContext();
 
   const performAction = async () => {
     if (working) return;
@@ -39,7 +41,12 @@ const TopicComponent: FC<ComponenentType> = ({ topic }) => {
     updateToasts(toast);
   };
   return (
-    <div className=" p-2 flex space-x-4 items-center ">
+    <div
+      className={cn(
+        " p-2 flex space-x-4 items-center opacity-1 duration-75 delay-400 overflow-hidden",
+        !openTopicsMenu && "opacity-0 delay-0"
+      )}
+    >
       <p className="flex-1 mr-3">{topic}</p>
       <button
         className={cn(

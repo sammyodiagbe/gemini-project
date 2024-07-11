@@ -9,21 +9,11 @@ import {
   useEffect,
 } from "react";
 import { Gemini as AI } from "@/gemini/gemini";
-import { ChatSession, Content, TextPart } from "@google/generative-ai";
+import { ChatSession, TextPart } from "@google/generative-ai";
+import { createConversationObject, jsonDecode, processText } from "@/lib/utils";
+import { ConversationType, ImageDataType } from "@/lib/type";
+
 import {
-  createConversationObject,
-  jsonDecode,
-  processImage,
-  processText,
-} from "@/lib/utils";
-import {
-  ConversationType,
-  ImageDataType,
-  MessageType,
-  ToastType,
-} from "@/lib/type";
-import {
-  geminiDocumentInitInstruction,
   generateFlashcardGemini,
   generateInitialPossibleInteractions,
   generateQuizGemini,
@@ -38,8 +28,8 @@ type interaction = {
 
 type ContextType = {
   interactions: interaction[];
-  extractedText: string | undefined | null;
-  setExtractedText: Dispatch<SetStateAction<undefined | string>>;
+  extractedText: string[];
+  setExtractedText: Dispatch<SetStateAction<string[]>>;
   chatWithGemini: Function;
   conversation: ConversationType[];
   startQuizMode: Function;
@@ -63,7 +53,7 @@ type ContextType = {
 
 const conversationContext = createContext<ContextType>({
   interactions: [],
-  extractedText: null,
+  extractedText: [],
   setExtractedText: () => {},
   chatWithGemini: () => {},
   conversation: [],
@@ -94,7 +84,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   children,
 }) => {
   const [interactions, setInteractions] = useState<interaction[]>([]);
-  const [extractedText, setExtractedText] = useState<string>();
+  const [extractedText, setExtractedText] = useState<string[]>([]);
   const [chat, setChat] = useState<ChatSession | null>(null);
   const [conversation, setConversation] = useState<ConversationType[]>([]);
   const [gotData, setGotData] = useState<boolean>(false);
@@ -114,35 +104,30 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const initGemini = async () => {
     setWorkingOnPdf(true);
+    const history = [];
+    const initInstruction: TextPart = {
+      text: "You have been given a chunk of data in the history, i have pulled out the text from a pdf and broken them down into chunks, and i have also assigned by pages, user would converse with you based on this history. you are an ai study buddy. make sure your json string response and well formated, Your name is Nala and you are a study buddy, if asked who created you, say it is Samson",
+    };
     try {
       // for (let index = 0; index < documentImagesData?.length; index++) {
       //   const inlineImage = processImage(documentImagesData[index]);
       //   history.push({ role: "user", parts: [inlineImage] });
       // }
-      const initMessage = geminiDocumentInitInstruction(extractedText!);
-      const initConversationText = processText(initMessage);
+      // const initMessage = geminiDocumentInitInstruction(extractedText!);
+      // const initConversationText = processText(initMessage);
+      if (!extractedText.length) return;
+      for (let a = 0; a < extractedText?.length; a++) {
+        const text = extractedText[a];
+        const textPart = processText(a, text);
+        history.push({ role: "user", parts: [textPart] });
+      }
 
       let chat = await AI.startChat({
-        history: [
-          // {
-          //   role: "user",
-          //   parts: [
-          //     {
-          //       inlineData: {
-          //         mimeType: "image/png",
-          //         data: "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAtCAYAAACXm/ozAAAAF0lEQVR4nGNgGAWjYBSMglEwCkYBUQAABzUAAfWEpx8AAAAASUVORK5CYII=",
-          //       },
-          //     },
-          //   ],
-          // },
-
-          {
-            role: "user",
-            parts: [initConversationText],
-          },
-        ],
+        history: [{ role: "user", parts: [initInstruction] }, ...history],
       });
-      await generatePossibleInteractions(chat, extractedText!);
+
+      console.log(await chat.getHistory());
+      await generatePossibleInteractions(chat);
       // get all the possible topics from the document so a user can lock onto a topic
       await generatePossibleTopics(chat);
       setChat(chat);
@@ -152,11 +137,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     }
   };
 
-  const generatePossibleInteractions = async (
-    chat: ChatSession,
-    text: string
-  ) => {
-    const message = generateInitialPossibleInteractions(text);
+  const generatePossibleInteractions = async (chat: ChatSession) => {
+    const message = generateInitialPossibleInteractions();
     let jsonString = "";
     try {
       const result = await chat?.sendMessageStream(message);
@@ -166,6 +148,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
       const { interactions, type } = jsonDecode(jsonString);
       setInteractions((prev) => interactions);
+      console.log(interactions);
       setDocType(type);
     } catch (error: any) {
       console.log(error);
@@ -181,6 +164,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         resText += chunk?.text();
       }
       const { topics } = jsonDecode(resText);
+      console.log(topics);
       setTopics(topics);
     } catch (error: any) {
       console.log(error);
@@ -207,14 +191,16 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     const obj = createConversationObject("chat", "user", message);
     setConversation((prev) => [...prev, obj]);
     setBusyAI(true);
+    const prompt = `I need you to answer the question i have asked and in your json response , an entry of response should be present, this is the question, ${message}`;
     let res = "";
     try {
-      const result = await chat?.sendMessageStream(message);
+      const result = await chat?.sendMessageStream(prompt);
       for await (const chunk of result?.stream!) {
         res += chunk.text();
       }
       console.log(res);
       const { response } = jsonDecode(res);
+      console.log(response);
       let aiResponse: ConversationType = {
         message: response,
         sender: "ai",
@@ -249,7 +235,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const reset = () => {
     setChat(null);
-    setExtractedText("");
+    setExtractedText([]);
     setDocumentImages([]);
     setGotData(false);
     setFocusTopics([]);
@@ -380,8 +366,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setDocumentImages(images);
   };
 
-  const updateExtractedText = (text: string) => {
-    setExtractedText(text);
+  const updateExtractedText = (data: string[]) => {
+    setExtractedText(data);
   };
   return (
     <conversationContext.Provider

@@ -18,9 +18,10 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
     >
+      <p className="text-sm font-bold">Nala</p>
       <MarkdownView
         markdown={message}
-        className="bg-onBackground p-2 max-w-[80%] rounded-lg"
+        className="bg-onBackground p-2rounded-lg"
       />
       <div className="py-8 grid justify-center">
         <FlashCard isFlipped={flip} containerClassName="card-container">

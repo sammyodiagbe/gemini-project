@@ -1,14 +1,6 @@
 import { ImageDataType } from "./type";
 
-export const generateInitialPossibleInteractions = (
-  articleText: string,
-  images?: ImageDataType[]
-): string => {
-  if (articleText.replace(/\n+/, "") === "") {
-    console.log("empty dataset");
-    return `Article or document has no context, so your response should be telling the user there is nothing to work with, let the user know you have not recieved any text or article or let the user know nothing was pulled out of the documents provided, now your response in json would look like this {response: "", .....}, let them know There is no information to work with`;
-  }
-
+export const generateInitialPossibleInteractions = (): string => {
   return `Hey Gemini, 
     Analyze the text and generate 4 possible interactions a user might want to have with ypu in regards to the text article below
     If the text has no clarity or direction you can ignore and just send a message back letting the user know their isn't clarity you could also add an entry in your response that sets clarity: false.( this is also at the root of the json object) The structure of each interaction object should always be { text: "..."} and also keep them at a shorter length please.
@@ -28,7 +20,7 @@ export const generateInitialPossibleInteractions = (
     Always add fun by using emojis
     And always refer to the user in first person
     In the case where text isn't provided then you can simply respond to the user saying There is not context provided, come up with some response to let them know there is nothing to work with
-    text=${articleText}`;
+`;
 };
 
 export const geminiDocumentInitInstruction = (text: string): string => {

@@ -6,9 +6,13 @@ import {
   defaults,
 } from "chart.js";
 import { FC } from "react";
-import { Bar } from "react-chartjs-2";
-
-ChartJs.register(CategoryScale, LinearScale, BarElement);
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  ChartContainer,
+  type ChartConfig,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "./ui/chart";
 
 defaults.color = "#eff";
 
@@ -23,17 +27,53 @@ type TopicType = {
 };
 
 const InsightChartComponent: FC<ChartPropType> = ({ breakdowns = [] }) => {
+  interface DynamicObject<T> {
+    [key: string]: T;
+  }
+  let chartConfig = {} satisfies ChartConfig;
+
+  const tempobj: DynamicObject<any> = {};
+  breakdowns.map(({ topic, understanding, explanation }) => {
+    tempobj[topic] = {
+      color: "purple",
+      label: explanation,
+    };
+  });
+
   console.log(breakdowns);
-  const labels = breakdowns.map(({ topic }) => topic);
-  const points = breakdowns.map(({ understanding }) => understanding);
+  chartConfig = {};
   return (
-    <div className="my-8">
-      <Bar
-        data={{
-          labels,
-          datasets: [{ data: points, backgroundColor: ["#8338ec"] }],
-        }}
-      />
+    <div className="my-8 min-h-[350px]">
+      <ChartContainer config={chartConfig} className="min-h-[350px] px-0 mx-0">
+        <BarChart
+          accessibilityLayer
+          data={breakdowns}
+          defaultShowTooltip={true}
+          title="Your breakdown."
+        >
+          <CartesianGrid />
+          <YAxis
+            dataKey={"understanding"}
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+          />
+          <XAxis
+            dataKey={"topic"}
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+          />
+          <ChartTooltip content={<ChartTooltipContent />} />
+
+          <Bar
+            dataKey={"understanding"}
+            fill={`#8338ec`}
+            radius={8}
+            label="topic"
+          />
+        </BarChart>
+      </ChartContainer>
     </div>
   );
 };

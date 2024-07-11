@@ -6,6 +6,7 @@ import LoadingStateContextProvider from "@/context/loadingStateContext";
 import Navbar from "@/components/navbar";
 import { Analytics } from "@vercel/analytics/react";
 import ThemeProvider, { useThemeContext } from "@/context/themeContext";
+import ComponentInteractionsProvider from "@/context/componentInteractionContext";
 
 const inter = Outfit({ subsets: ["latin"] });
 
@@ -29,8 +30,10 @@ export default function RootLayout({
           )}
         >
           <LoadingStateContextProvider>
-            <Navbar />
-            {children}
+            <ComponentInteractionsProvider>
+              <Navbar />
+              {children}
+            </ComponentInteractionsProvider>
             <Analytics />
           </LoadingStateContextProvider>
         </body>

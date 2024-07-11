@@ -39,7 +39,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       animate={{ transform: "scale(1)", opacity: 1 }}
       className={cn(
         "p-4rounded-md mb-5 bg-onBackground/50 p-4 rounded-lg py-3 grid",
-        sender === "user" && "max-w-[80%] justify-start rounded-full"
+        sender === "user" && "justify-start rounded-full"
       )}
     >
       {/* <p className="pb-3 text-sm">
@@ -53,6 +53,11 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
           className="mb-4 leading-8"
         />
       ) : ( */}
+      {sender === "ai" ? (
+        <p className="text-sm font-bold">Nala</p>
+      ) : (
+        <p className="text-sm font-bold">You</p>
+      )}
       <MarkdownView
         markdown={message}
         className="leading-8 mb-3 "

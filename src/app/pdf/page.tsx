@@ -46,7 +46,7 @@ const Page = () => {
 
     try {
       const {
-        data: { extracted_text, images },
+        data: { pages, images, error, Message },
       } = await axios.post(
         `${
           process.env.NEXT_PUBLIC_DEV_MODE === "development"
@@ -55,16 +55,17 @@ const Page = () => {
         }/upload_file`,
         formData,
         {
-          onDownloadProgress: (event) => console.log(event),
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      console.log(images);
+      if (error) {
+        console.log(Message);
+      }
 
-      updateExtractedText(extracted_text);
+      updateExtractedText(pages);
       updateImagesData(images);
       updateDataState(true);
       // const result = await AI.generateContent(
