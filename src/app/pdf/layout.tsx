@@ -1,3 +1,4 @@
+import NotesComponent from "@/components/notes-components/notesComponent";
 import PopupComponent from "@/components/popupComponent";
 import ToastWrapperProvider from "@/components/toast-components/toastWrapperProvider";
 import ConversationContextProvider from "@/context/conversationContext";
@@ -19,7 +20,7 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
           <NoteContextProvider>
             <ToastProvider>
               <ToastWrapperProvider />
-
+              <NotesComponent />
               {children}
             </ToastProvider>
           </NoteContextProvider>

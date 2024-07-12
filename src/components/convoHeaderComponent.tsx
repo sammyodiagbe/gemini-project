@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { FileQuestion, LayoutList, Notebook, Pen, Zap } from "lucide-react";
 
 const ConversationHeader = () => {
-  const { notes, setShowNote, toggleCreateNote } = useNoteContext();
+  const { notes, setShowNote, toggleCreateNote, showNote } = useNoteContext();
   const { getFlashCard } = useConversationContext();
   const { setOpenTopicsMenu, openTopicsMenu } =
     useComponentInteractionsContext();
@@ -47,7 +47,7 @@ const ConversationHeader = () => {
         <button
           className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm  font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
-            toggleCreateNote(true);
+            toggleCreateNote(!showNote);
           }}
         >
           <Pen size={18} />
@@ -60,9 +60,7 @@ const ConversationHeader = () => {
         </button>
         <button
           className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
-          onClick={() => {
-            toggleCreateNote(true);
-          }}
+          onClick={() => {}}
         >
           <FileQuestion size={18} />
           <span

@@ -13,8 +13,8 @@ const NoteComponent: FC<ComponentType> = ({ note, index }) => {
   const { content } = note;
   const { deleteNote } = useNoteContext();
   return (
-    <div className="note space-y-2">
-      <h1 className="font-bold">Note {index + 1}</h1>
+    <div className="note space-y-1">
+      <h1 className="font-bold">#{index + 1}</h1>
       <p>{content}</p>
       <div className="">
         <button
