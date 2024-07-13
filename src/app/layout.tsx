@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 import LoadingStateContextProvider from "@/context/loadingStateContext";
 import Navbar from "@/components/navbar";
 import { Analytics } from "@vercel/analytics/react";
-import ThemeProvider, { useThemeContext } from "@/context/themeContext";
 import ComponentInteractionsProvider from "@/context/componentInteractionContext";
+import { ThemeProvider } from "@/components/next-theme";
 
 const inter = Outfit({ subsets: ["latin"] });
 
@@ -22,7 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className=" relative">
-      <ThemeProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
         <body
           className={cn(
             inter.className,

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NetworkStatusComponent from "./networkStatusComponent";
+import ThemeToggler from "./themeToggleComponent";
 
 const Navbar = () => {
   return (
@@ -15,6 +16,9 @@ const Navbar = () => {
           </li>
           <li>
             <NetworkStatusComponent />
+          </li>
+          <li>
+            <ThemeToggler />
           </li>
           <li>
             <div className="h-[2.5rem] w-[2.5rem] rounded-full bg-onBackground" />

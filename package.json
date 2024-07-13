@@ -20,6 +20,7 @@
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
+    "next-themes": "^0.3.0",
     "pdf-parse": "^1.1.1",
     "pdf.js-extract": "^0.2.1",
     "pdf2html": "^3.1.0",
