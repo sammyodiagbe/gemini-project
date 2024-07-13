@@ -11,10 +11,10 @@ const ConversationHeader = () => {
     useComponentInteractionsContext();
 
   return (
-    <div className="h-full sticky top-0 left-[5rem] flex items-center justify-center  select-none z-[120]">
+    <div className="h-full absolute top-0 -left-[6rem] flex items-center justify-center  select-none z-[120]">
       <div className="py-2 space-y-4 ">
         <button
-          className="btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-onBackground group"
+          className="btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-secondary group"
           onClick={() => {
             setShowNote(true);
           }}
@@ -29,7 +29,7 @@ const ConversationHeader = () => {
         </button>
         <button
           className={cn(
-            "relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group",
+            "relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group",
             openTopicsMenu && "bg-purple-500 text-white"
           )}
           onClick={() => {
@@ -45,7 +45,7 @@ const ConversationHeader = () => {
           </span>
         </button>
         <button
-          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm  font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          className="relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm  font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
             toggleCreateNote(!showNote);
           }}
@@ -59,7 +59,7 @@ const ConversationHeader = () => {
           </span>
         </button>
         <button
-          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          className="relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {}}
         >
           <FileQuestion size={18} />
@@ -71,7 +71,7 @@ const ConversationHeader = () => {
           </span>
         </button>
         <button
-          className="relative flex items-center justify-center bg-onBackground w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          className="relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
             getFlashCard();
           }}
