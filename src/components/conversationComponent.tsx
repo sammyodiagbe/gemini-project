@@ -126,13 +126,6 @@ const ConversationComponent = () => {
           {/* this woudl contain the textarea and other action btn */}
           <div className=" bg-secondary sticky left-0 bottom-1 w-full max-w-full z-10 rounded-full">
             <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
-              {!quizmode && (
-                <AnimatePresence>
-                  <motion.div className="flex">
-                    <QuizWrapperComponent />
-                  </motion.div>
-                </AnimatePresence>
-              )}
               <form
                 className="w-full flex-1 flex items-center"
                 onSubmit={sendMessage}

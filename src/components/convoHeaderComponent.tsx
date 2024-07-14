@@ -1,8 +1,17 @@
 import { useComponentInteractionsContext } from "@/context/componentInteractionContext";
 import { useConversationContext } from "@/context/conversationContext";
 import { useNoteContext } from "@/context/noteContext";
-import { cn } from "@/lib/utils";
-import { FileQuestion, LayoutList, Notebook, Pen, Zap } from "lucide-react";
+import { buttonIconSize, cn } from "@/lib/utils";
+import {
+  FileQuestion,
+  LayoutList,
+  Notebook,
+  Pen,
+  TriangleAlert,
+  Zap,
+} from "lucide-react";
+import DifficultyComponent from "./quiz/difficultyComponent";
+import QuizMeComponent from "./quiz/quizmeComponent";
 
 const ConversationHeader = () => {
   const { notes, setShowNote, toggleCreateNote, showNote } = useNoteContext();
@@ -58,18 +67,9 @@ const ConversationHeader = () => {
             Write Note
           </span>
         </button>
-        <button
-          className="relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
-          onClick={() => {}}
-        >
-          <FileQuestion size={18} />
-          <span
-            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
-           group-hover:visible group-hover:opacity-1 btn-hover:visible"
-          >
-            Quiz Me
-          </span>
-        </button>
+
+        <QuizMeComponent />
+
         <button
           className="relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
