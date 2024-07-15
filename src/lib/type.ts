@@ -38,7 +38,7 @@ export type QuizType = {
   question: string;
   options: string[];
   answer: string;
-  quiztype: "multiplechoice" | "shortanswer";
+  quiztype: "multiple_choice" | "shortanswer";
   currentQuestion: number;
   totalQuestions: number;
   score: number;

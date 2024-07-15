@@ -40,23 +40,25 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const startQuiz = async (
     multipleChoice: boolean,
     shortAnswer: boolean,
-    difficulty: "easy" | "medium" | "hard"
+    difficulty: number
   ) => {
     const prompt = beginQuizmode(multipleChoice, shortAnswer, difficulty);
     setBusyAI(true);
-    console.log(difficulty);
     try {
-      const result = await chat?.sendMessage(prompt);
-      const response = await result?.response;
-      const text = await response?.text();
-      const responseData = jsonDecode(text!);
-      const { quiz, response: aiRes } = responseData;
+      let text = "";
+      const result = await chat?.sendMessageStream(prompt);
+      for await (let chunk of result?.stream!) {
+        text += chunk.text();
+      }
+      console.log(text);
+      const { quiz, response } = jsonDecode(text);
       console.log(quiz);
+      console.log(response);
       const res: ConversationType = {
-        type: "quiz",
         quiz: quiz,
+        message: response,
+        type: "quiz",
         sender: "ai",
-        message: aiRes,
       };
       setQuizmode(true);
       setConversation((prev) => [...prev, res]);

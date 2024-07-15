@@ -99,55 +99,20 @@ export const generateFlashcardGemini = (): string => {
 export const beginQuizmode = (
   multiplechoice: boolean,
   shortAnswer: boolean,
-  difficulty: "easy" | "medium" | "hard"
+  difficulty: number
 ): string => {
-  let prompt: string;
-  if (multiplechoice && !shortAnswer) {
-    prompt = `
-    Generate multiplechoice quiz questions
-    Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
-    now this question can only be one  type, multiplechoice
-    you need to add a type in your response which is quiztype:multiplechoice
-
-    Always make sure to include quiztype entry
-    you response should include the quiz which is an object like quiz: { question: "...", options: [...]:, answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice}
-
-
-     
-  `;
-    return prompt;
-  }
-
-  if (multiplechoice === false && shortAnswer === true) {
-    prompt = `
-    Generate showanswer quiz questions
-    Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
-    now this question can only be one  type, short Answer
-    you need to add a type in your response which is quiztype:shortanswer
-    Keep it short and simple
-
-    you response should include the quiz which is an object like quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortanswer}
-
-    Always make sure to include quiztype entry
-
-    Now on this part we are more focused on understanding and not accuracy
-  `;
-    return prompt;
-  }
-
-  prompt = `
-    Generate quiz questions
-    Until a prompt to stop is sent to you you keep sending questions, you are to send just one question at a time
-    now this question can only be one o two type, multiplechoice or short answer question
-    you need to add a type in your response at the root of your json response which is quiztype:multiplechoice | shortanswer
-
-    now on this part if you have decided to ask the user a shortanswer quiz your json response should a quiz structure quiz: { question: "...", answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: shortanswer} but if you have decided to go with multiplechoice quiz your json response should be like this quiz: { question: "...",options:[...], answer: "...", currentQuestion: 2, totalQuestions: number, score: 0, quiztype: multiplechoice |  shortanswer}
-
-    Always make sure to include quiztype entry
-
-    You randomly choose if you want to ask the user shortanswer questions or multiplechoice per question.
-  `;
-  return prompt + `\n difficulty level is ${difficulty}`;
+  let prompt: string = "";
+  let quiztype =
+    multiplechoice && shortAnswer
+      ? `multiple choice and short answer`
+      : multiplechoice && !shortAnswer
+      ? "only multiple choice"
+      : shortAnswer && !multiplechoice
+      ? `only short answer questions`
+      : "";
+  console.log(quiztype);
+  prompt = `Naala generate quiz questions, quiz type is of ${quiztype} and the difficulty level is ${difficulty}, your response should look like {response: ... , quiz: {question: .., options: [...,...,], answer, quiztype: multiple_choice, currentQuestion: , totalQuestions: ..}} if it a multi-choice question, but if it is a short answer response should be {response: ..., quiz: { question, answer, quiztype:short_answer, , currentQuestion: , totalQuestions: ..}}, total question should be 10 unless a request for number of question is given`;
+  return prompt;
 };
 
 export const generateTopics = () => {
