@@ -1,3 +1,4 @@
+import ImagesComponent from "@/components/chat/imagesComponent";
 import NotesComponent from "@/components/notes-components/notesComponent";
 import PopupComponent from "@/components/popupComponent";
 import ToastWrapperProvider from "@/components/toast-components/toastWrapperProvider";
@@ -22,6 +23,7 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
               <ToastWrapperProvider />
               <NotesComponent />
               {children}
+              <ImagesComponent />
             </ToastProvider>
           </NoteContextProvider>
         </QuizContextProvider>

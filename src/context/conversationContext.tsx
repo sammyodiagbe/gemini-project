@@ -49,6 +49,7 @@ type ContextType = {
   addTopicToFocus: Function;
   removeTopicFromFocus: Function;
   removeAllFocusTopics: Function;
+  documentImagesData: ImageDataType[];
 };
 
 const conversationContext = createContext<ContextType>({
@@ -74,6 +75,7 @@ const conversationContext = createContext<ContextType>({
   addTopicToFocus: () => {},
   removeTopicFromFocus: () => {},
   removeAllFocusTopics: () => {},
+  documentImagesData: [],
 });
 
 type ConversationContextType = {
@@ -394,6 +396,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         focusTopics,
         removeTopicFromFocus,
         removeAllFocusTopics,
+        documentImagesData,
       }}
     >
       {children}
