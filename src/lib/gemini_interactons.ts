@@ -1,7 +1,7 @@
 import { ImageDataType } from "./type";
 
 export const generateInitialPossibleInteractions = (): string => {
-  return `Hey Gemini, 
+  return `Hey Naala, 
     Analyze the text and generate 4 possible interactions a user might want to have with ypu in regards to the text article below
     If the text has no clarity or direction you can ignore and just send a message back letting the user know their isn't clarity you could also add an entry in your response that sets clarity: false.( this is also at the root of the json object) The structure of each interaction object should always be { text: "..."} and also keep them at a shorter length please.
 
@@ -13,7 +13,7 @@ export const generateInitialPossibleInteractions = (): string => {
 
     This is the text gotten from the document
     
-
+    always include an interactions entry in your json response { interactions}
     ==============================================================================
     Never send back the text above this line........
     You are only responding based of the text here

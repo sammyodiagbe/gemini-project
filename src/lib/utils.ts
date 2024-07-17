@@ -17,6 +17,10 @@ export const jsonDecode = (encodedJson: string) => {
   return JSON.parse(encodedJson);
 };
 
+export const jsonEncode = (data: any) => {
+  return JSON.stringify(data);
+};
+
 export function createConversationObject(
   type: MessageType,
   sender: senderType,

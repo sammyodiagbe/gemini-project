@@ -10,7 +10,6 @@ type ImageCompnonentType = {
 
 const ImagesComponent = () => {
   const { documentImagesData } = useConversationContext();
-  console.log(documentImagesData.length);
   if (!documentImagesData || !documentImagesData.length) return null;
   return (
     <div className=" whitespace-nowrap space-x-4 fixed bottom-0 left-0 w-screen bg-background/80 overflow-x-scroll z-[200] p-3 h-[16rem] items-center scroll-smooth hidden">

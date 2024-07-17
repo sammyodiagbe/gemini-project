@@ -58,11 +58,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       ) : (
         <p className="text-sm font-bold">You</p>
       )}
-      <MarkdownView
-        markdown={message}
-        className="leading-8 mb-3 "
-        options={{}}
-      />
+      <p>{message}</p>
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}
 
       {sender === "ai" && (

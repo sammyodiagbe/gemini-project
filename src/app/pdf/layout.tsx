@@ -23,7 +23,6 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
               <ToastWrapperProvider />
               <NotesComponent />
               {children}
-              <ImagesComponent />
             </ToastProvider>
           </NoteContextProvider>
         </QuizContextProvider>

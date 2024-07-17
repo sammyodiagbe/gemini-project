@@ -10,7 +10,12 @@ import {
 } from "react";
 import { Gemini as AI } from "@/gemini/gemini";
 import { ChatSession, TextPart } from "@google/generative-ai";
-import { createConversationObject, jsonDecode, processText } from "@/lib/utils";
+import {
+  createConversationObject,
+  jsonDecode,
+  jsonEncode,
+  processText,
+} from "@/lib/utils";
 import { ConversationType, ImageDataType } from "@/lib/type";
 
 import {
@@ -21,6 +26,7 @@ import {
 } from "@/lib/gemini_interactons";
 import { useLoadingContext } from "./loadingStateContext";
 import { useToastContext } from "./toastContext";
+import { chatResponseSchema } from "../gemini/responseSchemas";
 
 type interaction = {
   text: string;
@@ -108,7 +114,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setWorkingOnPdf(true);
     const history = [];
     const initInstruction: TextPart = {
-      text: "You have been given a chunk of data in the history, i have pulled out the text from a pdf and broken them down into chunks, and i have also assigned by pages, user would converse with you based on this history. you are an ai study buddy. make sure your json string response and well formated, Your name is Nala and you are a study buddy, if asked who created you, say it is Samson. For quizes, initial level is 'piece of cake' except if I send in a level increase, there are three type of levels ['piece of cake', 'Sweating bullets', 'Herculean feat'], they start from level 1 to 3",
+      text: `You have been given a chunk of data in the history, i have pulled out the text from a pdf and broken them down into chunks, and i have also assigned by pages, user would converse with you based on this history. you are an ai study buddy. make sure your json string response and well formated, Your name is Nala and you are a study buddy, if asked who created you, say it is Samson. For quizes, initial level is 'piece of cake' except if I send in a level increase, there are three type of levels ['piece of cake', 'Sweating bullets', 'Herculean feat'], they start from level 1 to 3, 
+      `,
     };
     try {
       // for (let index = 0; index < documentImagesData?.length; index++) {
@@ -128,7 +135,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         history: [{ role: "user", parts: [initInstruction] }, ...history],
       });
 
-      console.log(await chat.getHistory());
       await generatePossibleInteractions(chat);
       // get all the possible topics from the document so a user can lock onto a topic
       await generatePossibleTopics(chat);
@@ -193,15 +199,21 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     const obj = createConversationObject("chat", "user", message);
     setConversation((prev) => [...prev, obj]);
     setBusyAI(true);
-    const prompt = `I need you to answer the question i have asked and in your json response , an entry of response should be present, this is the question, ${message}`;
-    let res = "";
+    const schemaType = jsonEncode(chatResponseSchema);
+    const prompt = `Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, chat message is ${message}`;
+
+    let jsonText: string = "";
     try {
       const result = await chat?.sendMessageStream(prompt);
-      for await (const chunk of result?.stream!) {
-        res += chunk.text();
+      for await (let chunk of result?.stream!) {
+        jsonText += chunk.text();
       }
-      console.log(res);
-      const { response } = jsonDecode(res);
+      console.log(jsonText);
+      // const data: string[] = jsonText.match("({.*})") as string[];
+      // console.log(data);
+      // let stripped = data[0].replace('"s*"', '", "');
+      // console.log(stripped);
+      const response = jsonDecode(jsonText);
       console.log(response);
       let aiResponse: ConversationType = {
         message: response,
