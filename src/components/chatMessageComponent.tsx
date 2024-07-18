@@ -1,5 +1,7 @@
-import { ConversationType } from "@/lib/type";
+"use client";
+import { ConversationType, MessageTypeObj } from "@/lib/type";
 import { NotebookPen, SpeechIcon } from "lucide-react";
+
 import MarkdownView from "react-showdown";
 import { FC } from "react";
 import { cn } from "@/lib/utils";
@@ -17,7 +19,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
   const handleSpeak = () => {
     try {
       const synth = window.speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(message);
+      const utterance = new SpeechSynthesisUtterance("message");
       utterance.rate = 1;
       utterance.pitch = 1;
       if (synth.speaking) {
@@ -29,6 +31,8 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       console.log(error);
     }
   };
+
+  const messageType = typeof message;
   const addNote = async () => {
     const data = { content: message };
     await takeNote(data);
@@ -53,12 +57,41 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
           className="mb-4 leading-8"
         />
       ) : ( */}
-      {sender === "ai" ? (
-        <p className="text-sm font-bold">Nala</p>
+      <p className="text-sm font-bold mb-2">
+        {sender === "ai" ? "Naala" : "You"}
+      </p>
+
+      {messageType === "string" ? (
+        <p>{message as string}</p>
       ) : (
-        <p className="text-sm font-bold">You</p>
+        (message as MessageTypeObj[]).map((entry, index) => {
+          const { title, paragraphs } = entry;
+
+          return (
+            <div className="bg-secondary/30 p-3 rounded-md" key={index}>
+              <h1 className="pb-3 text-lg font-bold">{title}</h1>
+              {/* paragraph */}
+              {paragraphs.map((paragraph, index) => {
+                const { text, codes } = paragraph;
+                console.log(paragraph);
+
+                const codeString: string =
+                  codes && codes.length
+                    ? codes.map((c) => c.code).join("\b")
+                    : "";
+                return (
+                  <div className="" key={index}>
+                    <p key={index} className="pb-4 leading-8">
+                      {text}
+                    </p>
+                    {codes && codes.length && <p>{codeString}</p>}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })
       )}
-      <p>{message}</p>
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}
 
       {sender === "ai" && (

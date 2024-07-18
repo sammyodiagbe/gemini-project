@@ -7,6 +7,16 @@ type TopicBreakdownType = {
   explanation: string;
 };
 
+export type MessageTypeObj = {
+  title?: string;
+  paragraphs: {
+    text: string;
+    codes: {
+      code: string;
+    }[];
+  }[];
+};
+
 export type NoteType = {
   topic?: string;
   content: string;
@@ -20,7 +30,7 @@ export type InsightType = {
 
 export type ConversationType = {
   type: MessageType;
-  message: string;
+  message: string | string[] | object[] | object;
   sender: senderType;
   quiz?: QuizType;
   flashcard?: FlashCardType;

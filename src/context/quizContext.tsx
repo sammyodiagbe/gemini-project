@@ -8,9 +8,10 @@ import {
 } from "react";
 import { useConversationContext } from "./conversationContext";
 import { beginQuizmode } from "@/lib/gemini_interactons";
-import { jsonDecode } from "@/lib/utils";
+import { jsonDecode, jsonEncode } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
 import { useLoadingContext } from "./loadingStateContext";
+import { quizSchema } from "@/gemini/responseSchemas";
 
 type QuizContextType = {
   quizmode: boolean;
@@ -42,21 +43,24 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     shortAnswer: boolean,
     difficulty: number
   ) => {
-    const prompt = beginQuizmode(multipleChoice, shortAnswer, difficulty);
     setBusyAI(true);
+    const schema = jsonEncode(quizSchema);
+    const prompt = `Generate quiz question, only send a single question object each time, quiztype can be either multiple_choice if multiple_choice is true or short_answer if short_answer is true,
+    either of the two if they are both true
+    multiple_choice=${multipleChoice}, short_answer=${shortAnswer}, 
+    
+    difficulty level=${difficulty}, level is from 1 to 3 where 1 is the least difficult, answer must be included in options and try to keep the answers short and not too lengthy and always shuffle the options when question is multiple_choice. Follow schema. <JSONSchema>${schema}</JSONSchema>`;
     try {
-      let text = "";
+      let jsonString = "";
       const result = await chat?.sendMessageStream(prompt);
       for await (let chunk of result?.stream!) {
-        text += chunk.text();
+        jsonString += chunk.text();
       }
-      console.log(text);
-      const { quiz, response } = jsonDecode(text);
-      console.log(quiz);
-      console.log(response);
+      console.log(jsonString);
+      const quiz = jsonDecode(jsonString);
       const res: ConversationType = {
         quiz: quiz,
-        message: response,
+        message: quiz.message,
         type: "quiz",
         sender: "ai",
       };

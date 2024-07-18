@@ -26,7 +26,11 @@ import {
 } from "@/lib/gemini_interactons";
 import { useLoadingContext } from "./loadingStateContext";
 import { useToastContext } from "./toastContext";
-import { chatResponseSchema } from "../gemini/responseSchemas";
+import {
+  chatResponseSchema,
+  flashcardSchema,
+  quizSchema,
+} from "../gemini/responseSchemas";
 
 type interaction = {
   text: string;
@@ -114,7 +118,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setWorkingOnPdf(true);
     const history = [];
     const initInstruction: TextPart = {
-      text: `You have been given a chunk of data in the history, i have pulled out the text from a pdf and broken them down into chunks, and i have also assigned by pages, user would converse with you based on this history. you are an ai study buddy. make sure your json string response and well formated, Your name is Nala and you are a study buddy, if asked who created you, say it is Samson. For quizes, initial level is 'piece of cake' except if I send in a level increase, there are three type of levels ['piece of cake', 'Sweating bullets', 'Herculean feat'], they start from level 1 to 3, 
+      text: `You have been given a chunk of data in the history, i have pulled out the text from a pdf and broken them down into chunks, and i have also assigned by pages, user would converse with you based on this history. you are an ai study buddy. make sure your json string response and well formated, Your name is Nala and you are a study buddy, always interact in first person not third person. if asked who created you, say it is Samson. For quizes, initial level is 'piece of cake' except if I send in a level increase, there are three type of levels ['piece of cake', 'Sweating bullets', 'Herculean feat'], they start from level 1 to 3,Remeber you are a study buddy so tailor your responses around that,  but have fun with it
       `,
     };
     try {
@@ -200,7 +204,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setConversation((prev) => [...prev, obj]);
     setBusyAI(true);
     const schemaType = jsonEncode(chatResponseSchema);
-    const prompt = `Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, chat message is ${message}`;
+    const prompt = `Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, chat message is ${message}, if the user is only having a casual conversation with you`;
 
     let jsonText: string = "";
     try {
@@ -208,13 +212,11 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       for await (let chunk of result?.stream!) {
         jsonText += chunk.text();
       }
-      console.log(jsonText);
       // const data: string[] = jsonText.match("({.*})") as string[];
       // console.log(data);
       // let stripped = data[0].replace('"s*"', '", "');
       // console.log(stripped);
       const response = jsonDecode(jsonText);
-      console.log(response);
       let aiResponse: ConversationType = {
         message: response,
         sender: "ai",
@@ -258,13 +260,16 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const startQuizMode = async () => {
     const message = generateQuizGemini();
     setBusyAI(true);
+    const schema = jsonEncode(quizSchema);
+    const prompt = `Generate quiz question, only send a single question object each time, quiztype can be either multiple_choice or short_answer, Follow schema.<JSONSchema>${schema}</JSONSchema>`;
     let jsonString = "";
     try {
-      const response = await chat?.sendMessageStream(message);
+      const response = await chat?.sendMessageStream(prompt);
       for await (let chunk of response?.stream!) {
         jsonString += chunk.text();
       }
       const jsonData = jsonDecode(jsonString!);
+      console.log(jsonData);
       const { response: res, quiz } = jsonData;
       const convoobj = createConversationObject("quiz", "ai", res, quiz);
       setConversation((prev) => [...prev, convoobj]);
@@ -313,15 +318,19 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const getFlashCard = async () => {
     setBusyAI(true);
     const message = generateFlashcardGemini();
+    const schema = jsonEncode(flashcardSchema);
+    const prompt = `Generate a single flashcard based on the document, keep question and answers short and simple. Follow JSON schema.<JSONSchema>${schema}</JSONSchema>`;
     let jsonString = "";
     try {
-      const requestFlashCard = await chat?.sendMessageStream(message);
+      const requestFlashCard = await chat?.sendMessageStream(prompt);
       for await (let chunk of requestFlashCard?.stream!) {
         jsonString += chunk.text();
       }
-      const { response: res, flashcard } = jsonDecode(jsonString!);
+
+      const flashcard = jsonDecode(jsonString!);
+
       const chatMessage: ConversationType = {
-        message: res,
+        message: flashcard.message,
         flashcard,
         type: "flashcard",
         sender: "ai",
