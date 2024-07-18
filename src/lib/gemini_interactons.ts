@@ -1,4 +1,6 @@
+import { quizSchema } from "@/gemini/responseSchemas";
 import { ImageDataType } from "./type";
+import { jsonEncode } from "./utils";
 
 export const generateInitialPossibleInteractions = (): string => {
   return `Hey Naala, 
@@ -55,10 +57,31 @@ export const geminiDocumentInitInstruction = (text: string): string => {
     `;
 };
 
-export const generateQuizGemini = (text?: string): string => {
-  return `
-    
-  `;
+export const generateQuizGemini = (
+  multiplechoice: boolean,
+  shortanswer: boolean,
+  difficulty: number
+): string => {
+  let prompt;
+  const schema = jsonEncode(quizSchema);
+  if (multiplechoice && !shortanswer) {
+    prompt = "Generate multiple choice questions only";
+  }
+  if (!multiplechoice && shortanswer) {
+    prompt = "Generate short answers question only ";
+  }
+
+  if (multiplechoice && shortanswer) {
+    prompt =
+      "Generate question, question can either be [multiple_choice or short_answer],";
+  }
+
+  prompt =
+    `Generate quiz question, only send one question at a time, keep track of user progress and score, set difficulty level to ${difficulty}, where 1 is least difficult and 3 is the highest level, ` +
+    prompt +
+    `Follow schema. <JSONSchema>${schema}</JSONSchema>`;
+
+  return prompt;
 };
 
 export const generateFlashcardGemini = (): string => {

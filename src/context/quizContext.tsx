@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { useConversationContext } from "./conversationContext";
-import { beginQuizmode } from "@/lib/gemini_interactons";
+import { beginQuizmode, generateQuizGemini } from "@/lib/gemini_interactons";
 import { jsonDecode, jsonEncode } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
 import { useLoadingContext } from "./loadingStateContext";
@@ -44,15 +44,11 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     difficulty: number
   ) => {
     setBusyAI(true);
-    const schema = jsonEncode(quizSchema);
-    const prompt = `Generate quiz question, only send a single question object each time, quiztype can be either multiple_choice if multiple_choice is true or short_answer if short_answer is true,
-    either of the two if they are both true
-    multiple_choice=${multipleChoice}, short_answer=${shortAnswer}, 
-    
-    difficulty level=${difficulty}, level is from 1 to 3 where 1 is the least difficult, answer must be included in options and try to keep the answers short and not too lengthy and always shuffle the options when question is multiple_choice. Follow schema. <JSONSchema>${schema}</JSONSchema>`;
+    const prompt = generateQuizGemini(multipleChoice, shortAnswer, difficulty);
+    let jsonString = "";
     try {
-      let jsonString = "";
       const result = await chat?.sendMessageStream(prompt);
+
       for await (let chunk of result?.stream!) {
         jsonString += chunk.text();
       }
@@ -101,19 +97,20 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const nextQuestion = async (prevConversation: ConversationType) => {
     setBusyAI(true);
-    const prompt = "Next question please.";
+    const schema = jsonEncode(quizSchema);
+    const prompt = `Send next quiz question please, and this is not a recitation Follow Schema. <JSONSchema>${schema}</JSONSchema>`;
+    let jsonString = "";
     try {
-      const result = await chat?.sendMessage(prompt);
-      const response = await result?.response;
-      const text = await response?.text();
-      const json = jsonDecode(text!);
-      console.log(json);
-      const { quiz, response: aiRes } = json;
+      const result = await chat?.sendMessageStream(prompt);
+      for await (let chunk of result?.stream!) {
+        jsonString += chunk.text();
+      }
+      const quiz = jsonDecode(jsonString);
       const res: ConversationType = {
         type: "quiz",
         quiz: quiz,
         sender: "ai",
-        message: aiRes,
+        message: quiz.message,
       };
       setConversation((prev) =>
         prev.filter((convo) => convo !== prevConversation)

@@ -62,13 +62,13 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       </p>
 
       {messageType === "string" ? (
-        <p>{message as string}</p>
+        <p className="bg-secondary/60 p-3 rounded-lg">{message as string}</p>
       ) : (
         (message as MessageTypeObj[]).map((entry, index) => {
           const { title, paragraphs } = entry;
 
           return (
-            <div className="bg-secondary/30 p-3 rounded-md" key={index}>
+            <div className="bg-secondary/60 p-2 rounded-lg" key={index}>
               <h1 className="pb-3 text-lg font-bold">{title}</h1>
               {/* paragraph */}
               {paragraphs.map((paragraph, index) => {
@@ -82,7 +82,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
                 return (
                   <div className="" key={index}>
                     <p key={index} className="pb-4 leading-8">
-                      {text}
+                      <MarkdownView markdown={text} />
                     </p>
                     {codes && codes.length && <p>{codeString}</p>}
                   </div>

@@ -258,7 +258,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   };
 
   const startQuizMode = async () => {
-    const message = generateQuizGemini();
     setBusyAI(true);
     const schema = jsonEncode(quizSchema);
     const prompt = `Generate quiz question, only send a single question object each time, quiztype can be either multiple_choice or short_answer, Follow schema.<JSONSchema>${schema}</JSONSchema>`;
@@ -279,7 +278,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         {
           sender: "system",
           message: "Something went wrong, please try again",
-          retryQuery: message,
+          retryQuery: "message",
           type: "error",
           errorOrigin: "quiz",
         },

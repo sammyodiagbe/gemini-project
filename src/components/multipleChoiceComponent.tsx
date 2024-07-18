@@ -13,8 +13,9 @@ type ComponentType = {
 };
 
 const MultipleChoiceComponent: FC<ComponentType> = ({ conv }) => {
-  const { quiz } = conv;
-  const { options, question, answer, currentQuestion, totalQuestions } = quiz!;
+  const { quiz, message } = conv;
+  const { options, question, answer, currentQuestion, totalQuestions, score } =
+    quiz!;
   const { sendMultipleChoiceResponse } = useQuizContext();
   const [selected, setSelected] = useState<number>(-1);
   const [answered, setAnswered] = useState<boolean>(false);
@@ -22,8 +23,6 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ conv }) => {
   const { conversation } = useConversationContext();
 
   const pickOption = (position: number) => {
-    console.log("check");
-
     if (answered) return;
     if (options[position] === answer) {
       setRightAnswer(true);
@@ -43,6 +42,14 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ conv }) => {
   };
   return (
     <div className="min-h[6.25rem]">
+      {rightAnswer && (
+        <Confetti
+          className="absolute w-full h-full"
+          recycle={false}
+          gravity={0.8}
+        />
+      )}
+      <p className="mb-2">{message as string}</p>
       <AnimatePresence>
         {conversation.includes(conv) && (
           <motion.div
@@ -52,16 +59,13 @@ const MultipleChoiceComponent: FC<ComponentType> = ({ conv }) => {
             transition={{ duration: 0.3 }}
             className="max-w-full mx-auto relative"
           >
-            {rightAnswer && (
-              <Confetti
-                className="absolute w-full h-full"
-                recycle={false}
-                gravity={0.8}
-              />
-            )}
-            <h1 className="">
-              Question {currentQuestion} of {totalQuestions}
-            </h1>
+            <div className=" flex justify-between items-center py-2">
+              <h1 className="">
+                Question {currentQuestion} of {totalQuestions}
+              </h1>
+              <h2>Your score: {score}</h2>
+            </div>
+
             <h1 className="text-xl font-medium mb-8 leading-8">{question}</h1>
             <div className="grid grid-cols-2 gap-5">
               {options.map((option, index) => {

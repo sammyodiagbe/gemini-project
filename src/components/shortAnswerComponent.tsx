@@ -14,7 +14,7 @@ type ComponentType = {
 };
 
 const ShortAnswerComponent: FC<ComponentType> = ({ conv }) => {
-  const { quiz } = conv;
+  const { quiz, message } = conv;
   const { question, answer, currentQuestion, totalQuestions } = quiz!;
   const [userResponded, setUserResponded] = useState(false);
   const [checkingAnswer, setCheckingAnswer] = useState(false);
@@ -39,6 +39,7 @@ const ShortAnswerComponent: FC<ComponentType> = ({ conv }) => {
 
   return (
     <div className="min-h-[7.25rem]">
+      <p className="py-3">{message as string}</p>
       <AnimatePresence>
         <motion.div
           initial={{ x: -500, opacity: 0 }}
@@ -52,7 +53,7 @@ const ShortAnswerComponent: FC<ComponentType> = ({ conv }) => {
           </h1>
           <h1 className="text-xl">{question}</h1>
           <textarea
-            className=" w-full bg-backgroundColor text-textColor p-2 rounded-md resize-none"
+            className=" w-full outline-none border-none text-textColor p-2 rounded-md resize-none bg-secondary"
             rows={5}
             value={userAnswer}
             onChange={({ target }) => setUserAnswer(target.value)}

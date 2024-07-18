@@ -28,7 +28,10 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
           <div className="card-face card-front" onClick={() => setFlip(!flip)}>
             <p className="text-xl font-semibold">{front}</p>
           </div>
-          <div className="card-face card-back" onClick={() => setFlip(!flip)}>
+          <div
+            className="card-face card-back text-black/90"
+            onClick={() => setFlip(!flip)}
+          >
             <p className="text-xl font-semibold">{back}</p>
           </div>
         </FlashCard>

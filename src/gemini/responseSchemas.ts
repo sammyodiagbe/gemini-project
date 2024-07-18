@@ -91,7 +91,7 @@ export const quizSchema = {
     score: { type: "number" },
     options: {
       description:
-        "four options with only one being the right answer to the quiz question",
+        "four options with only one being the right answer to the quiz question, always make sure to shuffle the options so the answer would be in different position each time",
       type: "array",
       items: {
         type: "string",
