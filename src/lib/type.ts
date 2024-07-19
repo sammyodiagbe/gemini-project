@@ -24,8 +24,7 @@ export type NoteType = {
 };
 export type InsightType = {
   overall_understanding: string;
-  recommended_topics: string[];
-  understanding_breakdowns: TopicBreakdownType[];
+  breakdowns: TopicBreakdownType[];
 };
 
 export type ConversationType = {

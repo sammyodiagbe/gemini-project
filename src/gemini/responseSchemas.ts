@@ -99,3 +99,30 @@ export const quizSchema = {
     },
   },
 };
+
+export const insightSchema = {
+  description:
+    "How well user has done during the studying session and quiz session",
+  type: "object",
+  properties: {
+    message: {
+      type: "string",
+      description: "Some message breaking how well i did in the session",
+    },
+    breakdowns: {
+      type: "array",
+      description:
+        "This is a list of all the topics breakdown how well i did in the session tailored to each topic",
+      items: {
+        type: "object",
+        properties: {
+          topic: { type: "string", description: "a Topic during the session" },
+          understanding: {
+            type: "number",
+            description: "how well i did on this topic on a scale of 1 - 100",
+          },
+        },
+      },
+    },
+  },
+};

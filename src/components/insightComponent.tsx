@@ -8,7 +8,7 @@ type InsightPropsType = {
 };
 
 const InsightComponent: FC<InsightPropsType> = ({ message, insights }) => {
-  const { understanding_breakdowns } = insights;
+  const { breakdowns } = insights;
 
   return (
     <div className="space-y-3">
@@ -16,7 +16,7 @@ const InsightComponent: FC<InsightPropsType> = ({ message, insights }) => {
       <p>{message}</p>
 
       <div className="mt-5">
-        <InsightChartComponent breakdowns={understanding_breakdowns} />
+        <InsightChartComponent breakdowns={breakdowns} />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import { beginQuizmode, generateQuizGemini } from "@/lib/gemini_interactons";
 import { jsonDecode, jsonEncode } from "@/lib/utils";
 import { ConversationType } from "@/lib/type";
 import { useLoadingContext } from "./loadingStateContext";
-import { quizSchema } from "@/gemini/responseSchemas";
+import { insightSchema, quizSchema } from "@/gemini/responseSchemas";
 
 type QuizContextType = {
   quizmode: boolean;
@@ -146,34 +146,26 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const endSession = async () => {
-    const prompt = `End session and give me insight create a breakdown that can be viewed visually on a chart, include a insights entry and include data that I can put on a chart like how well the user understands the documents, also use percentage to measure user understanding of a topic
-      
-      Recommendation topics should be short and concise please
-      Your json response should look like this
-      {
-        response: ...,
-        insights: {
-          overall_understanding: ...,
-          understanding_breakdowns: [
-            { topic: ..., understanding: 40 (should of type number), explanation: ...},
-             ....
-          ],
-          recommended_topics: [....]
-        }
-      }
+    const schema = jsonEncode(insightSchema);
+    const prompt = `
+      Generate feedback and insights on how well I did during the session,
+      be motivational and friendly and add some goofiness with emojis
+      Follow Schema.<JSONSchema>${schema}</JSONSchema>
       `;
+    let jsonString = "";
     try {
-      const result = await chat?.sendMessage(prompt);
-      const response = await result?.response;
-      const text = await response?.text();
-      const json = jsonDecode(text!);
-      const { response: res, insights } = json;
-      console.log(json);
+      const result = await chat?.sendMessageStream(prompt);
+
+      for await (let chunk of result?.stream!) {
+        jsonString += chunk.text();
+      }
+      const insights = jsonDecode(jsonString);
+      console.log(insights);
       const chatData: ConversationType = {
         type: "insights",
         insights,
         sender: "ai",
-        message: res,
+        message: insights.message,
       };
       setQuizmode(false);
       setConversation((prev) => [...prev, chatData]);
