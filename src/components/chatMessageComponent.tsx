@@ -73,7 +73,6 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
               {/* paragraph */}
               {paragraphs.map((paragraph, index) => {
                 const { text, codes } = paragraph;
-                console.log(paragraph);
 
                 const codeString: string =
                   codes && codes.length
@@ -81,7 +80,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
                     : "";
                 return (
                   <div className="" key={index}>
-                    <p key={index} className="pb-4 leading-8">
+                    <p key={index} className="pb-4 leading-6">
                       <MarkdownView markdown={text} />
                     </p>
                     {codes && codes.length && <p>{codeString}</p>}

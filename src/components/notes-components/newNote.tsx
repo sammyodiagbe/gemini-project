@@ -32,7 +32,7 @@ const NewNoteComponent = () => {
           initial={{ x: 0 }}
           animate={{ x: "-28rem" }}
           exit={{ x: "28rem" }}
-          className="fixed h-auto bottom-0 left-full p-5 min-w-[28rem] bg-onBackground z-30 shadow-lg rounder-lg"
+          className="fixed h-auto bottom-0 left-full p-5 min-w-[28rem] bg-secondary z-30 shadow-lg rounder-lg"
         >
           <button
             className="w-12 h-12 absolute flex items-center justify-center right-2 top-2 "
@@ -47,7 +47,7 @@ const NewNoteComponent = () => {
                 value={text}
                 placeholder="Your note"
                 onChange={({ target }) => setText(target.value)}
-                className="bg-backgroundColor outline-none border-none w-full resize-none rounded-lg p-3"
+                className="bg-background/70 outline-none border-none w-full resize-none rounded-lg p-3"
                 rows={6}
               ></textarea>
               <div className="">

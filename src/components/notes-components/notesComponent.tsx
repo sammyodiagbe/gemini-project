@@ -3,26 +3,24 @@ import { useNoteContext } from "@/context/noteContext";
 import NoteComponent from "../noteComponent";
 import { useState } from "react";
 import { NoteType } from "@/lib/type";
-import { Download, X } from "lucide-react";
+import { Download, NotebookText, X } from "lucide-react";
 import { buttonIconSize } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 
 const NotesComponent = () => {
-  const { showNote, notes, takeNote, setShowNote } = useNoteContext();
+  const { showNote, notes, takeNote, setShowNote, naalaGenerateNotes } =
+    useNoteContext();
   const [noteText, setNoteText] = useState<string>("");
 
   const variants = {
     open: {
-      scale: 1,
-      opacity: 1,
+      x: "-45rem",
     },
     closed: {
-      scale: 0,
-      opacity: 0,
+      x: 0,
     },
     initial: {
-      scale: 0,
-      opacity: 0,
+      x: 0,
     },
   };
 
@@ -30,13 +28,13 @@ const NotesComponent = () => {
     <AnimatePresence>
       {showNote && (
         <motion.div
-          className="fixed flex justify-end top-0 left-0  w-[100dvw] h-[100dvh] bg-black/85 z-[300]"
+          className="fixed flex justify-end top-0 left-full  w-[45rem] h-[100dvh] bg-black/85 z-[300] shadow-lg "
           variants={variants}
           initial="initial"
           exit={"closed"}
           animate="open"
         >
-          <div className=" relative h-full bg-white w-[40%] p-4">
+          <div className="flex flex-col relative h-full bg-background/90 w-full p-6 overflow-y-scroll">
             <button
               className="h-[3rem] w-[3rem] absolute flex justify-center top-0 items-center bg-red-400 left-0 -translate-x-[3rem] text-white rounded-l-md"
               onClick={() => {
@@ -48,17 +46,27 @@ const NotesComponent = () => {
             <div className="flex align-center justify-between">
               <div className="">
                 <h2 className="text-xl">Your notes ({notes.length})</h2>
-                <p>Your notes would appear here</p>
               </div>
-              {notes.length && (
-                <button className="flex items-center space-x-2 hover:font-bold transition-all">
-                  <Download size={buttonIconSize} className="mr-1" /> Download
-                  Note
+              <div className="items-center flex space-x-4">
+                {notes.length && (
+                  <button className="flex items-center space-x-2 hover:font-bold transition-all text-sm">
+                    <Download size={buttonIconSize} className="mr-1" /> Download
+                    Note
+                  </button>
+                )}
+                <button
+                  className={
+                    " hover:font-bold flex items-center transition-all text-sm"
+                  }
+                  onClick={() => naalaGenerateNotes()}
+                >
+                  <NotebookText className="mr-1" size={buttonIconSize} /> Naala
+                  Generate notes
                 </button>
-              )}
+              </div>
             </div>
 
-            <div className="py-5 space-y-3">
+            <div className="py-5 space-y-6 flex-1">
               {notes.length ? (
                 notes.map((note, index) => (
                   <NoteComponent index={index} key={index} note={note} />
@@ -71,15 +79,16 @@ const NotesComponent = () => {
               )}
             </div>
 
-            <div className="absolute bottom-2 w-full left-0 p-2 flex space-x-3">
+            <div className="  w-full max-w-full left-0  bg-background p-2 px-3 flex space-x-3 rounded-full items-center">
               <textarea
                 placeholder="Enter note here"
-                className="flex-1 rows-1 rounded-md  resize-none align-middle"
+                className="flex-1 rows-1 rounded-md outline-none ring-0 focus:ring-0 resize-none align-middle bg-transparent max-h-[25dvh] max-h-52"
                 value={noteText}
                 onChange={(event) => setNoteText(event.target.value)}
+                rows={1}
               />
               <button
-                className="bg-purple-500 text-white p-2 rounded-sm active:scale-95"
+                className="bg-purple-500 text-white p-1 px-3 rounded-full active:scale-95"
                 onClick={async () => {
                   if (noteText.trim() === "") return;
                   const note: NoteType = { content: noteText };
