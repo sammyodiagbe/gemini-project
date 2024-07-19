@@ -52,6 +52,13 @@ export function processImage(imageData: ImageDataType) {
   return imagePart;
 }
 
+export const focusInstruction = (focusTopics: string[]) => {
+  const init =
+    "if asked what topics the focus is on just respond listing out the topics, there is no need to define the topics, quizes and flashcards are based off of this focus topics too";
+  return focusTopics.length
+    ? `Topics to focus on are ${focusTopics.join(", ")}, ${init},`
+    : `Focus on all document, responses should be based off of the entire document, ${init}`;
+};
 // const createDataURI = (base64String: string, mimetype: string) => {
 //   return `data:${mimetype};base64,${base64String}`;
 // };

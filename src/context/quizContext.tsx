@@ -160,7 +160,6 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         jsonString += chunk.text();
       }
       const insights = jsonDecode(jsonString);
-      console.log(insights);
       const chatData: ConversationType = {
         type: "insights",
         insights,

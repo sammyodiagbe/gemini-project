@@ -12,6 +12,7 @@ import { Gemini as AI } from "@/gemini/gemini";
 import { ChatSession, TextPart } from "@google/generative-ai";
 import {
   createConversationObject,
+  focusInstruction,
   jsonDecode,
   jsonEncode,
   processText,
@@ -106,7 +107,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [docType, setDocType] = useState<string>("");
   const { setWorkingOnPdf } = useLoadingContext();
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
-  const { updateToasts } = useToastContext();
 
   useEffect(() => {
     if (gotData) {
@@ -204,7 +204,9 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setConversation((prev) => [...prev, obj]);
     setBusyAI(true);
     const schemaType = jsonEncode(chatResponseSchema);
-    const prompt = `Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, chat message is ${message}, if the user is only having a casual conversation with you`;
+    const focus = focusInstruction(focusTopics);
+
+    const prompt = `${focus}. Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, chat message is ${message}, if the user is only having a casual conversation with you`;
 
     let jsonText: string = "";
     try {
@@ -318,7 +320,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setBusyAI(true);
     const message = generateFlashcardGemini();
     const schema = jsonEncode(flashcardSchema);
-    const prompt = `Generate a single flashcard based on the document, keep question and answers short and simple. Follow JSON schema.<JSONSchema>${schema}</JSONSchema>`;
+    const focus = focusInstruction(focusTopics);
+    const prompt = `Generate a single flashcard based on the document, keep question and answers short and simple. ${focus}. Follow JSON schema.<JSONSchema>${schema}</JSONSchema>`;
     let jsonString = "";
     try {
       const requestFlashCard = await chat?.sendMessageStream(prompt);
