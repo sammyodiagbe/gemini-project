@@ -23,9 +23,12 @@ const ConversationHeader = () => {
     <div className="h-full sticky   top-0 -left-[6rem] flex items-center justify-center  select-none z-[120] ">
       <div className="p-2 space-y-4 sticky top-0">
         <button
-          className="btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-secondary group"
+          className={cn(
+            "btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-secondary group transition-all",
+            showNote && "bg-purple-500 text-white "
+          )}
           onClick={() => {
-            setShowNote(true);
+            setShowNote(!showNote);
           }}
         >
           <Notebook size={18} />{" "}
