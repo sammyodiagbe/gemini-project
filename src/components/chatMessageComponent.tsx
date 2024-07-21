@@ -69,21 +69,25 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
 
           return (
             <div className="bg-secondary/60 p-2 rounded-lg" key={index}>
-              <h1 className="pb-3 text-lg font-bold">{title}</h1>
+              {title ? (
+                <h1 className="pb-3 text-lg font-bold">{title}</h1>
+              ) : null}
               {/* paragraph */}
               {paragraphs.map((paragraph, index) => {
                 const { text, codes } = paragraph;
 
-                const codeString: string =
+                const codeString: string | null =
                   codes && codes.length
-                    ? codes.map((c) => c.code).join("\b")
-                    : "";
+                    ? codes.map((c) => c.code).join("\n")
+                    : null;
                 return (
                   <div className="" key={index}>
-                    <p key={index} className="pb-4 leading-6">
-                      <MarkdownView markdown={text} />
+                    <p key={index} className="pb-3 leading-6">
+                      {text}
                     </p>
-                    {codes && codes.length && <p>{codeString}</p>}
+                    {codes && codeString !== "" && (
+                      <p className="">{codeString}</p>
+                    )}
                   </div>
                 );
               })}

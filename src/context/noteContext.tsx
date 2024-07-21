@@ -56,15 +56,19 @@ const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
     const schema = jsonEncode(noteSchema);
     const prompt = `${focusInstruction(
       focusTopics
-    )}, Generate notes for me/ Follow Schema.<JSONSchema>${schema}</JSONSchema>`;
+    )}, Generate notes for me. Follow Schema.<JSONSchema>${schema}</JSONSchema>`;
     try {
-      const result = await chat?.sendMessageStream(prompt);
+      const result = await chat?.sendMessage(prompt);
       let jsonString = "";
-      for await (let chunk of result?.stream!) {
-        jsonString += chunk.text();
-      }
 
-      const generatedNotes = jsonDecode(jsonString);
+      const res = await result?.response;
+      console.log(await res?.usageMetadata);
+      const textData = await res?.text();
+
+      console.log(textData);
+      console.log(textData?.length);
+
+      const generatedNotes = jsonDecode(textData!);
       console.log(generatedNotes);
       updateNotes((prev) => [...prev, ...generatedNotes]);
     } catch (error: any) {

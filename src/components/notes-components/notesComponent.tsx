@@ -34,7 +34,7 @@ const NotesComponent = () => {
           exit={"closed"}
           animate="open"
         >
-          <div className="flex flex-col relative h-full bg-background/90 w-full p-6 overflow-y-scroll">
+          <div className="flex flex-col relative h-full bg-background w-full p-6 overflow-y-scroll">
             <button
               className="h-[3rem] w-[3rem] absolute flex justify-center top-0 items-center bg-red-400 left-0 -translate-x-[3rem] text-white rounded-l-md"
               onClick={() => {

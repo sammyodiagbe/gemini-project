@@ -15,7 +15,7 @@ export const generateInitialPossibleInteractions = (): string => {
 
     This is the text gotten from the document
     
-    always include an interactions entry in your json response { interactions}
+    always include an interactions entry in your json response { interactions}, keep them short
     ==============================================================================
     Never send back the text above this line........
     You are only responding based of the text here

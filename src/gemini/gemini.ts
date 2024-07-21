@@ -12,6 +12,8 @@ export const Gemini = AI.getGenerativeModel(
     model: "gemini-1.5-flash",
     generationConfig: {
       responseMimeType: "application/json",
+      temperature: 0.85,
+      maxOutputTokens: 8192,
     },
     safetySettings: [
       {
