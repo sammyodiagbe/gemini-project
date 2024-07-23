@@ -2,7 +2,7 @@
 import { ConversationType, MessageTypeObj } from "@/lib/type";
 import { NotebookPen, SpeechIcon } from "lucide-react";
 
-import MarkdownView from "react-showdown";
+import MarkdownView, { Markdown } from "react-showdown";
 import { FC } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -83,7 +83,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
                 return (
                   <div className="" key={index}>
                     <p key={index} className="pb-3 leading-6">
-                      {text}
+                      <Markdown markdown={text} />
                     </p>
                     {codes && codeString !== "" && (
                       <p className="">{codeString}</p>
