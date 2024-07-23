@@ -17,7 +17,7 @@ const QueryErrorComponent: FC<QueryErrorComponentType> = ({ data }) => {
   return (
     <div className="space-y-2 text-center">
       <h1>Oh Snap that didn't seem to work</h1>
-      <p>{message}</p>
+      <p>{message as string}</p>
 
       <button
         className="p-3 py-2  ring-1 mx-auto hover:bg-red-400/35 ring-red-500 rounded-md flex items-center space-x-2 active:scale-95"
