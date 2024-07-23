@@ -54,12 +54,10 @@ const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const naalaGenerateNotes = async () => {
     const schema = jsonEncode(noteSchema);
-    const prompt = `${focusInstruction(
-      focusTopics
-    )}, Generate notes for me. limit notes to max of 2 per topic Follow Schema.<JSONSchema>${schema}</JSONSchema>`;
+    const prompt = `Generate 5 notes for me from the pdf file. Should be unique. Follow JSON Schema.<JSONSchema>${schema}</JSONSchema>`;
     try {
-      const result = await chat?.sendMessage(prompt);
       let jsonString = "";
+      const result = await chat?.sendMessage(prompt);
 
       const res = await result?.response;
       console.log(await res?.usageMetadata);

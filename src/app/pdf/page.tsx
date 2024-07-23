@@ -25,6 +25,7 @@ const Page = () => {
   } = useConversationContext()!;
   const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
   const { quizmode } = useQuizContext();
+  const { initGemini } = useConversationContext();
 
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
@@ -44,30 +45,18 @@ const Page = () => {
     const fileUrl = await URL.createObjectURL(file);
     formData.append("file", file);
 
+    console.log(fileUrl);
     try {
-      const {
-        data: { pages, images, error, Message },
-      } = await axios.post(
-        `${
-          process.env.NEXT_PUBLIC_DEV_MODE === "development"
-            ? process.env.NEXT_PUBLIC_DEV_BACKEND_URL
-            : process.env.NEXT_PUBLIC_BACKEND_URL
-        }/upload_file`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      // so now the plan is to be able to upload the images directly to gemini api
 
-      if (error) {
-        console.log(Message);
-      }
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        const base64 = fileReader.result as string;
+        initGemini(base64);
+      };
 
-      updateExtractedText(pages);
-      updateImagesData(images);
-      updateDataState(true);
+      fileReader.readAsDataURL(file);
+
       // const result = await AI.generateContent(
       //   generateInitialPossibleInteractions(extracted_text)
       // );

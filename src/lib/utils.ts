@@ -62,3 +62,7 @@ export const focusInstruction = (focusTopics: string[]) => {
 // const createDataURI = (base64String: string, mimetype: string) => {
 //   return `data:${mimetype};base64,${base64String}`;
 // };
+
+// export const filePart = (fileurl: string) => {
+//   return F
+// }

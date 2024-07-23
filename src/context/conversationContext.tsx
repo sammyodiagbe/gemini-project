@@ -9,7 +9,7 @@ import {
   useEffect,
 } from "react";
 import { Gemini as AI } from "@/gemini/gemini";
-import { ChatSession, TextPart } from "@google/generative-ai";
+import { ChatSession, InlineDataPart, TextPart } from "@google/generative-ai";
 import {
   createConversationObject,
   focusInstruction,
@@ -61,6 +61,7 @@ type ContextType = {
   removeTopicFromFocus: Function;
   removeAllFocusTopics: Function;
   documentImagesData: ImageDataType[];
+  initGemini: Function;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -87,6 +88,7 @@ const conversationContext = createContext<ContextType>({
   removeTopicFromFocus: () => {},
   removeAllFocusTopics: () => {},
   documentImagesData: [],
+  initGemini: () => {},
 });
 
 type ConversationContextType = {
@@ -108,19 +110,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const { setWorkingOnPdf } = useLoadingContext();
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (gotData) {
-      initGemini();
-    }
-  }, [gotData]);
-
-  const initGemini = async () => {
+  const initGemini = async (fileURL: string) => {
     setWorkingOnPdf(true);
-    const history = [];
-    const initInstruction: TextPart = {
-      text: `You have been given a chunk of data in the history, i have pulled out the text from a pdf and broken them down into chunks, and i have also assigned by pages, user would converse with you based on this history. you are an ai study buddy. make sure your json string response and well formated, Your name is Nala and you are a study buddy, always interact in first person not third person. if asked who created you, say it is Samson. For quizes, initial level is 'piece of cake' except if I send in a level increase, there are three type of levels ['piece of cake', 'Sweating bullets', 'Herculean feat'], they start from level 1 to 3,Remeber you are a study buddy so tailor your responses around that,  but have fun with it
-      `,
-    };
     try {
       // for (let index = 0; index < documentImagesData?.length; index++) {
       //   const inlineImage = processImage(documentImagesData[index]);
@@ -128,16 +119,25 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       // }
       // const initMessage = geminiDocumentInitInstruction(extractedText!);
       // const initConversationText = processText(initMessage);
-      if (!extractedText.length) return;
-      for (let a = 0; a < extractedText?.length; a++) {
-        const text = extractedText[a];
-        const textPart = processText(a, text);
-        history.push({ role: "user", parts: [textPart] });
-      }
+      console.log(fileURL.split(",")[0]);
+      console.log(fileURL.split(",")[1].length);
+      console.log(fileURL.split(",")[1].trim().length);
+      console.log("================");
 
+      const initPDf: InlineDataPart = {
+        inlineData: {
+          mimeType: "application/pdf",
+          data: fileURL.split(",")[1],
+        },
+      };
+      const textInstruction: TextPart = {
+        text: "You are an amazing study buddy, I have added a pdf file with you, you would help me understand the contents better",
+      };
       let chat = await AI.startChat({
-        history: [{ role: "user", parts: [initInstruction] }, ...history],
+        history: [{ role: "user", parts: [initPDf, textInstruction] }],
       });
+
+      console.log(await chat.requestOptions);
 
       await generatePossibleInteractions(chat);
       // get all the possible topics from the document so a user can lock onto a topic
@@ -206,7 +206,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     const schemaType = jsonEncode(chatResponseSchema);
     const focus = focusInstruction(focusTopics);
 
-    const prompt = `${focus}. Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, chat message is ${message}, if the user is only having a casual conversation with you`;
+    const prompt = `${focus}. Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, ${message}, if the user is only having a casual conversation with you`;
 
     let jsonText: string = "";
     try {
@@ -397,6 +397,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   return (
     <conversationContext.Provider
       value={{
+        initGemini,
         interactions,
         extractedText,
         setExtractedText,
