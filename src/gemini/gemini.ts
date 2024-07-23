@@ -9,7 +9,7 @@ const AI = new GoogleGenerativeAI(
 
 export const Gemini = AI.getGenerativeModel(
   {
-    model: "gemini-1.5-flash",
+    model: "gemini-1.5-pro",
     generationConfig: {
       responseMimeType: "application/json",
       temperature: 0.75,

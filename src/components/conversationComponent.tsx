@@ -69,14 +69,15 @@ const ConversationComponent = () => {
           <div className=" pb-[1.875rem] space-y-8">
             {conversation.length ? (
               conversation.map((conv, index) => {
-                const { type, quiz, message, flashcard, insights } = conv;
+                let { type, quiz, message: mess, flashcard, insights } = conv;
+                let message = mess as string;
                 switch (type) {
                   case "chat":
                     return <ChatMessageComponent conv={conv} key={index} />;
                   case "quiz":
                     return (
                       <QuizMessageComponent
-                        message={message}
+                        message={message as string}
                         conv={conv}
                         quiz={quiz!}
                         key={index}
