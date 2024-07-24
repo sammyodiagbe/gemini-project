@@ -1,19 +1,26 @@
 "use client";
-import { ConversationType, QuizType } from "@/lib/type";
+import {
+  ConversationType,
+  QuizQuestionType,
+  QuizSessionType,
+  QuizType,
+} from "@/lib/type";
 import { FC } from "react";
 import MultipleChoiceComponent from "./multipleChoiceComponent";
 import ShortAnswerComponent from "./shortAnswerComponent";
+import { useConversationContext } from "@/context/conversationContext";
+import { useQuizContext } from "@/context/quizContext";
 
 type QuizData = {
   conv: ConversationType;
   message: string;
-  quiz: QuizType;
+  quiz: QuizSessionType;
 };
 
 const QuizMessageComponent: FC<QuizData> = ({ conv, quiz, message }) => {
-  console.log(quiz);
-  const { quiztype } = quiz;
-  console.log("re-render");
+  const { sessionCount } = useQuizContext();
+  const { questions } = quiz;
+  const { quiztype } = questions[sessionCount];
   if (quiztype === "multiple_choice") {
     return <MultipleChoiceComponent conv={conv!} />;
   }

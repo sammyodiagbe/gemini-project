@@ -71,3 +71,15 @@ export type ImageDataType = {
   img_type: string;
   base_64_data: string;
 };
+
+export type QuizQuestionType = {
+  question: string;
+  answer: string | string[];
+  quiztype: "short_answer" | "multiple_choice";
+};
+
+export type QuizSessionType = {
+  questions: QuizQuestionType[];
+  message: string;
+  difficulty: string;
+};

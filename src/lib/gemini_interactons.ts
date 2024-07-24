@@ -65,19 +65,19 @@ export const generateQuizGemini = (
   let prompt;
   const schema = jsonEncode(quizSchema);
   if (multiplechoice && !shortanswer) {
-    prompt = "Generate multiple choice questions only";
+    prompt = "Generate 5 multiple choice questions only";
   }
   if (!multiplechoice && shortanswer) {
-    prompt = "Generate short answers question only ";
+    prompt = "Generate 5 short answers question only ";
   }
 
   if (multiplechoice && shortanswer) {
     prompt =
-      "Generate question, question can either be [multiple_choice or short_answer],";
+      "Generate 5 quiz question, question can either be [multiple_choice or short_answer], randomly choose which you want";
   }
 
   prompt =
-    `Generate quiz question, only send one question at a time, keep track of user progress and score, set difficulty level to ${difficulty}, where 1 is least difficult and 3 is the highest level, ` +
+    `set difficulty level to ${difficulty}, where 1 is least difficult and 3 is the highest level, ` +
     prompt +
     `Follow schema. <JSONSchema>${schema}</JSONSchema>`;
 

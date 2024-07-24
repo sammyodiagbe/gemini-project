@@ -66,35 +66,39 @@ export const flashcardSchema = {
 
 export const quizSchema = {
   type: "object",
-  description:
-    "A quiz object that has question, quiztype (which can either be multiple_choice or short_answer), answer, currentQuestion, totalQuestion, score",
-  required: [
-    "question",
-    "answer",
-    "options",
-    "quiztype",
-    "currentQuestion",
-    "score",
-    "totalQuestions",
-    "message",
-  ],
+  description: "A quiz object that has 10 questions, and a motivation message",
+  required: ["questions", "message", "difficulty"],
+
   properties: {
+    difficulty: { type: "string", description: "Difficulty level of the quiz" },
     message: {
       type: "string",
       description:
         "Some motivation message as my study partner with a twist of fun and goofiness",
     },
-    question: { type: "string" },
-    answer: { type: "string" },
-    currentQuestion: { type: "number" },
-    totalQuestions: { type: "number" },
-    score: { type: "number" },
-    options: {
-      description:
-        "four options with only one being the right answer to the quiz question, always make sure to shuffle the options so the answer would be in different position each time",
+    questions: {
       type: "array",
+      description: "10 quiz questions in an array ",
       items: {
-        type: "string",
+        type: "object",
+        properties: {
+          quiztype: {
+            type: "string",
+            description:
+              "type of quiz question which can either be multiple_choice or short_answer",
+          },
+          question: { type: "string", description: "Question" },
+          answer: { type: "string" },
+          options: {
+            description:
+              "four options with only one being the right answer to the quiz question, always make sure to shuffle the options so the answer would be in different position each time",
+            type: "array",
+            items: {
+              type: "string",
+            },
+          },
+          required: ["answer", "options", "quiztype"],
+        },
       },
     },
   },

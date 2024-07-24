@@ -9,7 +9,7 @@ import {
 import { useConversationContext } from "./conversationContext";
 import { beginQuizmode, generateQuizGemini } from "@/lib/gemini_interactons";
 import { jsonDecode, jsonEncode } from "@/lib/utils";
-import { ConversationType } from "@/lib/type";
+import { ConversationType, QuizSessionType } from "@/lib/type";
 import { useLoadingContext } from "./loadingStateContext";
 import { insightSchema, quizSchema } from "@/gemini/responseSchemas";
 
@@ -21,6 +21,8 @@ type QuizContextType = {
   nextQuestion: Function;
   endSession: Function;
   sendMultipleChoiceResponse: Function;
+  quizSession: QuizSessionType[];
+  sessionCount: number;
 };
 
 const quizContext = createContext<QuizContextType>({
@@ -31,12 +33,16 @@ const quizContext = createContext<QuizContextType>({
   nextQuestion: () => {},
   endSession: () => {},
   sendMultipleChoiceResponse: () => {},
+  quizSession: [],
+  sessionCount: 0,
 });
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [quizmode, setQuizmode] = useState(false);
   const { chat, setConversation, conversation } = useConversationContext();
   const { busyAI, setBusyAI } = useLoadingContext();
+  const [quizSession, setQuizSession] = useState<QuizSessionType[]>([]);
+  const [sessionCount, setSessionCount] = useState<number>(0);
 
   const startQuiz = async (
     multipleChoice: boolean,
@@ -54,6 +60,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       }
       console.log(jsonString);
       const quiz = jsonDecode(jsonString);
+      const { message, difficulty, questions } = quiz;
       const res: ConversationType = {
         quiz: quiz,
         message: quiz.message,
@@ -182,6 +189,8 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         nextQuestion,
         endSession,
         sendMultipleChoiceResponse,
+        quizSession,
+        sessionCount,
       }}
     >
       {children}
