@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { useConversationContext } from "./conversationContext";
-import { beginQuizmode, generateQuizGemini } from "@/lib/gemini_interactons";
+import { generateQuizGemini } from "@/lib/gemini_interactons";
 import { jsonDecode, jsonEncode } from "@/lib/utils";
 import { ConversationType, QuizSessionType } from "@/lib/type";
 import { useLoadingContext } from "./loadingStateContext";
@@ -58,16 +58,17 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       for await (let chunk of result?.stream!) {
         jsonString += chunk.text();
       }
-      console.log(jsonString);
-      const quiz = jsonDecode(jsonString);
-      const { message, difficulty, questions } = quiz;
+      const quiz: QuizSessionType = jsonDecode(jsonString);
+      console.log(quiz);
       const res: ConversationType = {
-        quiz: quiz,
+        quiz: quiz.questions,
         message: quiz.message,
         type: "quiz",
         sender: "ai",
       };
       setQuizmode(true);
+      setSessionCount((prev) => prev + 1);
+      setQuizSession((prev) => [...prev, quiz]);
       setConversation((prev) => [...prev, res]);
     } catch (error: any) {
       console.log(error);

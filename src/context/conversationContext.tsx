@@ -119,10 +119,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       // }
       // const initMessage = geminiDocumentInitInstruction(extractedText!);
       // const initConversationText = processText(initMessage);
-      console.log(fileURL.split(",")[0]);
-      console.log(fileURL.split(",")[1].length);
-      console.log(fileURL.split(",")[1].trim().length);
-      console.log("================");
 
       const initPDf: InlineDataPart = {
         inlineData: {

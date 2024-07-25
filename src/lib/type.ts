@@ -29,9 +29,9 @@ export type InsightType = {
 
 export type ConversationType = {
   type: MessageType;
-  message: string | string[] | object[] | object;
+  message: string;
   sender: senderType;
-  quiz?: QuizType;
+  quiz?: QuizQuestionType[];
   flashcard?: FlashCardType;
   retryQuery?: string;
   insights?: InsightType;
@@ -74,8 +74,9 @@ export type ImageDataType = {
 
 export type QuizQuestionType = {
   question: string;
-  answer: string | string[];
+  answer: string;
   quiztype: "short_answer" | "multiple_choice";
+  options?: string[];
 };
 
 export type QuizSessionType = {

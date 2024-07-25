@@ -1,32 +1,24 @@
-import { useQuizContext } from "@/context/quizContext";
 import { buttonClass } from "@/lib/tailwind_classes";
 import { ConversationType } from "@/lib/type";
 import { FC } from "react";
 
 type ComponentProps = {
-  conv: ConversationType;
+  nextQuestion: Function;
+  lastQuestion: boolean;
 };
 
-const QuizActionComponent: FC<ComponentProps> = ({ conv }) => {
-  const { nextQuestion, endSession } = useQuizContext();
-  const { quiz } = conv;
-  const { currentQuestion, totalQuestions } = quiz!;
-  const lastQuestion = currentQuestion === totalQuestions;
+const QuizActionComponent: FC<ComponentProps> = ({
+  nextQuestion,
+  lastQuestion,
+}) => {
   return (
     <div className="mt-7 flex justify-end -z-10">
       {!lastQuestion && (
-        <button
-          className={buttonClass}
-          onClick={async () => {
-            await nextQuestion(conv);
-          }}
-        >
+        <button className={buttonClass} onClick={() => nextQuestion()}>
           Next Question
         </button>
       )}
-      <button className={buttonClass} onClick={() => endSession()}>
-        End session
-      </button>
+      <button className={buttonClass}>End session</button>
     </div>
   );
 };

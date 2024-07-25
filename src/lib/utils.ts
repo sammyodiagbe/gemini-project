@@ -4,7 +4,7 @@ import {
   ConversationType,
   ImageDataType,
   MessageType,
-  QuizType,
+  QuizQuestionType,
   senderType,
 } from "./type";
 import { InlineDataPart, TextPart } from "@google/generative-ai";
@@ -25,7 +25,7 @@ export function createConversationObject(
   type: MessageType,
   sender: senderType,
   message: string,
-  quiz?: QuizType
+  quiz?: QuizQuestionType[]
 ): ConversationType {
   return { type, sender, message, quiz };
 }

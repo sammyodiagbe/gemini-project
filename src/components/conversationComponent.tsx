@@ -1,7 +1,7 @@
 "use client";
 
 import { useConversationContext } from "@/context/conversationContext";
-import { Gamepad, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import {
   FormEvent,
   FormEventHandler,
@@ -9,20 +9,18 @@ import {
   useRef,
   useState,
 } from "react";
+
 import ChatMessageComponent from "./chatMessageComponent";
 import QuizMessageComponent from "./QuizMessageComponent";
 import FlashCardComponent from "./flashCardComponent";
 import QueryErrorComponent from "./errorComponent";
 import PossibleInteractionComponent from "./possibleInteractionComponent";
-import { buttonClass } from "@/lib/tailwind_classes";
-import QuizWrapperComponent from "./quizWrapperComponent";
 import InsightComponent from "./insightComponent";
 import PomodoroTimerComponent from "./pomodoroTimerComponent";
 import ThinkingAI from "./loadingAiComponent";
 import { useLoadingContext } from "@/context/loadingStateContext";
 import { useQuizContext } from "@/context/quizContext";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
 import ConversationHeader from "./convoHeaderComponent";
 
 const ConversationComponent = () => {
@@ -78,7 +76,6 @@ const ConversationComponent = () => {
                     return (
                       <QuizMessageComponent
                         message={message as string}
-                        conv={conv}
                         quiz={quiz!}
                         key={index}
                       />
