@@ -1,16 +1,37 @@
+import { useQuizContext } from "@/context/quizContext";
 import { QuizQuestionType } from "@/lib/type";
-import { FC } from "react";
+import { buttonIconSize } from "@/lib/utils";
+import { LoaderPinwheel } from "lucide-react";
+import { FC, useEffect, useState } from "react";
 
 type ComponentType = {
   question: QuizQuestionType;
 };
 
 const ShortAnswerQuestionComponent: FC<ComponentType> = ({ question }) => {
-  const { question: ques } = question;
+  const { question: ques, answer } = question;
+  const [responseText, setResponseText] = useState("");
+  const [checkingResponse, setCheckingResponse] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [answered, setAnswered] = useState(false);
+  const { checkShortAnswer } = useQuizContext();
 
-  const checkUserResponse = () => {
+  useEffect(() => {
+    setResponseText("");
+    setCheckingResponse(false);
+    setFeedback("");
+    setAnswered(false);
+  }, [question]);
+
+  const checkUserResponse = async () => {
     // check to see if the user understands the question and topic
     // remember the whole purpose of this app is understanding and not being right
+    if (responseText.trim() === "") return;
+    setCheckingResponse(true);
+    const feedback = await checkShortAnswer(responseText, answer, ques);
+    setCheckingResponse(false);
+    setFeedback(feedback);
+    setAnswered(true);
   };
   return (
     <div className="">
@@ -20,12 +41,32 @@ const ShortAnswerQuestionComponent: FC<ComponentType> = ({ question }) => {
           className="w-full resize-none outline-none border-none bg-transparent   rounded"
           rows={3}
           placeholder="Enter answer here (remember it is more about learning not being right)"
+          value={responseText}
+          onChange={(event) => setResponseText(event.target.value)}
         ></textarea>
-        <div className="flex justify-end">
-          <button className="p-2 bg-purple-500 text-white rounded-full scale-95 hover:scale-100 transition-all">
-            Check response
-          </button>
-        </div>
+        {!answered && (
+          <div className="flex justify-end">
+            <button
+              className="p-2 bg-purple-500 text-white rounded-full scale-95 hover:scale-100 transition-all"
+              onClick={() => checkUserResponse()}
+              disabled={checkingResponse || answered}
+            >
+              {checkingResponse ? (
+                <LoaderPinwheel
+                  size={buttonIconSize}
+                  className="animate-spin"
+                />
+              ) : (
+                "Check Response"
+              )}
+            </button>
+          </div>
+        )}
+        {answered && (
+          <div className="my-4">
+            <p>{feedback}</p>
+          </div>
+        )}
       </div>
     </div>
   );

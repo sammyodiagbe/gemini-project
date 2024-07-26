@@ -29,7 +29,7 @@ const MultipleChoiceQuestionComponent: FC<ComponentType> = ({ question }) => {
 
   return (
     <div className="">
-      <h1 className="text-2xl text-extrabold">{ques}</h1>
+      <h1 className="text-2xl font-extrabold mb-4">{ques}</h1>
       <div className="grid grid-cols-2 gap-3 my-4">
         {options?.map((option, index) => {
           return (

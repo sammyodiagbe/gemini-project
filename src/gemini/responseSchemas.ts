@@ -143,3 +143,12 @@ export const noteSchema = {
     },
   },
 };
+
+export const checkShortanswerResponse = {
+  type: "object",
+  description:
+    "A response message that provides user with feedback, remeber to focus more on understanding than being right",
+  properties: {
+    message: { type: "string", description: "message" },
+  },
+};

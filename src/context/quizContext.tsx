@@ -11,7 +11,11 @@ import { generateQuizGemini } from "@/lib/gemini_interactons";
 import { jsonDecode, jsonEncode } from "@/lib/utils";
 import { ConversationType, QuizSessionType } from "@/lib/type";
 import { useLoadingContext } from "./loadingStateContext";
-import { insightSchema, quizSchema } from "@/gemini/responseSchemas";
+import {
+  checkShortanswerResponse,
+  insightSchema,
+  quizSchema,
+} from "@/gemini/responseSchemas";
 
 type QuizContextType = {
   quizmode: boolean;
@@ -59,7 +63,6 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         jsonString += chunk.text();
       }
       const quiz: QuizSessionType = jsonDecode(jsonString);
-      console.log(quiz);
       const res: ConversationType = {
         quiz: quiz.questions,
         message: quiz.message,
@@ -78,25 +81,34 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkShortAnswer = async (
     userAnswer: string,
-    aiAnswer: string,
+    answer: string,
     question: string
   ) => {
-    const prompt = `User has sent back there answer to the shortquestion quiz, now the focus and main purpose of this software is understanding. So Analyze the user response and the question, plus actual answer and determine if they understand what the question is about, then give appropriate response based on your analysis, once the main purpose of this app is to focus on Understanding and not being right. Your response should not have no questions.
+    console.log(userAnswer);
+    console.log(answer);
+    console.log(question);
+    const schema = jsonEncode(checkShortanswerResponse);
+    const prompt = `
+    Compare response from user and see if they have an understanding of the question remember to be supportive. This is more about understanding than being right, i have provided the question, user answer and answer below
 
-    Make you analysis short and concise and no questions please
-    Make your responses very fun and goofy with emojis
-    your response here should only include the response entry { response: ....}
-    
     question=${question}
     userAnswer=${userAnswer}
-    yourGeneratedAnswer=${aiAnswer}
+    answer=${answer}
+
+    Follow JSON Schema.<JSONSchema>${schema}</JsonSchema>
+    
+    
     `;
+    let jsonString = "";
     try {
-      const result = await chat?.sendMessage(prompt);
-      const response = await result?.response;
-      const text = await response?.text();
-      const json = jsonDecode(text!);
-      return json.response;
+      const result = await chat?.sendMessageStream(prompt);
+
+      for await (let chunk of result?.stream!) {
+        jsonString += chunk.text();
+      }
+      const { message } = jsonDecode(jsonString!);
+
+      return message;
     } catch (error: any) {
       console.log(error);
     }
