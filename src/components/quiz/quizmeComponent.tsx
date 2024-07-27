@@ -1,5 +1,10 @@
 "use client";
-import { FileQuestion, TriangleAlert } from "lucide-react";
+import {
+  FileQuestion,
+  LoaderPinwheel,
+  LoaderPinwheelIcon,
+  TriangleAlert,
+} from "lucide-react";
 import DifficultyComponent from "./difficultyComponent";
 import {
   ChangeEvent,
@@ -8,7 +13,7 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { buttonIconSize, cn } from "@/lib/utils";
 import { useQuizContext } from "@/context/quizContext";
 
 const difficultyLevels = [
@@ -34,10 +39,14 @@ const QuizMeComponent = () => {
   const [multipleChoice, allowMultipleChoice] = useState(true);
   const [shortAnswer, allowShortAnswer] = useState(false);
   const [difLevel, setDifLevel] = useState<number>(1);
+  const [startingQuiz, setStartingQuiz] = useState(false);
 
-  const beginQuiz: MouseEventHandler = (event) => {
+  const beginQuiz: MouseEventHandler = async (event) => {
     event.stopPropagation();
-    startQuiz(multipleChoice, shortAnswer, difLevel);
+    setStartingQuiz(true);
+    await startQuiz(multipleChoice, shortAnswer, difLevel);
+    setOpen(false);
+    setStartingQuiz(false);
   };
 
   const handleLevelChange: ChangeEventHandler = (
@@ -136,10 +145,17 @@ const QuizMeComponent = () => {
 
             <span className="py-3 grid grid-cols-2 gap-2 ">
               <button
-                className=" rounded-full p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
+                className="flex justify-center rounded-full p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
                 onClick={beginQuiz}
               >
-                Start Quiz
+                {startingQuiz ? (
+                  <LoaderPinwheel
+                    size={buttonIconSize}
+                    className="animate-spin"
+                  />
+                ) : (
+                  "Start Quiz"
+                )}
               </button>
               <button
                 className="  rounded-full p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"

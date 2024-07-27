@@ -2,7 +2,6 @@
 import { QuizQuestionType } from "@/lib/type";
 import { cn } from "@/lib/utils";
 import { FC, useEffect, useState } from "react";
-import QuizActionComponent from "./quizActionComponent";
 
 type ComponentType = {
   question: QuizQuestionType;
@@ -35,13 +34,19 @@ const MultipleChoiceQuestionComponent: FC<ComponentType> = ({ question }) => {
           return (
             <button
               className={cn(
-                " text-left p-3 py-5 rounded-md bg-secondary active:scale-95 hover:ring-1 hover:ring-primary transition-all flex items-start",
-                answered && selected === index && isRight && "bg-green-500",
-                answered && selected === index && !isRight && "bg-red-500",
+                " text-left p-3 py-5 rounded-md bg-secondary active:scale-95 hover:ring-1 hover:ring-primary transition-all duration-100 flex items-start",
+                answered &&
+                  selected === index &&
+                  isRight &&
+                  "bg-rightOption text-white",
+                answered &&
+                  selected === index &&
+                  !isRight &&
+                  "bg-wrongOption text-white",
                 answered &&
                   !(selected === index) &&
                   option === answer &&
-                  "bg-green-500"
+                  "bg-rightOption text-white"
               )}
               key={index}
               onClick={() => checkAnswer(option, index)}
