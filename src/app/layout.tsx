@@ -36,7 +36,6 @@ export default function RootLayout({
         >
           <LoadingStateContextProvider>
             <ComponentInteractionsProvider>
-              <Navbar />
               {children}
             </ComponentInteractionsProvider>
             <Analytics />

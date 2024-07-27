@@ -1,4 +1,5 @@
 import ImagesComponent from "@/components/chat/imagesComponent";
+import Navbar from "@/components/navbar";
 import NotesComponent from "@/components/notes-components/notesComponent";
 import PopupComponent from "@/components/popupComponent";
 import ToastWrapperProvider from "@/components/toast-components/toastWrapperProvider";
@@ -11,6 +12,7 @@ import { FC } from "react";
 
 type LayoutType = {
   children: React.ReactNode;
+  title: "Naala is here to help";
 };
 
 const PageLayout: FC<LayoutType> = ({ children }) => {
@@ -22,6 +24,7 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
             <ToastProvider>
               <ToastWrapperProvider />
               <NotesComponent />
+              <Navbar />
               {children}
             </ToastProvider>
           </NoteContextProvider>
