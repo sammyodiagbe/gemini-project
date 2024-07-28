@@ -43,8 +43,6 @@ type ContextType = {
   setExtractedText: Dispatch<SetStateAction<string[]>>;
   chatWithGemini: Function;
   conversation: ConversationType[];
-  startQuizMode: Function;
-  nextQuestion: Function;
   getFlashCard: Function;
   setConversation: Dispatch<SetStateAction<ConversationType[]>>;
   chat: ChatSession | null;
@@ -70,8 +68,6 @@ const conversationContext = createContext<ContextType>({
   setExtractedText: () => {},
   chatWithGemini: () => {},
   conversation: [],
-  startQuizMode: () => {},
-  nextQuestion: () => {},
   getFlashCard: () => {},
   setConversation: () => {},
   attemptQueryRetry: () => {},
@@ -111,6 +107,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
 
   const initGemini = async (fileURL: string) => {
+    console.time("init");
     setWorkingOnPdf(true);
     try {
       // for (let index = 0; index < documentImagesData?.length; index++) {
@@ -140,6 +137,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       await generatePossibleTopics(chat);
       setChat(chat);
       setWorkingOnPdf(false);
+      console.timeEnd("init");
     } catch (error: any) {
       console.log(error);
     }
@@ -180,7 +178,24 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   };
 
   const addTopicToFocus = async (text: string) => {
-    setFocusTopics((prev) => [...prev, text]);
+    const topics = [...focusTopics, text];
+    console.time("adding_topics");
+    console.log(topics.join(", "));
+    const prompt = `This are the topics i would like you focus on, quizes, conversation, flashcards should be based on this topics
+    topics=${topics.join(", ")}`;
+    let jsonString = "";
+
+    try {
+      const result = await chat?.sendMessageStream(prompt);
+      for await (let chunk of result?.stream!) {
+        jsonString += chunk.text;
+      }
+      const timeTaken = console.timeEnd("adding_topics");
+      console.log(timeTaken);
+    } catch (error: any) {
+      console.log(error);
+    }
+    setFocusTopics((prev) => topics);
   };
 
   const removeTopicFromFocus = async (topic: string) => {
@@ -196,6 +211,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   };
 
   const chatWithGemini = async (message: string) => {
+    console.time("chat");
     const obj = createConversationObject("chat", "user", message);
     setConversation((prev) => [...prev, obj]);
     setBusyAI(true);
@@ -231,6 +247,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       // };
 
       setConversation((prev) => [...prev, aiResponse]);
+      console.timeEnd("chat");
     } catch (error: any) {
       console.log(error);
       setConversation((prev) => [
@@ -255,64 +272,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setFocusTopics([]);
   };
 
-  const startQuizMode = async () => {
-    setBusyAI(true);
-    const schema = jsonEncode(quizSchema);
-    const prompt = `Generate quiz question, only send a single question object each time, quiztype can be either multiple_choice or short_answer, Follow schema.<JSONSchema>${schema}</JSONSchema>`;
-    let jsonString = "";
-    try {
-      const response = await chat?.sendMessageStream(prompt);
-      for await (let chunk of response?.stream!) {
-        jsonString += chunk.text();
-      }
-      const jsonData = jsonDecode(jsonString!);
-      console.log(jsonData);
-      const { response: res, quiz } = jsonData;
-      const convoobj = createConversationObject("quiz", "ai", res, quiz);
-      setConversation((prev) => [...prev, convoobj]);
-    } catch (error: any) {
-      setConversation((prev) => [
-        ...conversation,
-        {
-          sender: "system",
-          message: "Something went wrong, please try again",
-          retryQuery: "message",
-          type: "error",
-          errorOrigin: "quiz",
-        },
-      ]);
-    }
-    setBusyAI(false);
-  };
-
-  const nextQuestion = async () => {
-    const message = "Next Question please, Don't repeat questions.";
-    setBusyAI(true);
-    let jsonString = "";
-    try {
-      const response = await chat?.sendMessageStream(message);
-      for await (let chunk of response?.stream!) {
-        jsonString += chunk.text();
-      }
-      const { response: res, quiz } = jsonDecode(jsonString!);
-      const obj = createConversationObject("quiz", "ai", res, quiz);
-      setConversation((prev) => [...prev, obj]);
-    } catch (error: any) {
-      setConversation((prev) => [
-        ...conversation,
-        {
-          sender: "system",
-          message: "Something went wrong, please try again",
-          retryQuery: message,
-          type: "error",
-          errorOrigin: "quiz",
-        },
-      ]);
-    }
-    setBusyAI(false);
-  };
-
   const getFlashCard = async () => {
+    console.time("flashcard");
     setBusyAI(true);
     const message = generateFlashcardGemini();
     const schema = jsonEncode(flashcardSchema);
@@ -349,6 +310,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       ]);
     }
     setBusyAI(false);
+    console.timeEnd("flashcard");
   };
 
   const attemptQueryRetry = async (retryQuery: string, errorOrigin: string) => {
@@ -399,8 +361,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         setExtractedText,
         chatWithGemini,
         conversation,
-        startQuizMode,
-        nextQuestion,
         getFlashCard,
         setConversation,
         chat,
