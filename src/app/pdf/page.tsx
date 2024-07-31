@@ -12,6 +12,7 @@ import LoaderComponent from "@/components/loader";
 import { useQuizContext } from "@/context/quizContext";
 import NewNoteComponent from "@/components/notes-components/newNote";
 import TopicsComponent from "@/components/pdf_components/topicsComponent";
+import { useToast } from "@/components/ui/use-toast";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string | null>(null);
@@ -26,7 +27,7 @@ const Page = () => {
   const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
   const { quizmode } = useQuizContext();
   const { initGemini } = useConversationContext();
-
+  const { toast } = useToast();
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
   ) => {
@@ -44,8 +45,6 @@ const Page = () => {
     const formData = new FormData();
     const fileUrl = await URL.createObjectURL(file);
     formData.append("file", file);
-
-    console.log(fileUrl);
     try {
       // so now the plan is to be able to upload the images directly to gemini api
 
@@ -70,7 +69,11 @@ const Page = () => {
       // setExtractedText(extracted_text);
     } catch (error: any) {
       setWorkingOnPdf(false);
-      console.log(error);
+      setFile(null);
+      toast({
+        description:
+          "Oh no, something went wrong, please try uploading a file again",
+      });
     }
   };
 
