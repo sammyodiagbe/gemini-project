@@ -1,7 +1,8 @@
 "use client";
 import { noteSchema } from "@/gemini/responseSchemas";
 import { NoteType } from "@/lib/type";
-import { focusInstruction, jsonDecode, jsonEncode } from "@/lib/utils";
+import { jsonDecode, jsonEncode } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 import {
   createContext,
   Dispatch,
@@ -38,6 +39,7 @@ const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [showNote, setShowNote] = useState<boolean>(false);
   const [createNewNote, setCreateNoteNote] = useState<boolean>(false);
   const { focusTopics, chat } = useConversationContext();
+  const { toast } = useToast();
 
   const takeNote = (note: NoteType) => {
     if (note.content.trim() === "") return;
@@ -71,7 +73,11 @@ const NoteContextProvider = ({ children }: { children: React.ReactNode }) => {
       console.log(generatedNotes);
       updateNotes((prev) => [...prev, ...generatedNotes]);
     } catch (error: any) {
-      console.log(error);
+      toast({
+        title: "Oopsie",
+        description:
+          "Something went wrong while trying to generate notes, please try again",
+      });
     }
   };
   return (

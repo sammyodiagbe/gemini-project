@@ -6,11 +6,19 @@ import { NoteType } from "@/lib/type";
 import { Download, NotebookText, X } from "lucide-react";
 import { buttonIconSize } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import Spinner from "../spinner";
 
 const NotesComponent = () => {
   const { showNote, notes, takeNote, setShowNote, naalaGenerateNotes } =
     useNoteContext();
   const [noteText, setNoteText] = useState<string>("");
+  const [generatingNotes, setGeneratingNotes] = useState(false);
+
+  const generateNotes = async () => {
+    setGeneratingNotes(true);
+    await naalaGenerateNotes();
+    setGeneratingNotes(false);
+  };
 
   const variants = {
     open: {
@@ -33,6 +41,7 @@ const NotesComponent = () => {
           initial="initial"
           exit={"closed"}
           animate="open"
+          transition={{ stiffness: 50 }}
         >
           <div className="flex flex-col relative h-full bg-background w-full p-6 overflow-y-scroll">
             <button
@@ -46,23 +55,6 @@ const NotesComponent = () => {
             <div className="flex align-center justify-between">
               <div className="">
                 <h2 className="text-xl">Your notes ({notes.length})</h2>
-              </div>
-              <div className="items-center flex space-x-4">
-                {notes.length && (
-                  <button className="flex items-center space-x-2 hover:font-bold transition-all text-sm">
-                    <Download size={buttonIconSize} className="mr-1" /> Download
-                    Note
-                  </button>
-                )}
-                <button
-                  className={
-                    " hover:font-bold flex items-center transition-all text-sm"
-                  }
-                  onClick={() => naalaGenerateNotes()}
-                >
-                  <NotebookText className="mr-1" size={buttonIconSize} /> Naala
-                  Generate notes
-                </button>
               </div>
             </div>
 
@@ -79,24 +71,25 @@ const NotesComponent = () => {
               )}
             </div>
 
-            <div className="  w-full max-w-full left-0  bg-background p-2 px-3 flex space-x-3 rounded-full items-center">
-              <textarea
-                placeholder="Enter note here"
-                className="flex-1 rows-1 rounded-md outline-none ring-0 focus:ring-0 resize-none align-middle bg-transparent max-h-[25dvh] max-h-52"
-                value={noteText}
-                onChange={(event) => setNoteText(event.target.value)}
-                rows={1}
-              />
+            <div className=" fixed right-5 bottom-10 items-center flex space-x-4">
+              {notes.length && (
+                <button className="flex items-center space-x-2 hover:font-bold transition-all text-sm">
+                  <Download size={buttonIconSize} className="mr-1" /> Download
+                  Note
+                </button>
+              )}
               <button
-                className="bg-purple-500 text-white p-1 px-3 rounded-full active:scale-95"
-                onClick={async () => {
-                  if (noteText.trim() === "") return;
-                  const note: NoteType = { content: noteText };
-                  await takeNote(note);
-                  setNoteText("");
-                }}
+                className={
+                  "scale-95 hover:ring-1 hover:ring-primary hover:font-semibold active:scale-95 hover:scale-1 flex items-center p-3 px-5 rounded-full transition-all text-sm bg-secondary"
+                }
+                onClick={() => generateNotes()}
               >
-                Save Note
+                {generatingNotes ? (
+                  <Spinner />
+                ) : (
+                  <NotebookText className="mr-1" size={buttonIconSize} />
+                )}
+                Naala generate notes
               </button>
             </div>
           </div>

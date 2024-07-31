@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar";
 import { Analytics } from "@vercel/analytics/react";
 import ComponentInteractionsProvider from "@/context/componentInteractionContext";
 import { ThemeProvider } from "@/components/next-theme";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Outfit({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
         >
           <LoadingStateContextProvider>
             <ComponentInteractionsProvider>
+              <Toaster />
               {children}
             </ComponentInteractionsProvider>
             <Analytics />

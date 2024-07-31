@@ -1,8 +1,6 @@
 "use client";
 import { ConversationType, MessageTypeObj } from "@/lib/type";
 import { NotebookPen, SpeechIcon } from "lucide-react";
-
-import MarkdownView, { Markdown } from "react-showdown";
 import { FC } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";

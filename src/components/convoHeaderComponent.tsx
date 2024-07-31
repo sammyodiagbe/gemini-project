@@ -1,16 +1,8 @@
 import { useComponentInteractionsContext } from "@/context/componentInteractionContext";
 import { useConversationContext } from "@/context/conversationContext";
 import { useNoteContext } from "@/context/noteContext";
-import { buttonIconSize, cn } from "@/lib/utils";
-import {
-  FileQuestion,
-  LayoutList,
-  Notebook,
-  Pen,
-  TriangleAlert,
-  Zap,
-} from "lucide-react";
-import DifficultyComponent from "./quiz/difficultyComponent";
+import { cn } from "@/lib/utils";
+import { LayoutList, Notebook, Pen, Zap } from "lucide-react";
 import QuizMeComponent from "./quiz/quizmeComponent";
 
 const ConversationHeader = () => {
