@@ -5,8 +5,8 @@
 
 const LoaderComponent = () => {
   return (
-    <div className="fixed h-screen w-screen  grid items-center justify-center z-50 top-0 left-0 bg-backgroundColor">
-      <div className="text-center max-w-[250px]">
+    <div className="fixed h-screen w-screen bg-primary  grid items-center justify-center z-50 top-0 left-0 bg-backgroundColor">
+      <div className="text-center max-w-[250px] space-y-3">
         {/* <Lottie
           animationData={loadingMonkey}
           className=" w-[280px] mb-0 self-auto"
@@ -16,7 +16,7 @@ const LoaderComponent = () => {
           Analyzing your file.
         </h1> */}
         <h1 className="text-2xl">Hold on..</h1>
-        <p>Rafiki is analyzing your file</p>
+        <p>Naala is analyzing your file</p>
       </div>
     </div>
   );

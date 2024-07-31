@@ -17,13 +17,7 @@ import { useToast } from "@/components/ui/use-toast";
 const Page = () => {
   const [fileUrl, setFile] = useState<string | null>(null);
   const [openSidebar, setOpenSidebar] = useState<boolean>(false);
-  const {
-    setConversation,
-    updateExtractedText,
-    updateImagesData,
-    updateDataState,
-    reset,
-  } = useConversationContext()!;
+  const { setConversation, reset } = useConversationContext()!;
   const { setWorkingOnPdf, workingOnPdf, busyAI } = useLoadingContext()!;
   const { quizmode } = useQuizContext();
   const { initGemini } = useConversationContext();
