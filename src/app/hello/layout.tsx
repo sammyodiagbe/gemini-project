@@ -4,8 +4,8 @@ type LayoutType = {
   children: React.ReactNode;
 };
 
-const PageLayout: FC<LayoutType> = ({ children }) => {
+const HelloPageLayout: FC<LayoutType> = ({ children }) => {
   return <>{children}</>;
 };
 
-export default PageLayout;
+export default HelloPageLayout;
