@@ -11,7 +11,7 @@ type ChatComponentType = {
 };
 
 const ChatMessageComponent: FC<ChatComponentType> = ({
-  conv: { message, type, sender },
+  conv: { message, type, sender, time },
 }) => {
   const { takeNote } = useNoteContext();
   const handleSpeak = () => {
@@ -30,7 +30,6 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
     }
   };
 
-  const messageType = typeof message;
   const addNote = async () => {
     const data = { content: message };
     await takeNote(data);
@@ -55,8 +54,9 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
           className="mb-4 leading-8"
         />
       ) : ( */}
-      <p className="text-sm font-bold mb-2">
-        {sender === "ai" ? "Naala" : "You"}
+      <p className="flex justify-between items-center text-sm font-bold mb-2">
+        <span>{sender === "ai" ? "Naala" : "You"}</span>
+        {time && <span>took {time}s</span>}
       </p>
 
       <p className="bg-secondary/60 p-3 rounded-lg">{message}</p>

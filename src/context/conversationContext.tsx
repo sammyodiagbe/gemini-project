@@ -12,9 +12,11 @@ import { Gemini as AI } from "@/gemini/gemini";
 import { ChatSession, InlineDataPart, TextPart } from "@google/generative-ai";
 import {
   createConversationObject,
+  errorMessage,
   focusInstruction,
   jsonDecode,
   jsonEncode,
+  measurePerformance,
   processText,
 } from "@/lib/utils";
 import { ConversationType, ImageDataType } from "@/lib/type";
@@ -32,6 +34,7 @@ import {
   flashcardSchema,
   quizSchema,
 } from "../gemini/responseSchemas";
+import { useToast } from "@/components/ui/use-toast";
 
 type interaction = {
   text: string;
@@ -105,6 +108,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [docType, setDocType] = useState<string>("");
   const { setWorkingOnPdf } = useLoadingContext();
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
+  const { toast } = useToast();
 
   const initGemini = async (fileURL: string) => {
     console.time("init");
@@ -217,6 +221,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setBusyAI(true);
     const schemaType = jsonEncode(chatResponseSchema);
     const focus = focusInstruction(focusTopics);
+    const start = performance.now();
 
     const prompt = `${focus}. Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>, ${message}, if the user is only having a casual conversation with you`;
 
@@ -235,6 +240,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         message: response,
         sender: "ai",
         type: "chat",
+        time: measurePerformance(start),
       };
 
       // console.log(decodejson);
@@ -249,17 +255,11 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       setConversation((prev) => [...prev, aiResponse]);
       console.timeEnd("chat");
     } catch (error: any) {
-      console.log(error);
-      setConversation((prev) => [
-        ...conversation,
-        {
-          sender: "system",
-          message: "Something went wrong, please try again",
-          retryQuery: message,
-          type: "error",
-          errorOrigin: "chat",
-        },
-      ]);
+      toast({
+        description: errorMessage(
+          "Oh no, that didn't seem to work, please try again"
+        ),
+      });
     }
     setBusyAI(false);
   };
@@ -273,8 +273,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   };
 
   const getFlashCard = async () => {
-    console.time("flashcard");
     setBusyAI(true);
+    const start = performance.now();
     const message = generateFlashcardGemini();
     const schema = jsonEncode(flashcardSchema);
     const focus = focusInstruction(focusTopics);
@@ -293,24 +293,16 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         flashcard,
         type: "flashcard",
         sender: "ai",
+        time: measurePerformance(start),
       };
 
       setConversation((prev) => [...prev, chatMessage]);
     } catch (error: any) {
-      console.log(error);
-      setConversation((prev) => [
-        ...conversation,
-        {
-          sender: "system",
-          message: "Something went wrong, please try again",
-          retryQuery: message,
-          type: "error",
-          errorOrigin: "flashcard",
-        },
-      ]);
+      toast({
+        description: "Oopsie that didn't seem to work, please try again",
+      });
     }
     setBusyAI(false);
-    console.timeEnd("flashcard");
   };
 
   const attemptQueryRetry = async (retryQuery: string, errorOrigin: string) => {

@@ -66,3 +66,10 @@ export const focusInstruction = (focusTopics: string[]) => {
 // export const filePart = (fileurl: string) => {
 //   return F
 // }
+export const measurePerformance = (start: number) => {
+  return (performance.now() - start) / 1000;
+};
+
+export const errorMessage = (message: string) => {
+  return message;
+};

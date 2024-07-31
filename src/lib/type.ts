@@ -36,6 +36,7 @@ export type ConversationType = {
   retryQuery?: string;
   insights?: InsightType;
   errorOrigin?: string;
+  time?: number;
 };
 
 export type FlashCardType = {
