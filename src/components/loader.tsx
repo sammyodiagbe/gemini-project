@@ -5,7 +5,7 @@
 
 const LoaderComponent = () => {
   return (
-    <div className="fixed h-screen w-screen bg-primary  grid items-center justify-center z-50 top-0 left-0 bg-backgroundColor">
+    <div className="fixed h-screen w-screen bg-primary  grid items-center justify-center z-50 top-0 left-0">
       <div className="text-center max-w-[250px] space-y-3">
         {/* <Lottie
           animationData={loadingMonkey}
