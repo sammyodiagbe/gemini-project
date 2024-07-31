@@ -61,40 +61,8 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
         {sender === "ai" ? "Naala" : "You"}
       </p>
 
-      {messageType === "string" ? (
-        <p className="bg-secondary/60 p-3 rounded-lg">{message as string}</p>
-      ) : (
-        (message as MessageTypeObj[]).map((entry, index) => {
-          const { title, paragraphs } = entry;
+      <p className="bg-secondary/60 p-3 rounded-lg">{message}</p>
 
-          return (
-            <div className="bg-secondary/60 p-2 rounded-lg" key={index}>
-              {title ? (
-                <h1 className="pb-3 text-lg font-bold">{title}</h1>
-              ) : null}
-              {/* paragraph */}
-              {paragraphs.map((paragraph, index) => {
-                const { text, codes } = paragraph;
-
-                const codeString: string | null =
-                  codes && codes.length
-                    ? codes.map((c) => c.code).join("\n")
-                    : null;
-                return (
-                  <div className="" key={index}>
-                    <p key={index} className="pb-3 leading-6">
-                      <Markdown markdown={text} />
-                    </p>
-                    {codes && codeString !== "" && (
-                      <p className="">{codeString}</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })
-      )}
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}
 
       {sender === "ai" && (

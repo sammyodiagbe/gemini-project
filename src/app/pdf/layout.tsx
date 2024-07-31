@@ -12,7 +12,6 @@ import { FC } from "react";
 
 type LayoutType = {
   children: React.ReactNode;
-  title: "Naala is here to help";
 };
 
 const PageLayout: FC<LayoutType> = ({ children }) => {

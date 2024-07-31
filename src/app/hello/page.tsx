@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { buttonClass } from "@/lib/tailwind_classes";
 import Link from "next/link";
 
-const HelloPage = () => {
+const Page = () => {
   const [name, setName] = useState("");
   const [hasProvidedName, setHasProvdiedName] = useState(false);
 
@@ -78,4 +78,4 @@ const HelloPage = () => {
   );
 };
 
-export default HelloPage;
+export default Page;
