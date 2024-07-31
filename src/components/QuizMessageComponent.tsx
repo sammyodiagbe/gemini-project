@@ -7,9 +7,14 @@ import QuizActionComponent from "./quizActionComponent";
 type ComponentType = {
   quiz: QuizQuestionType[];
   message: string;
+  time: number;
 };
 
-const QuizMessageComponent: React.FC<ComponentType> = ({ quiz, message }) => {
+const QuizMessageComponent: React.FC<ComponentType> = ({
+  quiz,
+  message,
+  time,
+}) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [quizQuestion, setQuizQuestion] = useState<QuizQuestionType>(
     quiz[currentIndex]
@@ -23,7 +28,10 @@ const QuizMessageComponent: React.FC<ComponentType> = ({ quiz, message }) => {
 
   return (
     <div>
-      <p className="pb-4">{message}</p>
+      <div className="flex justify-between items-center">
+        <p className="pb-4">{message}</p>
+        <span className="">time taken: {time}s</span>
+      </div>
       <div className="py-2">
         <h2>
           Question {currentIndex + 1} of {quiz.length}

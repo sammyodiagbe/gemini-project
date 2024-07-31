@@ -8,9 +8,15 @@ import {
 } from "react";
 import { useConversationContext } from "./conversationContext";
 import { generateQuizGemini } from "@/lib/gemini_interactons";
-import { jsonDecode, jsonEncode } from "@/lib/utils";
+import {
+  errorMessage,
+  jsonDecode,
+  jsonEncode,
+  measurePerformance,
+} from "@/lib/utils";
 import { ConversationType, QuizSessionType } from "@/lib/type";
 import { useLoadingContext } from "./loadingStateContext";
+import { useToast } from "@/components/ui/use-toast";
 import {
   checkShortanswerResponse,
   insightSchema,
@@ -47,6 +53,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { busyAI, setBusyAI } = useLoadingContext();
   const [quizSession, setQuizSession] = useState<QuizSessionType[]>([]);
   const [sessionCount, setSessionCount] = useState<number>(0);
+  const { toast } = useToast();
 
   const startQuiz = async (
     multipleChoice: boolean,
@@ -56,6 +63,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     setBusyAI(true);
     const prompt = generateQuizGemini(multipleChoice, shortAnswer, difficulty);
     let jsonString = "";
+    const start = performance.now();
     try {
       const result = await chat?.sendMessageStream(prompt);
 
@@ -68,13 +76,16 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         message: quiz.message,
         type: "quiz",
         sender: "ai",
+        time: measurePerformance(start),
       };
       setQuizmode(true);
       setSessionCount((prev) => prev + 1);
       setQuizSession((prev) => [...prev, quiz]);
       setConversation((prev) => [...prev, res]);
     } catch (error: any) {
-      console.log(error);
+      toast({
+        description: errorMessage(),
+      });
     }
     setBusyAI(false);
   };
@@ -84,9 +95,6 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     answer: string,
     question: string
   ) => {
-    console.log(userAnswer);
-    console.log(answer);
-    console.log(question);
     const schema = jsonEncode(checkShortanswerResponse);
     const prompt = `
     Compare response from user and see if they have an understanding of the question remember to be supportive. This is more about understanding than being right, i have provided the question, user answer and answer below
@@ -110,7 +118,9 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
 
       return message;
     } catch (error: any) {
-      console.log(error);
+      toast({
+        description: errorMessage(),
+      });
     }
     return "";
   };
@@ -139,7 +149,9 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         setConversation((prev) => [...prev, res]);
       }, 100);
     } catch (error: any) {
-      console.log(error);
+      toast({
+        description: errorMessage(),
+      });
     }
     setBusyAI(false);
   };
@@ -161,7 +173,9 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       console.log(res);
       return;
     } catch (error) {
-      console.log(error);
+      toast({
+        description: errorMessage(),
+      });
     }
   };
 

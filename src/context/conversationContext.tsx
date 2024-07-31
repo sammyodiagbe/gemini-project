@@ -141,9 +141,10 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       await generatePossibleTopics(chat);
       setChat(chat);
       setWorkingOnPdf(false);
-      console.timeEnd("init");
     } catch (error: any) {
-      console.log(error);
+      toast({
+        description: errorMessage(),
+      });
     }
   };
 
@@ -256,9 +257,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       console.timeEnd("chat");
     } catch (error: any) {
       toast({
-        description: errorMessage(
-          "Oh no, that didn't seem to work, please try again"
-        ),
+        description: errorMessage(),
       });
     }
     setBusyAI(false);

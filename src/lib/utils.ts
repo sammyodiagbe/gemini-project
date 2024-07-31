@@ -67,9 +67,9 @@ export const focusInstruction = (focusTopics: string[]) => {
 //   return F
 // }
 export const measurePerformance = (start: number) => {
-  return (performance.now() - start) / 1000;
+  return Math.round((performance.now() - start) / 1000);
 };
 
-export const errorMessage = (message: string) => {
-  return message;
+export const errorMessage = () => {
+  return "Oh no, something went wrong, please try again";
 };

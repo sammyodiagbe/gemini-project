@@ -5,6 +5,7 @@ import { FC } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useNoteContext } from "@/context/noteContext";
+import MarkDownView from "react-showdown";
 
 type ChatComponentType = {
   conv: ConversationType;
@@ -56,30 +57,40 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       ) : ( */}
       <p className="flex justify-between items-center text-sm font-bold mb-2">
         <span>{sender === "ai" ? "Naala" : "You"}</span>
-        {time && <span>took {time}s</span>}
+        {time && <span>time taken: {Math.round(time)}s</span>}
       </p>
 
-      <p className="bg-secondary/60 p-3 rounded-lg">{message}</p>
+      <p className="bg-secondary/60 p-3 rounded-lg">
+        {Array.isArray(message) ? (
+          message.map((m, index) => {
+            const {
+              title,
+              paragraphs,
+            }: { title: string; paragraphs: { text: string }[] } = m;
+            return (
+              <div className="">
+                <h1 key={index}>{title}</h1>
+                <div className="space-y-2">
+                  {paragraphs.map((paragraph, ind) => {
+                    const { text } = paragraph;
+                    return (
+                      <MarkDownView
+                        markdown={text}
+                        key={ind}
+                        className="leading-6"
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p>{message}</p>
+        )}
+      </p>
 
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}
-
-      {sender === "ai" && (
-        <div className="flex items-center mt-6">
-          <button
-            className="flex items-center  text-textColor/80  p-2 mr-2 rounded-md active:scale-95 justify-center"
-            onClick={addNote}
-          >
-            <NotebookPen size={15} className="mr-1" />
-          </button>
-          <button
-            className="flex items-center p-2 text-textColor/80 rounded-md active:scale-95 justify-center"
-            onClick={handleSpeak}
-            aria-label="Listen"
-          >
-            <SpeechIcon size={15} className="mr-1" />
-          </button>
-        </div>
-      )}
     </motion.div>
   );
 };

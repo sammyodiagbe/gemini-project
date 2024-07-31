@@ -67,7 +67,14 @@ const ConversationComponent = () => {
           <div className=" pb-[1.875rem] space-y-8">
             {conversation.length ? (
               conversation.map((conv, index) => {
-                let { type, quiz, message: mess, flashcard, insights } = conv;
+                let {
+                  type,
+                  quiz,
+                  message: mess,
+                  flashcard,
+                  insights,
+                  time,
+                } = conv;
                 let message = mess as string;
                 switch (type) {
                   case "chat":
@@ -78,6 +85,7 @@ const ConversationComponent = () => {
                         message={message as string}
                         quiz={quiz!}
                         key={index}
+                        time={time!}
                       />
                     );
                   case "flashcard":
@@ -86,6 +94,7 @@ const ConversationComponent = () => {
                         message={message}
                         flashcard={flashcard!}
                         key={index}
+                        time={time!}
                       />
                     );
                   case "error":

@@ -7,9 +7,14 @@ import { motion } from "framer-motion";
 type FlashCardPropTypes = {
   message: string;
   flashcard: FlashCardType;
+  time: number;
 };
 
-const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
+const FlashCardComponent: FC<FlashCardPropTypes> = ({
+  message,
+  time,
+  flashcard,
+}) => {
   const { front, back } = flashcard;
   const [flip, setFlip] = useState(false);
   return (
@@ -18,7 +23,10 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({ message, flashcard }) => {
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
     >
-      <p className="text-sm font-bold">Nala</p>
+      <div className="flex justify-between items-center py-3">
+        <p className="flex-1 text-sm font-bold">Nala</p>
+        <span>time taken: {time} s </span>
+      </div>
       <MarkdownView
         markdown={message}
         className="bg-onBackground p-2rounded-lg"
