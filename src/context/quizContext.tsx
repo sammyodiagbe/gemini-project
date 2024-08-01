@@ -188,7 +188,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
       Generate feedback and insights on how well I did during the session,
       be motivational and friendly and add some goofiness with emojis
       Quiz data from user <QuizData>${quizData}</QuizData>
-
+      Also remember to put previous related data into consideration when breaking down how well they did
       Follow Schema.<JSONSchema>${schema}</JSONSchema>
       `;
     let jsonString = "";

@@ -4,6 +4,7 @@ import MultipleChoiceQuestionComponent from "./multipleChoiceComponent";
 import ShortAnswerQuestionComponent from "./shortAnswerComponent";
 import QuizActionComponent from "./quizActionComponent";
 import { useQuizContext } from "@/context/quizContext";
+import { jsonEncode } from "@/lib/utils";
 
 type ComponentType = {
   quiz: QuizQuestionType[];
@@ -36,7 +37,8 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
   };
 
   const getBreakdown = async () => {
-    await endSession();
+    const quizData = jsonEncode(responseData);
+    await endSession(quizData);
   };
 
   return (
