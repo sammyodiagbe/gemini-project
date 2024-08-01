@@ -111,7 +111,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const { toast } = useToast();
 
   const initGemini = async (fileURL: string) => {
-    console.time("init");
     setWorkingOnPdf(true);
     try {
       // for (let index = 0; index < documentImagesData?.length; index++) {
@@ -133,8 +132,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       let chat = await AI.startChat({
         history: [{ role: "user", parts: [initPDf, textInstruction] }],
       });
-
-      console.log(await chat.requestOptions);
 
       await generatePossibleInteractions(chat);
       // get all the possible topics from the document so a user can lock onto a topic
@@ -184,8 +181,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const addTopicToFocus = async (text: string) => {
     const topics = [...focusTopics, text];
-    console.time("adding_topics");
-    console.log(topics.join(", "));
     const prompt = `This are the topics i would like you focus on, quizes, conversation, flashcards should be based on this topics
     topics=${topics.join(", ")}`;
     let jsonString = "";
@@ -195,20 +190,60 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       for await (let chunk of result?.stream!) {
         jsonString += chunk.text;
       }
-      const timeTaken = console.timeEnd("adding_topics");
-      console.log(timeTaken);
+      toast({
+        description: `${text} has been added successfully`,
+      });
     } catch (error: any) {
-      console.log(error);
+      toast({
+        description: errorMessage(),
+      });
     }
     setFocusTopics((prev) => topics);
   };
 
   const removeTopicFromFocus = async (topic: string) => {
-    setFocusTopics((prev) => prev.filter((t) => t !== topic));
+    const topics = [...focusTopics.filter((t) => t === topic)];
+    const prompt = topics.length
+      ? `This are the topics i would like you focus on, quizes, conversation, flashcards should be based on this topics
+    topics=${topics.join(", ")}`
+      : "Focus is now on all topics";
+    let jsonString = "";
+
+    try {
+      const result = await chat?.sendMessageStream(prompt);
+      for await (let chunk of result?.stream!) {
+        jsonString += chunk.text;
+      }
+      toast({
+        description: `${topic} was removed successfully`,
+      });
+      setFocusTopics((prev) => prev.filter((t) => t !== topic));
+    } catch (error: any) {
+      toast({
+        description: errorMessage(),
+      });
+    }
   };
 
-  const removeAllFocusTopics = () => {
-    setFocusTopics((prev) => []);
+  const removeAllFocusTopics = async () => {
+    const prompt = "Focus is now on all topics";
+    let jsonString = "";
+
+    try {
+      const result = await chat?.sendMessageStream(prompt);
+      for await (let chunk of result?.stream!) {
+        jsonString += chunk.text;
+      }
+      toast({
+        description: `We are now focusing on all topics`,
+      });
+
+      setFocusTopics((prev) => []);
+    } catch (error: any) {
+      toast({
+        description: errorMessage(),
+      });
+    }
   };
 
   const updateDataState = (state: boolean) => {
