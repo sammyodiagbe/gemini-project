@@ -1,13 +1,17 @@
 "use client";
-import { QuizQuestionType } from "@/lib/type";
+import { QuizQuestionType, QuizResponseType } from "@/lib/type";
 import { cn } from "@/lib/utils";
 import { FC, useEffect, useState } from "react";
 
 type ComponentType = {
   question: QuizQuestionType;
+  updateResponse: Function;
 };
 
-const MultipleChoiceQuestionComponent: FC<ComponentType> = ({ question }) => {
+const MultipleChoiceQuestionComponent: FC<ComponentType> = ({
+  question,
+  updateResponse,
+}) => {
   const { question: ques, answer, options } = question;
   const [answered, setAnswered] = useState(false);
   const [selected, setSelected] = useState(-1);
@@ -18,6 +22,12 @@ const MultipleChoiceQuestionComponent: FC<ComponentType> = ({ question }) => {
     setSelected(index);
     setIsRight((prev) => option === answer);
     setAnswered(true);
+    const response: QuizResponseType = {
+      answer,
+      question: ques,
+      userAnswer: option,
+    };
+    updateResponse(response);
   };
 
   useEffect(() => {

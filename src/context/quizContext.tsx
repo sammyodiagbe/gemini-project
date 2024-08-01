@@ -179,11 +179,16 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const endSession = async () => {
+  const endSession = async (quizData: string) => {
     const schema = jsonEncode(insightSchema);
+    const start = performance.now();
+
+    console.log(quizData);
     const prompt = `
       Generate feedback and insights on how well I did during the session,
       be motivational and friendly and add some goofiness with emojis
+      Quiz data from user <QuizData>${quizData}</QuizData>
+
       Follow Schema.<JSONSchema>${schema}</JSONSchema>
       `;
     let jsonString = "";
@@ -194,16 +199,21 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         jsonString += chunk.text();
       }
       const insights = jsonDecode(jsonString);
+      console.log(insights);
       const chatData: ConversationType = {
         type: "insights",
         insights,
         sender: "ai",
         message: insights.message,
+        time: measurePerformance(start),
       };
       setQuizmode(false);
       setConversation((prev) => [...prev, chatData]);
     } catch (error: any) {
-      console.log(error);
+      setQuizmode(false);
+      toast({
+        description: errorMessage(),
+      });
     }
   };
   return (

@@ -1,14 +1,18 @@
 import { useQuizContext } from "@/context/quizContext";
-import { QuizQuestionType } from "@/lib/type";
+import { QuizQuestionType, QuizResponseType } from "@/lib/type";
 import { buttonIconSize } from "@/lib/utils";
 import { LoaderPinwheel } from "lucide-react";
 import { FC, useEffect, useState } from "react";
 
 type ComponentType = {
   question: QuizQuestionType;
+  updateResponse: Function;
 };
 
-const ShortAnswerQuestionComponent: FC<ComponentType> = ({ question }) => {
+const ShortAnswerQuestionComponent: FC<ComponentType> = ({
+  question,
+  updateResponse,
+}) => {
   const { question: ques, answer } = question;
   const [responseText, setResponseText] = useState("");
   const [checkingResponse, setCheckingResponse] = useState(false);
@@ -32,6 +36,12 @@ const ShortAnswerQuestionComponent: FC<ComponentType> = ({ question }) => {
     setCheckingResponse(false);
     setFeedback(feedback);
     setAnswered(true);
+    const response: QuizResponseType = {
+      question: ques,
+      answer,
+      userAnswer: responseText,
+    };
+    updateResponse(response);
   };
   return (
     <div className="">

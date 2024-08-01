@@ -85,3 +85,9 @@ export type QuizSessionType = {
   message: string;
   difficulty: string;
 };
+
+export type QuizResponseType = {
+  question: string;
+  userAnswer: string;
+  answer: string;
+};

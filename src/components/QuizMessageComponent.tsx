@@ -1,8 +1,9 @@
-import { QuizQuestionType } from "@/lib/type";
+import { QuizQuestionType, QuizResponseType } from "@/lib/type";
 import { useState } from "react";
 import MultipleChoiceQuestionComponent from "./multipleChoiceComponent";
 import ShortAnswerQuestionComponent from "./shortAnswerComponent";
 import QuizActionComponent from "./quizActionComponent";
+import { useQuizContext } from "@/context/quizContext";
 
 type ComponentType = {
   quiz: QuizQuestionType[];
@@ -20,10 +21,22 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
     quiz[currentIndex]
   );
 
+  const { endSession } = useQuizContext();
+  // this would be used later to determine user insights
+  const [responseData, setResponseData] = useState<QuizResponseType[]>([]);
+
+  const updateResponseData = (response: QuizResponseType) => {
+    setResponseData((prev) => [...prev, response]);
+  };
+
   const nextQuestion = () => {
     let index = currentIndex + 1;
     setCurrentIndex((prev) => index);
     setQuizQuestion(quiz[index]);
+  };
+
+  const getBreakdown = async () => {
+    await endSession();
   };
 
   return (
@@ -38,13 +51,20 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
         </h2>
       </div>
       {quizQuestion.quiztype === "multiple_choice" ? (
-        <MultipleChoiceQuestionComponent question={quizQuestion} />
+        <MultipleChoiceQuestionComponent
+          question={quizQuestion}
+          updateResponse={updateResponseData}
+        />
       ) : (
-        <ShortAnswerQuestionComponent question={quizQuestion} />
+        <ShortAnswerQuestionComponent
+          question={quizQuestion}
+          updateResponse={updateResponseData}
+        />
       )}
       <QuizActionComponent
         nextQuestion={nextQuestion}
         lastQuestion={currentIndex === quiz.length - 1}
+        getBreakdown={getBreakdown}
       />
     </div>
   );
