@@ -5,6 +5,7 @@ import ShortAnswerQuestionComponent from "./shortAnswerComponent";
 import QuizActionComponent from "./quizActionComponent";
 import { useQuizContext } from "@/context/quizContext";
 import { jsonEncode } from "@/lib/utils";
+import TimeComponent from "./timeComponent";
 
 type ComponentType = {
   quiz: QuizQuestionType[];
@@ -42,11 +43,10 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center">
-        <p className="pb-4">{message}</p>
-        <span className="">time taken: {time}s</span>
-      </div>
+    <div className="space-y-3">
+      <TimeComponent time={time} />
+      <p className="pb-4">{message}</p>
+
       <div className="py-2">
         <h2>
           Question {currentIndex + 1} of {quiz.length}
@@ -66,7 +66,7 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
       <QuizActionComponent
         nextQuestion={nextQuestion}
         lastQuestion={currentIndex === quiz.length - 1}
-        getBreakdown={getBreakdown}
+        responseData={responseData}
       />
     </div>
   );

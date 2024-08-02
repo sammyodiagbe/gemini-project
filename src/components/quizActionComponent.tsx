@@ -17,10 +17,12 @@ const QuizActionComponent: FC<ComponentProps> = ({
 }) => {
   const { endSession } = useQuizContext();
   const [endingSession, setEndingSession] = useState(false);
+  const [sessionEnded, setSessionEnded] = useState(false);
   const getbreakdown = async () => {
     setEndingSession(true);
     await endSession(responseData);
     setEndingSession(false);
+    setSessionEnded(true);
   };
 
   return (
@@ -34,14 +36,16 @@ const QuizActionComponent: FC<ComponentProps> = ({
           Next Question
         </button>
       )}
-      <button
-        className={buttonClass}
-        disabled={endingSession}
-        onClick={getbreakdown}
-      >
-        {endingSession && <Spinner />}{" "}
-        {endingSession ? "Ending Session" : "End Session"}
-      </button>
+      {!sessionEnded ? (
+        <button
+          className={buttonClass}
+          disabled={endingSession}
+          onClick={getbreakdown}
+        >
+          {endingSession && <Spinner />}{" "}
+          {endingSession ? "Ending Session" : "End Session"}
+        </button>
+      ) : null}
     </div>
   );
 };

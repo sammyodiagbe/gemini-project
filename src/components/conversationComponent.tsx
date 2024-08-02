@@ -105,6 +105,7 @@ const ConversationComponent = () => {
                         message={message}
                         insights={insights!}
                         key={index}
+                        time={time!}
                       />
                     );
                   default:

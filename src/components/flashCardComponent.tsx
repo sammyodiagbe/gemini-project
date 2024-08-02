@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import MarkdownView from "react-showdown";
 import FlashCard from "react-card-flip";
 import { motion } from "framer-motion";
+import TimeComponent from "./timeComponent";
 
 type FlashCardPropTypes = {
   message: string;
@@ -19,13 +20,13 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({
   const [flip, setFlip] = useState(false);
   return (
     <motion.div
-      className="select-none"
+      className="select-none space-y-2"
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
     >
+      <TimeComponent time={time} />
       <div className="flex justify-between items-center py-3">
         <p className="flex-1 text-sm font-bold">Nala</p>
-        <span>time taken: {time} s </span>
       </div>
       <MarkdownView
         markdown={message}

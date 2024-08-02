@@ -2,7 +2,14 @@
 import { buttonClass } from "@/lib/tailwind_classes";
 import { buttonIconSize, cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronUp, Pause, Play, RotateCcw } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Pause,
+  Play,
+  RotateCcw,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 const PomodoroTimerComponent = () => {
@@ -103,9 +110,10 @@ const PomodoroTimerComponent = () => {
       >
         <motion.button
           variants={menu}
-          className="relative w-[90px] ring-1 ring-textColor/20 hover:ring-primary/60 p-2 rounded-full text-sm  text-center justify-center  text-textColor/90 flex items-center space-x-2"
+          className="relative w-[90px] ring-1 ring-textColor/20 hover:ring-primary/60 p-2 rounded-full  text-center justify-center  text-textColor/90 flex items-center space-x-2"
           onClick={() => setShowMenu(!showMenu)}
         >
+          <Clock size={buttonIconSize} />
           <span className="font-bold flex-1">
             {minutes <= 9 ? `0${minutes}` : minutes}:
             {seconds <= 9 ? `0${seconds}` : seconds}
