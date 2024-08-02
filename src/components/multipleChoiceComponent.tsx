@@ -44,7 +44,7 @@ const MultipleChoiceQuestionComponent: FC<ComponentType> = ({
           return (
             <button
               className={cn(
-                " text-left p-3 py-5 rounded-md bg-secondary active:scale-95 hover:ring-1 hover:ring-primary transition-all duration-100 flex items-start",
+                " text-left p-3 py-5 bg-primary/10 rounded-md active:scale-95 hover:ring-1 hover:ring-primary transition-all duration-100 flex items-start",
                 answered &&
                   selected === index &&
                   isRight &&

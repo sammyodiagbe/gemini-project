@@ -43,7 +43,7 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 bg-secondary/30 p-3 rounded-md">
       <TimeComponent time={time} />
       <p className="pb-4">{message}</p>
 
@@ -61,6 +61,7 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
         <ShortAnswerQuestionComponent
           question={quizQuestion}
           updateResponse={updateResponseData}
+          time={time}
         />
       )}
       <QuizActionComponent

@@ -20,7 +20,7 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({
   const [flip, setFlip] = useState(false);
   return (
     <motion.div
-      className="select-none space-y-2"
+      className="select-none space-y-2 bg-secondary/30 p-3 rounded-md"
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
     >
@@ -30,7 +30,7 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({
       </div>
       <MarkdownView
         markdown={message}
-        className="bg-onBackground p-2rounded-lg"
+        className="bg-onBackground p-2rounded-lg "
       />
       <div className="py-8 grid justify-center">
         <FlashCard isFlipped={flip} containerClassName="card-container">

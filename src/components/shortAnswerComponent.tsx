@@ -3,15 +3,18 @@ import { QuizQuestionType, QuizResponseType } from "@/lib/type";
 import { buttonIconSize } from "@/lib/utils";
 import { LoaderPinwheel } from "lucide-react";
 import { FC, useEffect, useState } from "react";
+import TimeComponent from "./timeComponent";
 
 type ComponentType = {
   question: QuizQuestionType;
   updateResponse: Function;
+  time: number;
 };
 
 const ShortAnswerQuestionComponent: FC<ComponentType> = ({
   question,
   updateResponse,
+  time,
 }) => {
   const { question: ques, answer } = question;
   const [responseText, setResponseText] = useState("");
@@ -74,6 +77,7 @@ const ShortAnswerQuestionComponent: FC<ComponentType> = ({
         )}
         {answered && (
           <div className="my-4">
+            <TimeComponent time={time} />
             <p>{feedback}</p>
           </div>
         )}

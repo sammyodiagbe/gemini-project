@@ -17,7 +17,7 @@ const InsightComponent: FC<InsightPropsType> = ({
   const { breakdowns } = insights;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 bg-secondary/30 p-3 rounded-md">
       <TimeComponent time={time!} />
 
       <h1 className="text-lg">Let's see how you did </h1>
