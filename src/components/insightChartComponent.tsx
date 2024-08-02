@@ -39,8 +39,6 @@ const InsightChartComponent: FC<ChartPropType> = ({ breakdowns = [] }) => {
       label: explanation,
     };
   });
-
-  console.log(breakdowns);
   chartConfig = {};
   return (
     <div className="my-8 min-h-[350px]">
