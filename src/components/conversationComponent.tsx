@@ -34,11 +34,21 @@ const ConversationComponent = () => {
   useEffect(() => {
     if (convoContainerRef === null) return;
 
-    convoContainerRef.current?.scrollTo({
-      top: convoContainerRef.current.scrollHeight,
-      behavior: "smooth",
+    const observer = new MutationObserver(() => {
+      convoContainerRef.current?.scrollTo({
+        top: convoContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     });
-  }, [conversation]);
+
+    observer.observe(convoContainerRef?.current!, {
+      childList: true,
+      subtree: true,
+    });
+    return () => {
+      observer.disconnect();
+    };
+  }, [convoContainerRef]);
 
   const sendMessage: FormEventHandler<HTMLFormElement> = async (
     event: FormEvent<HTMLFormElement>
