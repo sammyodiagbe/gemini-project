@@ -48,7 +48,7 @@ const ConversationComponent = () => {
     return () => {
       observer.disconnect();
     };
-  }, [convoContainerRef]);
+  }, []);
 
   const sendMessage: FormEventHandler<HTMLFormElement> = async (
     event: FormEvent<HTMLFormElement>
