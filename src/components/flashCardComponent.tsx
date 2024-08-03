@@ -20,7 +20,7 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({
   const [flip, setFlip] = useState(false);
   return (
     <motion.div
-      className="select-none space-y-2 bg-secondary/30 p-3 rounded-md"
+      className="select-none space-y-2 p-3 rounded-md"
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
     >

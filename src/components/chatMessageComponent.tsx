@@ -40,7 +40,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
       className={cn(
-        "bg-secondary mb-5 bg-onBackground/50  rounded-md py-3 grid",
+        "bg-secondary mb-5 rounded-md py-3 grid",
         sender === "user" && "justify-start rounded-full"
       )}
     >
