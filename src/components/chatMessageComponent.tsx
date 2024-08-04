@@ -1,11 +1,13 @@
 "use client";
 import { ConversationType, MessageTypeObj } from "@/lib/type";
 import { NotebookPen, SpeechIcon } from "lucide-react";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useNoteContext } from "@/context/noteContext";
-import MarkDownView from "react-showdown";
+import ReactMarkdown from "react-markdown";
+import { ReactTyped } from "react-typed";
+import MessageTypeComponent from "./chat/messageItem";
 
 type ChatComponentType = {
   conv: ConversationType;
@@ -15,6 +17,8 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
   conv: { message, type, sender, time },
 }) => {
   const { takeNote } = useNoteContext();
+  const [text, setText] = useState("");
+  const [charIndex, setCharIndex] = useState(0);
   const handleSpeak = () => {
     try {
       const synth = window.speechSynthesis;
@@ -35,12 +39,13 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
     const data = { content: message };
     await takeNote(data);
   };
+
   return (
     <motion.div
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
       className={cn(
-        "bg-secondary mb-5 rounded-md py-3 grid",
+        " mb-5 rounded-sm py-3 grid",
         sender === "user" && "justify-start rounded-full"
       )}
     >
@@ -60,35 +65,16 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
         {time && <span>time taken: {Math.round(time)}s</span>}
       </p>
 
-      <p className="bg-secondary/60 p-3 rounded-lg">
-        {Array.isArray(message) ? (
-          message.map((m, index) => {
-            const {
-              title,
-              paragraphs,
-            }: { title: string; paragraphs: { text: string }[] } = m;
-            return (
-              <div className="">
-                <h1 key={index}>{title}</h1>
-                <div className="space-y-2">
-                  {paragraphs.map((paragraph, ind) => {
-                    const { text } = paragraph;
-                    return (
-                      <MarkDownView
-                        markdown={text}
-                        key={ind}
-                        className="leading-6"
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <p>{message}</p>
-        )}
-      </p>
+      {/* <div className="prose lg:prose-xl">
+        <p className="prose">{message}</p>
+      </div> */}
+      {!Array.isArray(message) ? (
+        <p>{message}</p>
+      ) : (
+        message.map((m, index) => {
+          return <MessageTypeComponent data={m} key={index} />;
+        })
+      )}
 
       {/* <p className={cn("leading-8 mb-3")}>{message}</p> */}
     </motion.div>

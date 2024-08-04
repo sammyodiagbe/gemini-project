@@ -1,44 +1,93 @@
 export const chatResponseSchema = {
-  description:
-    "This is your response to a user chat message which is of type chat",
+  description: "Your response to user request in a list",
   type: "array",
   items: {
-    description: "This is a chunk of your text response",
     type: "object",
     properties: {
-      title: {
-        description:
-          "Title of the current paragraph, title can be optional if not required",
+      type: {
         type: "string",
+        enum: ["heading", "paragraph", "table", "code", "link"],
       },
-      paragraphs: {
-        description: "List of paragraphs related to title",
+      level: {
+        type: "number",
+        minimum: 1,
+        maximum: 6,
+        description: "Heading level (required for heading)",
+      },
+      text: {
+        type: "string",
+        description: "Text content (required for paragraph, heading, link)",
+      },
+      language: {
+        type: "string",
+        description: "Code language (required for code blocks)",
+      },
+      code: {
+        type: "string",
+        description: "Code snippet (required for code blocks)",
+      },
+
+      headers: {
+        type: "array",
+        items: { type: "string" },
+        description: "Table headers (required for tables)",
+      },
+      title: {
+        type: "string",
+        description: "Table title (required for tables)",
+      },
+      rows: {
         type: "array",
         items: {
-          description: "list of paragraphs related to title",
-          type: "object",
-          properties: {
-            text: { description: "Paragraph text", type: "string" },
-            codes: {
-              description: "A list of codes line by line",
-              type: "array",
-              items: {
-                description: "One line of code ",
-                type: "object",
-                properties: {
-                  code: {
-                    description: "one line of code for code",
-                    type: "string",
-                  },
-                },
-                required: ["code"],
-              },
-            },
-            required: ["text"],
-          },
+          type: "array",
+          items: { type: "string" },
         },
+        description: "Table rows (required for tables)",
+      },
+      href: {
+        type: "string",
+        description: "Link URL (required for links)",
       },
     },
+    required: ["type"],
+    allof: [
+      {
+        if: {
+          properties: { type: { const: "heading" } },
+        },
+        then: {
+          required: ["level", "text"],
+        },
+      },
+      {
+        if: {
+          properties: { type: { const: "paragraph" } },
+        },
+        then: {
+          required: ["text"],
+        },
+      },
+      {
+        if: {
+          properties: { type: { const: "code" } },
+        },
+        then: {
+          required: ["language", "code"],
+        },
+      },
+      {
+        if: { properties: { type: { const: "table" } } },
+        then: { required: ["headers", "rows", "title"] },
+      },
+      {
+        if: {
+          properties: { type: { const: "link" } },
+        },
+        then: {
+          required: ["href", "text"],
+        },
+      },
+    ],
   },
 };
 
@@ -111,7 +160,8 @@ export const insightSchema = {
   properties: {
     message: {
       type: "string",
-      description: "Some message breaking how well i did in the session",
+      description:
+        "Some message breaking how well i did in the session, response is formatted in markdown",
     },
     breakdowns: {
       type: "array",
@@ -147,7 +197,7 @@ export const noteSchema = {
 export const checkShortanswerResponse = {
   type: "object",
   description:
-    "A response message that provides user with feedback, remeber to focus more on understanding than being right",
+    "A response message that provides user with feedback, remeber to focus more on understanding than being right, response is formatted in markdown",
   properties: {
     message: { type: "string", description: "message" },
   },

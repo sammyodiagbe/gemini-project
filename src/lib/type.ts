@@ -91,3 +91,15 @@ export type QuizResponseType = {
   userAnswer: string;
   answer: string;
 };
+
+export type MessageItemType = {
+  text?: string;
+  type: "paragraph" | "code" | "heading" | "link" | "code" | "table";
+  headers?: string[];
+  rows?: string[][];
+  language?: string;
+  code?: string;
+  href?: string;
+  level?: number;
+  title?: string;
+};

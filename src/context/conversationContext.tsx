@@ -271,9 +271,10 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       // console.log(data);
       // let stripped = data[0].replace('"s*"', '", "');
       // console.log(stripped);
-      const response = jsonDecode(jsonText);
+      const res = jsonDecode(jsonText);
+      console.log(res);
       let aiResponse: ConversationType = {
-        message: response,
+        message: res,
         sender: "ai",
         type: "chat",
         time: measurePerformance(start),
@@ -291,6 +292,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       setConversation((prev) => [...prev, aiResponse]);
       console.timeEnd("chat");
     } catch (error: any) {
+      console.log(error);
       toast({
         description: errorMessage(),
       });
