@@ -6,14 +6,18 @@ import { AnimatePresence, delay, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { buttonClass } from "@/lib/tailwind_classes";
 import Link from "next/link";
+import { useConversationContext } from "@/context/conversationContext";
 
 const Page = () => {
   const [name, setName] = useState("");
   const [hasProvidedName, setHasProvdiedName] = useState(false);
+  const { updateUsername } = useConversationContext();
 
   const provideName = () => {
     if (name.trim() === "") return;
     setHasProvdiedName(true);
+    console.log(name);
+    updateUsername(name);
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center">

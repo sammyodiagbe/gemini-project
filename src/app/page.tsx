@@ -31,7 +31,7 @@ export default function Home() {
       <div className="h-full w-[800px] mx-auto text-center">
         <h1 className="text-8xl">Rafikiai Landing page is coming soon</h1>
         <Link
-          href="/pdf"
+          href="/hello"
           className={cn(buttonClass, "mt-10 inline-flex font-lg")}
         >
           Try the App now

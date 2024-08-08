@@ -63,6 +63,8 @@ type ContextType = {
   removeAllFocusTopics: Function;
   documentImagesData: ImageDataType[];
   initGemini: Function;
+  username: string;
+  updateUsername: Function;
 };
 
 const conversationContext = createContext<ContextType>({
@@ -88,6 +90,8 @@ const conversationContext = createContext<ContextType>({
   removeAllFocusTopics: () => {},
   documentImagesData: [],
   initGemini: () => {},
+  username: "",
+  updateUsername: () => {},
 });
 
 type ConversationContextType = {
@@ -109,6 +113,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const { setWorkingOnPdf } = useLoadingContext();
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
   const { toast } = useToast();
+  const [username, setUsername] = useState("");
 
   const initGemini = async (fileURL: string) => {
     setWorkingOnPdf(true);
@@ -377,6 +382,12 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setDocumentImages(images);
   };
 
+  const updateName = (username: string) => {
+    console.log(username);
+    console.log("working on this");
+    setUsername(username);
+  };
+
   const updateExtractedText = (data: string[]) => {
     setExtractedText(data);
   };
@@ -405,6 +416,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         removeTopicFromFocus,
         removeAllFocusTopics,
         documentImagesData,
+        username,
+        updateUsername: updateName,
       }}
     >
       {children}
