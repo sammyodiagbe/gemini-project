@@ -8,7 +8,6 @@ import { useNoteContext } from "@/context/noteContext";
 import ReactMarkdown from "react-markdown";
 import { ReactTyped } from "react-typed";
 import MessageTypeComponent from "./chat/messageItem";
-
 type ChatComponentType = {
   conv: ConversationType;
 };

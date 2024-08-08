@@ -20,12 +20,9 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
       <PopupContextProvider>
         <QuizContextProvider>
           <NoteContextProvider>
-            <ToastProvider>
-              <ToastWrapperProvider />
-              <NotesComponent />
-              <Navbar />
-              {children}
-            </ToastProvider>
+            <NotesComponent />
+            <Navbar />
+            {children}
           </NoteContextProvider>
         </QuizContextProvider>
       </PopupContextProvider>

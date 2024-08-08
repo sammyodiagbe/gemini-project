@@ -1,4 +1,5 @@
 import { FC } from "react";
+import ReactMarkdown from "react-markdown";
 
 type ComponentType = {
   data: { text: string };
@@ -6,7 +7,12 @@ type ComponentType = {
 
 const ParagraphComponent: FC<ComponentType> = ({ data }) => {
   const { text } = data;
-  return <p className="leading-7 mb-3">{text}</p>;
+
+  return (
+    <ReactMarkdown className={"mb-3 leading-8"}>{text}</ReactMarkdown>
+    //   <p className="prose leading-7 mb-3">{text}</p>
+    // </div>
+  );
 };
 
 export default ParagraphComponent;
