@@ -6,6 +6,8 @@ import { useConversationContext } from "@/context/conversationContext";
 
 const Navbar = () => {
   const { username } = useConversationContext();
+
+  console.log(username);
   return (
     <nav className="flex justify-between bg-backgroundColor text-textColor items-center p-4 h-[4.375rem] border-b-1 border-b-textColor">
       <h1 className="font-bold text-xl">
