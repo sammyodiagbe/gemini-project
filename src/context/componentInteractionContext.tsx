@@ -4,11 +4,13 @@ import { createContext, useContext, useState } from "react";
 type ContextType = {
   openTopicsMenu: boolean;
   setOpenTopicsMenu: Function;
+  closeTopicsMenu: Function;
 };
 
 const componentsContext = createContext<ContextType>({
   openTopicsMenu: false,
   setOpenTopicsMenu: () => {},
+  closeTopicsMenu: () => {},
 });
 
 const ComponentInteractionsProvider = ({
@@ -20,8 +22,14 @@ const ComponentInteractionsProvider = ({
   const setOpenTopicsMenu = () => {
     open(!openTopicsMenu);
   };
+
+  const closeTopicsMenu = () => {
+    open(false);
+  };
   return (
-    <componentsContext.Provider value={{ openTopicsMenu, setOpenTopicsMenu }}>
+    <componentsContext.Provider
+      value={{ openTopicsMenu, setOpenTopicsMenu, closeTopicsMenu }}
+    >
       {children}
     </componentsContext.Provider>
   );

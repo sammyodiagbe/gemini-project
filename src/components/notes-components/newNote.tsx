@@ -4,13 +4,14 @@ import { FormEventHandler, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useNoteContext } from "@/context/noteContext";
-import { NoteType, ToastType } from "@/lib/type";
+import { NoteType } from "@/lib/type";
 import { useToastContext } from "@/context/toastContext";
+import { useToast } from "../ui/use-toast";
 
 const NewNoteComponent = () => {
   const [text, setText] = useState("");
   const { toggleCreateNote, createNewNote, takeNote } = useNoteContext();
-  const { updateToasts, toasts } = useToastContext();
+  const { toast } = useToast();
 
   const addNewNote: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -18,6 +19,9 @@ const NewNoteComponent = () => {
     const note: NoteType = { content: text };
     await takeNote(note);
     setText("");
+    toast({
+      description: "Note added Successfully",
+    });
   };
   return (
     <AnimatePresence>

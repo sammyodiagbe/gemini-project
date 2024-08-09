@@ -2,7 +2,7 @@
 
 import AnimatedTextComponent from "@/components/animatedText";
 import { useState } from "react";
-import { AnimatePresence, delay, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { buttonClass } from "@/lib/tailwind_classes";
 import Link from "next/link";
@@ -17,7 +17,7 @@ const Page = () => {
     if (name.trim() === "") return;
     setHasProvdiedName(true);
     console.log(name);
-    updateUsername(name);
+    updateUsername();
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center">
