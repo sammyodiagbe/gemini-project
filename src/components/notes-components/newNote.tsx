@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useNoteContext } from "@/context/noteContext";
 import { NoteType } from "@/lib/type";
-import { useToastContext } from "@/context/toastContext";
 import { useToast } from "../ui/use-toast";
 
 const NewNoteComponent = () => {
@@ -21,6 +20,7 @@ const NewNoteComponent = () => {
     setText("");
     toast({
       description: "Note added Successfully",
+      style: { zIndex: "3000" },
     });
   };
   return (

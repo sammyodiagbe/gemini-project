@@ -12,7 +12,12 @@ const ConversationHeader = () => {
     useComponentInteractionsContext();
 
   return (
-    <div className="h-full sticky   top-0 -left-[6rem] flex items-center justify-center  select-none z-[120] ">
+    <div
+      className={cn(
+        "h-full sticky   top-0 -left-[6rem] flex items-center justify-center  select-none z-[120] ",
+        setOpenTopicsMenu && ""
+      )}
+    >
       <div className="p-2 space-y-4 sticky top-0">
         <button
           className={cn(
