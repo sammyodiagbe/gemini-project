@@ -30,18 +30,18 @@ const FlashCardComponent: FC<FlashCardPropTypes> = ({
       </div>
       <MarkdownView
         markdown={message}
-        className="bg-onBackground p-2rounded-lg "
+        className="bg-onBackground p-2rounded-lg text-md"
       />
       <div className="py-8 grid justify-center">
         <FlashCard isFlipped={flip} containerClassName="card-container">
           <div className="card-face card-front" onClick={() => setFlip(!flip)}>
-            <p className="text-xl font-semibold">{front}</p>
+            <p className="font-semibold text-md">{front}</p>
           </div>
           <div
             className="card-face card-back text-black/90"
             onClick={() => setFlip(!flip)}
           >
-            <p className="text-xl font-semibold">{back}</p>
+            <p className=" font-semibold text-md">{back}</p>
           </div>
         </FlashCard>
       </div>

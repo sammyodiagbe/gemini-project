@@ -47,7 +47,7 @@ const TopicComponent: FC<ComponenentType> = ({ topic }) => {
         !openTopicsMenu && "opacity-0 delay-0"
       )}
     >
-      <p className="flex-1 mr-3">{topic}</p>
+      <p className="flex-1 mr-3 text-sm">{topic}</p>
       <button
         className={cn(
           "h-7 w-7 hover:font-bold hover:text-purple-500",

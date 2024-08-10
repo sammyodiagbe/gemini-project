@@ -21,14 +21,14 @@ const ConversationHeader = () => {
       <div className="p-2 space-y-4 sticky top-0">
         <button
           className={cn(
-            "btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[4.5rem] w-[4.5rem] bg-secondary group transition-all",
+            "btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[3.5rem] w-[3.5rem] bg-secondary group transition-all",
             showNote && "bg-purple-500 text-white "
           )}
           onClick={() => {
             setShowNote(!showNote);
           }}
         >
-          <Notebook size={18} />{" "}
+          <Notebook size={16} />{" "}
           <span
             className="absolute w-auto  overflow-hidden   left-full top-full/2 transition-all ml-2  bg-purple-500 text-white py-2 px-2 invisible rounded-md whitespace-nowrap
            group-hover:visible  group-hover:opacity-1 btn-hover:visible"
@@ -38,14 +38,14 @@ const ConversationHeader = () => {
         </button>
         <button
           className={cn(
-            "relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group",
+            "relative flex items-center justify-center bg-secondary w-[3.5rem] h-[3.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group",
             openTopicsMenu && "bg-purple-500 text-white"
           )}
           onClick={() => {
             setOpenTopicsMenu();
           }}
         >
-          <LayoutList size={18} />
+          <LayoutList size={16} />
           <span
             className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
            group-hover:visible group-hover:opacity-1 btn-hover:visible text-white"
@@ -54,12 +54,12 @@ const ConversationHeader = () => {
           </span>
         </button>
         <button
-          className="relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm  font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          className="relative flex items-center justify-center bg-secondary w-[3.5rem] h-[3.5rem] text-textColor/80 hover:text-textColor text-sm  font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
             toggleCreateNote(!showNote);
           }}
         >
-          <Pen size={18} />
+          <Pen size={16} />
           <span
             className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
            group-hover:visible group-hover:opacity-1 btn-hover:visible"
@@ -71,12 +71,12 @@ const ConversationHeader = () => {
         <QuizMeComponent />
 
         <button
-          className="relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
+          className="relative flex items-center justify-center bg-secondary w-[3.5rem] h-[3.5rem] text-textColor/80 hover:text-textColor text-sm font-medium  py-1 px-3 rounded-full  active:scale-95 hover:ring-1 hover:ring-purple-500 group"
           onClick={() => {
             getFlashCard();
           }}
         >
-          <Zap size={18} />
+          <Zap size={16} />
           <span
             className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
            group-hover:visible group-hover:opacity-1 btn-hover:visible"

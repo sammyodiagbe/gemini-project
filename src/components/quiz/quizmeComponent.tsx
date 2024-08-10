@@ -58,7 +58,7 @@ const QuizMeComponent = () => {
   return (
     <button
       className={cn(
-        "relative flex items-center justify-center bg-secondary w-[4.5rem] h-[4.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full   hover:ring-1 hover:ring-purple-500 group transition-all",
+        "relative flex items-center justify-center bg-secondary w-[3.5rem] h-[3.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full   hover:ring-1 hover:ring-purple-500 group transition-all",
         open && "ring-2"
       )}
       onClick={(event) => {
@@ -66,11 +66,11 @@ const QuizMeComponent = () => {
         setOpen(!open);
       }}
     >
-      <FileQuestion size={18} />
+      <FileQuestion size={16} />
 
       {!open && (
         <span
-          className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
+          className="absolute w-auto  overflow-hidden bottom-0 left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
      group-hover:visible group-hover:opacity-1 btn-hover:visible"
         >
           Quiz Me
@@ -83,7 +83,7 @@ const QuizMeComponent = () => {
             animate="open"
             exit={"close"}
             initial="close"
-            className="absolute block  top-full/2 left-full bg-secondary whitespace-nowrap p-5 translate-x-3 rounded-lg w-[22.63rem] shadown-lg space-y-2 border-b-1"
+            className="absolute block  bottom-[-50px] left-full bg-secondary whitespace-nowrap p-5 translate-x-3 rounded-lg w-[22.63rem] shadown-lg space-y-2 border-b-1"
           >
             <h1 className="text-lg">Pick Question type</h1>
             <span className="grid grid-cols-2 gap-3 py-4">
@@ -98,7 +98,7 @@ const QuizMeComponent = () => {
               />
               <label
                 onClick={(event) => event.stopPropagation()}
-                className=" aspect-square bg-background cursor-pointer flex items-center justify-center rounded-md px-2 peer-checked/mult:bg-purple-500 peer-checked/mult:text-white"
+                className="py-3 bg-background cursor-pointer flex items-center justify-center rounded-md px-2 peer-checked/mult:bg-purple-500 peer-checked/mult:text-white"
                 htmlFor="multiplechoice"
               >
                 <h2>Multiple Choice</h2>
@@ -113,7 +113,7 @@ const QuizMeComponent = () => {
                 onChange={(event) => allowShortAnswer(event.target.checked)}
               />
               <label
-                className="aspect-square cursor-pointer bg-background flex items-center justify-center  rounded-md px-2 peer-checked/short:bg-purple-500 peer-checked/short:text-white"
+                className="py-3 cursor-pointer bg-background flex items-center justify-center  rounded-md px-2 peer-checked/short:bg-purple-500 peer-checked/short:text-white"
                 htmlFor="shortanswer"
                 onClick={(event) => event.stopPropagation()}
               >

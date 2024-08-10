@@ -103,8 +103,8 @@ const Page = () => {
         <>
           <div
             className={cn(
-              "w-[46.875rem] max-w-[46.875rem] h-full select-none transition-all duration-300 ease-in-out",
-              openSidebar ? "w-0" : "w-[46.875rem]"
+              "w-0 max-w-[40.875rem] h-full select-none transition-all duration-300 ease-in-out",
+              openSidebar ? "w-[40.875rem]" : "w-0"
             )}
           >
             <div className={cn("relative h-full transition-all")}>
@@ -131,7 +131,7 @@ const Page = () => {
                   <ChevronFirst
                     className={cn(
                       "transition-all delay-500 duration-500 ease-in-out",
-                      openSidebar ? " rotate-180" : "rotate-0"
+                      openSidebar ? " rotate-0" : "rotate-180"
                     )}
                   />
                 </button>

@@ -6,20 +6,7 @@ type MyPdfViewerType = {
 
 const MyPdfViewer: FC<MyPdfViewerType> = ({ filePath }) => {
   const iframeRef = useRef<HTMLEmbedElement>(null);
-  useEffect(() => {
-    if (iframeRef.current === null) return;
 
-    document.addEventListener("selectionchange", () => {
-      console.log("check ");
-      const selectedText = window.getSelection()?.toString();
-      if (selectedText) {
-        console.log(`you selected, `, selectedText);
-      }
-    });
-    return () => {
-      document.removeEventListener("selectionchange", () => {});
-    };
-  }, [iframeRef]);
   return (
     <iframe
       src={`${filePath}`}
