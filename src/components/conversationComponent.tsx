@@ -142,15 +142,15 @@ const ConversationComponent = () => {
             )}
           </div>
           {/* this woudl contain the textarea and other action btn */}
-          <div className=" bg-secondary sticky left-0 bottom-1 w-full max-w-full z-10 rounded-full">
-            <div className="w-full  flex items-center py-4 bg-onBackground px-4 rounded-full">
+          <div className=" sticky left-0 bottom-1 w-full max-w-full z-10 rounded-full">
               <form
                 className="w-full flex-1 flex items-center"
                 onSubmit={sendMessage}
               >
+            <div className="w-full  flex items-center bg-secondary py-2  px-2 rounded-full">
                 <textarea
                   placeholder="What do you want to do? i.e Explain xyz"
-                  className="flex-1  outline-none border-none p-2 bg-transparent resize-none overflow-hidden self-center"
+                  className="flex-1 h-[40px] py-2  outline-none border-none p-2 bg-transparent resize-none overflow-hidden self-center"
                   value={message}
                   onChange={({ target }) => setMessage(target.value)}
                   wrap="softwrap"
@@ -167,9 +167,8 @@ const ConversationComponent = () => {
                 >
                   <Send size={24} />
                 </button>
-              </form>
-              <PomodoroTimerComponent />
             </div>
+              </form>
             {busyAI && <ThinkingAI />}
           </div>
         </div>
