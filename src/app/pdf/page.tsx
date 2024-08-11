@@ -103,7 +103,7 @@ const Page = () => {
                 aria-disabled={quizmode || busyAI}
                 className={cn(
                   buttonClass,
-                  "absolute bg-white   bottom-10 ring-2 ring-purple-600 right-[50px] hover:scale-1 cursor-pointer z-[25]"
+                  "absolute bg-background text-foreground shadow-md   bottom-10  right-[50px] hover:scale-1 cursor-pointer z-[25]"
                 )}
               >
                 <Upload size={buttonIconSize} className="mr-2" /> Upload New

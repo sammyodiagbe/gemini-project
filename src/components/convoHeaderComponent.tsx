@@ -14,7 +14,7 @@ const ConversationHeader = () => {
   return (
     <div
       className={cn(
-        "h-full sticky   top-0 -left-[6rem] flex items-center justify-center  select-none z-[120] ",
+        "h-full sticky   top-0 flex items-center justify-center  select-none z-[120] ",
         setOpenTopicsMenu && ""
       )}
     >

@@ -1,7 +1,7 @@
 "use client";
 import { useNoteContext } from "@/context/noteContext";
 import NoteComponent from "../noteComponent";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NoteType } from "@/lib/type";
 import { Download, NotebookText, X } from "lucide-react";
 import { buttonIconSize, jsonEncode } from "@/lib/utils";
@@ -13,7 +13,17 @@ const NotesComponent = () => {
     useNoteContext();
   const [noteText, setNoteText] = useState<string>("");
   const [generatingNotes, setGeneratingNotes] = useState(false);
-  const [downloadingNotes, setDownloadingNotes] = useState(false)
+  const [downloadingNotes, setDownloadingNotes] = useState(false);
+  const notesRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if(notesRef.current) {
+      notesRef.current.scrollTo({
+        top: notesRef.current.scrollHeight,
+        behavior: "smooth"
+      })
+    }
+  }, [notes])
 
   const generateNotes = async () => {
     setGeneratingNotes(true);
@@ -69,29 +79,29 @@ const NotesComponent = () => {
     <AnimatePresence>
       {showNote && (
         <motion.div
-          className="fixed flex justify-end top-0 left-full  w-[45rem] h-[100dvh] bg-black/85 z-[300] shadow-lg "
+          className=" fixed flex justify-end top-0 left-full  w-[45rem] h-[100dvh] bg-black/85 z-[300] shadow-lg "
           variants={variants}
           initial="initial"
           exit={"closed"}
           animate="open"
           transition={{ stiffness: 50 }}
         >
-          <div className="flex flex-col relative h-full bg-background w-full p-6 overflow-y-scroll">
+          <div className=" flex flex-col relative h-full bg-background w-full ">
             <button
-              className="h-[3rem] w-[3rem] absolute flex justify-center top-0 items-center bg-red-400 left-0 -translate-x-[3rem] text-white rounded-l-md"
+              className="h-[3rem] w-[3rem] absolute flex justify-center top-0 items-cente right-0 rounded-l-md"
               onClick={() => {
                 setShowNote(false);
               }}
             >
               <X className="" />
             </button>
-            <div className="flex align-center justify-between">
+            <div className="flex align-center justify-between p-3">
               <div className="">
                 <h2 className="text-xl">Your notes ({notes.length})</h2>
               </div>
             </div>
 
-            <div className="py-5 space-y-6 flex-1">
+            <div className="py-5 space-y-6 flex-1 overflow-y-auto p-3" ref={notesRef}>
               {notes.length ? (
                 notes.map((note, index) => (
                   <NoteComponent index={index} key={index} note={note} />
