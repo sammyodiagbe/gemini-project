@@ -4,7 +4,7 @@ import NoteComponent from "../noteComponent";
 import { useState } from "react";
 import { NoteType } from "@/lib/type";
 import { Download, NotebookText, X } from "lucide-react";
-import { buttonIconSize } from "@/lib/utils";
+import { buttonIconSize, jsonEncode } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Spinner from "../spinner";
 
@@ -13,12 +13,45 @@ const NotesComponent = () => {
     useNoteContext();
   const [noteText, setNoteText] = useState<string>("");
   const [generatingNotes, setGeneratingNotes] = useState(false);
+  const [downloadingNotes, setDownloadingNotes] = useState(false)
 
   const generateNotes = async () => {
     setGeneratingNotes(true);
     await naalaGenerateNotes();
     setGeneratingNotes(false);
   };
+
+  const downloadNotes = async () => {
+    setDownloadingNotes(true);
+
+    try {
+      const result = await fetch("http://127.0.0.1:5000/download-notes", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonEncode({ data: notes })
+      });
+
+      const blob = await result.blob();
+      const url: string = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${Math.random().toString()}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      setDownloadingNotes(false)
+    }catch(error:any) {
+      console.log(error)
+      setDownloadingNotes(false)
+    }
+
+
+    setDownloadingNotes(false)
+  }
 
   const variants = {
     open: {
@@ -73,9 +106,8 @@ const NotesComponent = () => {
 
             <div className=" fixed right-5 bottom-10 items-center flex space-x-4">
               {notes.length && (
-                <button className="flex items-center space-x-2 hover:font-bold transition-all text-sm">
-                  <Download size={buttonIconSize} className="mr-1" /> Download
-                  Note
+                <button className="flex items-center space-x-2 hover:font-bold transition-all text-sm" onClick={() => downloadNotes()} disabled={generatingNotes || downloadingNotes}>
+                  <Download size={buttonIconSize} className="mr-1" /> {downloadingNotes ? "Downloading notes" :  "Download notes"}
                 </button>
               )}
               <button
