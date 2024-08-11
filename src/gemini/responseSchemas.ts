@@ -202,3 +202,16 @@ export const checkShortanswerResponse = {
     message: { type: "string", description: "message" },
   },
 };
+
+
+export const  downloadQuiz = {
+  type: "array",
+  description: "list of questions for user to download",
+  items: {
+    type: "object",
+    properties: {
+      question: { type: "string"},
+      answer: { type: "string"}
+    }
+  }
+}

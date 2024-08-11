@@ -27,7 +27,7 @@ const TopicsComponent = () => {
           !openTopicsMenu && " opacity-0"
         )}
       >
-        <h1 className="text-lg font-bold text-textColor/80">
+        <h1 className="text-md font-bold text-textColor/80">
           Nala Generated topics.
         </h1>
         <button

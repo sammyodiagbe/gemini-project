@@ -90,12 +90,19 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
               <span className="text-lg">Laughing Lava(Hard)</span>
             </div>
           </div>
+          <div> 
           <button
             className={cn(buttonClass, " w-full mt-6")}
             onClick={startQuiz}
           >
             Start Quiz
           </button>
+          <button className={cn(buttonClass)}>
+            Download Quiz
+          </button>
+
+          </div>
+         
         </div>
       </motion.div>
       <button
@@ -104,6 +111,7 @@ const QuizWrapperComponent: FC<ComponentType> = ({}) => {
           setVariant((prev) => (prev === "hidden" ? "visible" : "hidden"));
         }}
         disabled={busyAI || quizmode}
+        
       >
         <BookText size={18} className="mr-1 relative" /> Quiz Me
       </button>

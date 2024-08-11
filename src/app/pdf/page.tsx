@@ -50,17 +50,7 @@ const Page = () => {
 
       fileReader.readAsDataURL(file);
 
-      // const result = await AI.generateContent(
-      //   generateInitialPossibleInteractions(extracted_text)
-      // );
-      // const response = await result.response;
-      // const text = await response.text();
-      // const json = jsonDecode(text);
-
-      // const { interactions } = json;
-      // setInteractions(interactions);
       setFile(fileUrl);
-      // setExtractedText(extracted_text);
     } catch (error: any) {
       setWorkingOnPdf(false);
       setFile(null);

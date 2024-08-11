@@ -19,6 +19,7 @@ import { useLoadingContext } from "./loadingStateContext";
 import { useToast } from "@/components/ui/use-toast";
 import {
   checkShortanswerResponse,
+  downloadQuiz,
   insightSchema,
   quizSchema,
 } from "@/gemini/responseSchemas";
@@ -33,6 +34,7 @@ type QuizContextType = {
   sendMultipleChoiceResponse: Function;
   quizSession: QuizSessionType[];
   sessionCount: number;
+  generateQuestions: Function
 };
 
 const quizContext = createContext<QuizContextType>({
@@ -45,6 +47,7 @@ const quizContext = createContext<QuizContextType>({
   sendMultipleChoiceResponse: () => {},
   quizSession: [],
   sessionCount: 0,
+  generateQuestions: () => {}
 });
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -89,6 +92,36 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setBusyAI(false);
   };
+
+  const generateQuestions = async (
+    multipleChoice: boolean,
+    shortAnswer: boolean,
+    difficulty: number
+  ) => {
+    let prompt = generateQuizGemini(multipleChoice, shortAnswer, difficulty);
+    const schema = jsonEncode(downloadQuiz);
+    let jsonString = "";
+    const start = performance.now();
+    try {
+      const result = await chat?.sendMessageStream(prompt);
+ 
+      for await (let chunk of result?.stream!) {
+        jsonString += chunk.text();
+      }
+      const quizdata = jsonDecode(jsonString);
+      // 
+     
+      return quizdata;
+    } catch (error: any) {
+      console.log(error)
+      toast({
+        description: errorMessage(),
+      });
+    }
+    setBusyAI(false);
+  };
+
+
 
   const checkShortAnswer = async (
     userAnswer: string,
@@ -228,6 +261,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         sendMultipleChoiceResponse,
         quizSession,
         sessionCount,
+        generateQuestions
       }}
     >
       {children}

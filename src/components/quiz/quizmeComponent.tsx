@@ -13,8 +13,10 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { buttonIconSize, cn } from "@/lib/utils";
+import { buttonIconSize, cn, jsonEncode } from "@/lib/utils";
 import { useQuizContext } from "@/context/quizContext";
+import Spinner from "../spinner";
+import { toast } from "../ui/use-toast";
 
 const difficultyLevels = [
   "Piece of cake",
@@ -40,6 +42,54 @@ const QuizMeComponent = () => {
   const [shortAnswer, allowShortAnswer] = useState(false);
   const [difLevel, setDifLevel] = useState<number>(1);
   const [startingQuiz, setStartingQuiz] = useState(false);
+  const [generatingQues, setGeneratingQuez] = useState(false)
+  const { generateQuestions } = useQuizContext()
+
+
+  const generateQuizQuestionsAndDownload = async () => {
+    setGeneratingQuez(true)
+    const data = await generateQuestions();
+
+    const questions = data.questions!;
+
+    try {
+      const result = await fetch("http://127.0.0.1:5000/download-questions-pdf", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonEncode({ data: questions})
+      })
+      if(!result.ok) {
+        toast({
+          description: "Oops that didn't work, please try again"
+        });
+        return;
+      }
+      const blob: Blob =await result.blob();
+      const url: string = window.URL.createObjectURL(blob)
+  
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${Math.random().toString()}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      window.URL.revokeObjectURL(url);
+      setGeneratingQuez(false)
+    }catch(error: any) {
+      console.log(error);
+      setGeneratingQuez(false)
+      toast({
+        description: 'Oh no something went wrong, please try again'
+      })
+    }
+    // next is to post a message to the backend
+    
+
+    setGeneratingQuez(false)
+  }
 
   const beginQuiz: MouseEventHandler = async (event) => {
     event.stopPropagation();
@@ -158,12 +208,13 @@ const QuizMeComponent = () => {
                 )}
               </button>
               <button
-                className="  rounded-full p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
+                className="  rounded-full flex justify-center items-center p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
                 onClick={(event) => {
                   event.stopPropagation();
+                  generateQuizQuestionsAndDownload()
                 }}
               >
-                Download Quiz
+                {generatingQues ? <Spinner /> : "Download Quiz"}
               </button>
             </span>
           </motion.div>
