@@ -66,6 +66,8 @@ type ContextType = {
   username: string;
   updateUsername: Function;
   lockingTopic: string | null
+  errorGeneratingTopics: boolean,
+  retryGeneratingTopics: Function
 };
 
 const conversationContext = createContext<ContextType>({
@@ -93,7 +95,9 @@ const conversationContext = createContext<ContextType>({
   initGemini: () => {},
   username: "",
   updateUsername: () => {},
-  lockingTopic: null
+  lockingTopic: null,
+  errorGeneratingTopics: false,
+  retryGeneratingTopics: () => {}
 });
 
 type ConversationContextType = {
@@ -117,6 +121,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const { toast } = useToast();
   const [username, setUsername] = useState("");
   const [lockingTopic, setLockingTopic] = useState<string | null>(null)
+  const [errorGeneratingTopics, setErrorGeneratingTopics] = useState(false)
 
   const initGemini = async (fileURL: string) => {
     setWorkingOnPdf(true);
@@ -182,7 +187,9 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const { topics } = jsonDecode(resText);
       console.log(topics);
       setTopics(topics);
+      setErrorGeneratingTopics(false)
     } catch (error: any) {
+      setErrorGeneratingTopics(true)
       console.log(error);
     }
   };
@@ -400,6 +407,10 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const updateExtractedText = (data: string[]) => {
     setExtractedText(data);
   };
+
+  const retryGeneratingTopics = async () => {
+    await generatePossibleTopics(chat!);
+  }
   return (
     <conversationContext.Provider
       value={{
@@ -427,7 +438,9 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         documentImagesData,
         username,
         updateUsername: updateName,
-        lockingTopic
+        lockingTopic,
+        errorGeneratingTopics,
+        retryGeneratingTopics
       }}
     >
       {children}
