@@ -16,6 +16,24 @@
     @apply bg-gray-200;
   }
 
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Width of the entire scrollbar */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-secondary;/* Color of the track */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-fuchsia-500 rounded-sm; /* Color of the thumb */
+     /* Roundness of the thumb */
+     /* Adds space around the thumb */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the thumb on hover */
+  }
+
   @layer base {
     :root {
       --chart-1: 12 76% 61%;

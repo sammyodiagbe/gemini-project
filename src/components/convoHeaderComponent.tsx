@@ -14,11 +14,11 @@ const ConversationHeader = () => {
   return (
     <div
       className={cn(
-        "h-full sticky   top-0 flex items-center justify-center  select-none z-[120] ",
+        "h-auto absolute bottom-full left-full flex items-center justify-center  select-none z-[120] ",
         setOpenTopicsMenu && ""
       )}
     >
-      <div className="p-2 space-y-4 sticky top-0">
+      <div className="p-2 space-y-3 sticky top-0">
         <button
           className={cn(
             "btn relative flex items-center justify-center text-textColor/80 hover:text-textColor hover:ring-1 hover:ring-purple-500  font-medium rounded-full active:scale-95 h-[3.5rem] w-[3.5rem] bg-secondary group transition-all",
@@ -30,7 +30,7 @@ const ConversationHeader = () => {
         >
           <Notebook size={16} />{" "}
           <span
-            className="absolute w-auto  overflow-hidden   left-full top-full/2 transition-all ml-2  bg-purple-500 text-white py-2 px-2 invisible rounded-md whitespace-nowrap
+            className="absolute w-auto  overflow-hidden   right-full top-full/2 transition-all mr-2  bg-purple-500 text-white py-2 px-2 invisible rounded-md whitespace-nowrap text-sm
            group-hover:visible  group-hover:opacity-1 btn-hover:visible"
           >
             Your notes ({notes.length})
@@ -47,7 +47,7 @@ const ConversationHeader = () => {
         >
           <LayoutList size={16} />
           <span
-            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md 
+            className="absolute w-auto  overflow-hidden  right-full top-full/2 transition-all mr-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-sm
            group-hover:visible group-hover:opacity-1 btn-hover:visible text-white"
           >
             Show Generated Topics
@@ -61,7 +61,7 @@ const ConversationHeader = () => {
         >
           <Pen size={16} />
           <span
-            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
+            className="absolute w-auto  overflow-hidden  right-full top-full/2 transition-all mr-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white text-sm
            group-hover:visible group-hover:opacity-1 btn-hover:visible"
           >
             Write Note
@@ -78,7 +78,7 @@ const ConversationHeader = () => {
         >
           <Zap size={16} />
           <span
-            className="absolute w-auto  overflow-hidden  left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
+            className="absolute w-auto  overflow-hidden  right-full top-full/2 transition-all mr-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white text-sm
            group-hover:visible group-hover:opacity-1 btn-hover:visible"
           >
             Flashcard
@@ -92,7 +92,7 @@ const ConversationHeader = () => {
                 className=" hover:text-red-500 hover:font-bold"
                 onClick={() => showNewNote(false)}
               >
-                <X size={24} />
+                <X size={23} />
               </button>
             </div>
             <div className="">

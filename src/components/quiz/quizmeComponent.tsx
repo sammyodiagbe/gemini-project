@@ -26,7 +26,7 @@ const difficultyLevels = [
 
 const popupVariants = {
   open: {
-    x: 12,
+    x: -20,
     opacity: [0, 0.6, 1],
   },
   close: {
@@ -108,7 +108,7 @@ const QuizMeComponent = () => {
   return (
     <button
       className={cn(
-        "relative flex items-center justify-center bg-secondary w-[3.5rem] h-[3.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full   hover:ring-1 hover:ring-purple-500 group transition-all",
+        "relative flex items-center justify-center bg-secondary w-[3.5rem] h-[3.5rem] text-textColor/80 hover:text-textColor text-sm font-medium   py-1 px-3 rounded-full z-[30]   hover:ring-1 hover:ring-purple-500 group transition-all",
         open && "ring-2"
       )}
       onClick={(event) => {
@@ -120,7 +120,7 @@ const QuizMeComponent = () => {
 
       {!open && (
         <span
-          className="absolute w-auto  overflow-hidden bottom-0 left-full top-full/2 transition-all ml-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
+          className="absolute w-auto  overflow-hidden bottom-0 right-full top-full/2 transition-all mr-2 whitespace-nowrap  bg-purple-500 py-2 px-2 invisible rounded-md text-white
      group-hover:visible group-hover:opacity-1 btn-hover:visible"
         >
           Quiz Me
@@ -133,7 +133,7 @@ const QuizMeComponent = () => {
             animate="open"
             exit={"close"}
             initial="close"
-            className="absolute block  bottom-[-50px] left-full bg-secondary whitespace-nowrap p-5 translate-x-3 rounded-lg w-[22.63rem] shadown-lg space-y-2 border-b-1"
+            className="absolute block  bottom-[-50px] right-full bg-secondary whitespace-nowrap p-5 -translate-x-5 rounded-lg w-[22.63rem] shadown-lg space-y-2 border-b-1"
           >
             <h1 className="text-lg">Pick Question type</h1>
             <span className="grid grid-cols-2 gap-3 py-4">
