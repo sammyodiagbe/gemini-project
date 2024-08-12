@@ -65,7 +65,7 @@ const NotesComponent = () => {
 
   const variants = {
     open: {
-      x: "-45rem",
+      x: "-40rem",
     },
     closed: {
       x: 0,
@@ -79,29 +79,29 @@ const NotesComponent = () => {
     <AnimatePresence>
       {showNote && (
         <motion.div
-          className=" fixed flex justify-end top-0 left-full  w-[45rem] h-[100dvh] bg-black/85 z-[300] shadow-lg "
+          className="text-sm custom-scrollbar fixed flex justify-end top-0 left-full  w-[40rem] h-[100dvh] bg-black/85 z-[300] shadow-lg "
           variants={variants}
           initial="initial"
           exit={"closed"}
           animate="open"
           transition={{ stiffness: 50 }}
         >
-          <div className=" flex flex-col relative h-full bg-background w-full ">
+          <div className="p-2 flex flex-col relative h-full bg-background w-full ">
             <button
-              className="h-[3rem] w-[3rem] absolute flex justify-center top-0 items-cente right-0 rounded-l-md"
+              className="h-[3rem] w-[3rem] absolute flex justify-center top-3 items-cente right-3 rounded-l-md"
               onClick={() => {
                 setShowNote(false);
               }}
             >
-              <X className="" />
+              <X className="text-sm" />
             </button>
             <div className="flex align-center justify-between p-3">
               <div className="">
-                <h2 className="text-xl">Your notes ({notes.length})</h2>
+                <h2 className="text-md">Notes</h2>
               </div>
             </div>
 
-            <div className="py-5 space-y-6 flex-1 overflow-y-auto p-3" ref={notesRef}>
+            <div className=" custom-scrollbar py-5 space-y-6 flex-1 overflow-y-auto p-3" ref={notesRef}>
               {notes.length ? (
                 notes.map((note, index) => (
                   <NoteComponent index={index} key={index} note={note} />
@@ -115,14 +115,14 @@ const NotesComponent = () => {
             </div>
 
             <div className=" fixed right-5 bottom-10 items-center flex space-x-4">
-              {notes.length && (
-                <button className="flex items-center space-x-2 hover:font-bold transition-all text-sm" onClick={() => downloadNotes()} disabled={generatingNotes || downloadingNotes}>
+              {notes.length ? (
+                <button className="flex items-center space-x-2 hover:font-bold transition-all text-xs" onClick={() => downloadNotes()} disabled={generatingNotes || downloadingNotes}>
                   <Download size={buttonIconSize} className="mr-1" /> {downloadingNotes ? "Downloading notes" :  "Download notes"}
                 </button>
-              )}
+              ) : null}
               <button
                 className={
-                  "scale-95 hover:ring-1 hover:ring-primary hover:font-semibold active:scale-95 hover:scale-1 flex items-center p-3 px-5 rounded-full transition-all text-sm bg-secondary"
+                  "scale-95 text-xs hover:ring-1 hover:ring-primary hover:font-semibold active:scale-95 hover:scale-1 flex items-center p-3 px-5 rounded-full transition-all  bg-secondary"
                 }
                 onClick={() => generateNotes()}
               >
@@ -131,7 +131,7 @@ const NotesComponent = () => {
                 ) : (
                   <NotebookText className="mr-1" size={buttonIconSize} />
                 )}
-                Naala generate notes
+                {generatingNotes ? "Generating Notes" : "Naala generate notes"}
               </button>
             </div>
           </div>

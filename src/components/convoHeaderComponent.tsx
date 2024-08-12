@@ -28,7 +28,7 @@ const ConversationHeader = () => {
             setShowNote(!showNote);
           }}
         >
-          <Notebook size={16} />{" "}
+          <Notebook size={16} /> {notes.length > 0 && <span className="w-6 h-6 flex items-center justify-center translate-y-[14px] text-[8px] rounded-full absolute bg-fuchsia-500 text-white bottom-full right-0 translate-x-[2.5px]">{notes.length}</span>}
           <span
             className="absolute w-auto  overflow-hidden   right-full top-full/2 transition-all mr-2  bg-purple-500 text-white py-2 px-2 invisible rounded-md whitespace-nowrap text-sm
            group-hover:visible  group-hover:opacity-1 btn-hover:visible"
