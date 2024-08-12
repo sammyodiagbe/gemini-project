@@ -7,26 +7,24 @@ import { cn } from "@/lib/utils";
 import { buttonClass } from "@/lib/tailwind_classes";
 import Link from "next/link";
 import { useConversationContext } from "@/context/conversationContext";
+import { useRouter } from "next/router";
 
 const Page = () => {
   const [name, setName] = useState("");
   const [hasProvidedName, setHasProvdiedName] = useState(false);
   const { updateUsername } = useConversationContext();
+  const router = useRouter();
 
   const provideName = () => {
     if (name.trim() === "") return;
     setHasProvdiedName(true);
-    console.log(name);
-    updateUsername();
+    setTimeout(() => {
+      router.push(`/pdf?name=${name}`);
+    }, 1000);
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <div className="max-w-[35rem] space-y-3">
-        {/* < className="text-6xl font-bold mb-7 leading-[3.5rem]">
-          Hello there, I am{" "}
-          <span className="text-fuchsia-500 font-black">Naala</span>, here to
-          make your study better.
-        </h1> */}
         <AnimatedTextComponent
           classStyle="text-6xl font-bold mb-7 leading-[3.5rem]"
           text="Hi there, I'm Naala, your study partner."

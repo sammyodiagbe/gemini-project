@@ -2,7 +2,6 @@ import { useConversationContext } from "@/context/conversationContext";
 import { buttonIconSize, cn } from "@/lib/utils";
 import { ListRestartIcon, Lock, X } from "lucide-react";
 import TopicComponent from "./topicComponent";
-import { useToastContext } from "@/context/toastContext";
 import { useComponentInteractionsContext } from "@/context/componentInteractionContext";
 import { useState } from "react";
 

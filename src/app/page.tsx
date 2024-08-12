@@ -1,5 +1,6 @@
 "use client";
 
+import { useConversationContext } from "@/context/conversationContext";
 import { Gemini as AI } from "@/gemini/gemini";
 import { buttonClass } from "@/lib/tailwind_classes";
 import { cn } from "@/lib/utils";
@@ -8,9 +9,10 @@ import { FormEvent, FormEventHandler, useEffect, useState } from "react";
 
 export default function Home() {
   const [message, setMessage] = useState("");
+  const { reset } = useConversationContext();
 
   useEffect(() => {
-    console.log(AI.model);
+    reset();
   }, []);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (

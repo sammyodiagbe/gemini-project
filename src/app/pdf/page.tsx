@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import MyPdfViewer from "@/components/pdfViewer";
 import ConversationComponent from "@/components/conversationComponent";
 import { useConversationContext } from "@/context/conversationContext";
@@ -22,6 +22,9 @@ const Page = () => {
   const { quizmode } = useQuizContext();
   const { initGemini } = useConversationContext();
   const { toast } = useToast();
+  useEffect(() => {
+    reset();
+  }, []);
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = async (
     event: ChangeEvent<HTMLInputElement>
   ) => {

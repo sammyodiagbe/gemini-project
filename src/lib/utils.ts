@@ -73,3 +73,7 @@ export const measurePerformance = (start: number) => {
 export const errorMessage = () => {
   return "Oh no, something went wrong, please try again";
 };
+
+export const toastStyle = {zIndex: 2000};
+
+export const toastClass = "z-[2000] toast"

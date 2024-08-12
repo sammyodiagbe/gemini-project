@@ -18,6 +18,8 @@ import {
   jsonEncode,
   measurePerformance,
   processText,
+  toastClass,
+  toastStyle,
 } from "@/lib/utils";
 import { ConversationType, ImageDataType } from "@/lib/type";
 
@@ -42,8 +44,6 @@ type interaction = {
 
 type ContextType = {
   interactions: interaction[];
-  extractedText: string[];
-  setExtractedText: Dispatch<SetStateAction<string[]>>;
   chatWithGemini: Function;
   conversation: ConversationType[];
   getFlashCard: Function;
@@ -52,8 +52,6 @@ type ContextType = {
   attemptQueryRetry: Function;
   gotData: boolean;
   updateDataState: Function;
-  updateImagesData: Function;
-  updateExtractedText: Function;
   reset: Function;
   topics: string[];
   docType: string;
@@ -63,17 +61,15 @@ type ContextType = {
   removeAllFocusTopics: Function;
   documentImagesData: ImageDataType[];
   initGemini: Function;
-  username: string;
+  username: string | null;
   updateUsername: Function;
-  lockingTopic: string | null
-  errorGeneratingTopics: boolean,
-  retryGeneratingTopics: Function
+  lockingTopic: string | null;
+  errorGeneratingTopics: boolean;
+  retryGeneratingTopics: Function;
 };
 
 const conversationContext = createContext<ContextType>({
   interactions: [],
-  extractedText: [],
-  setExtractedText: () => {},
   chatWithGemini: () => {},
   conversation: [],
   getFlashCard: () => {},
@@ -83,8 +79,6 @@ const conversationContext = createContext<ContextType>({
   gotData: false,
   reset: () => {},
   updateDataState: () => {},
-  updateImagesData: () => {},
-  updateExtractedText: () => {},
   topics: [],
   docType: "",
   focusTopics: [],
@@ -93,11 +87,11 @@ const conversationContext = createContext<ContextType>({
   removeAllFocusTopics: () => {},
   documentImagesData: [],
   initGemini: () => {},
-  username: "",
+  username: null,
   updateUsername: () => {},
   lockingTopic: null,
   errorGeneratingTopics: false,
-  retryGeneratingTopics: () => {}
+  retryGeneratingTopics: () => {},
 });
 
 type ConversationContextType = {
@@ -108,7 +102,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   children,
 }) => {
   const [interactions, setInteractions] = useState<interaction[]>([]);
-  const [extractedText, setExtractedText] = useState<string[]>([]);
   const [chat, setChat] = useState<ChatSession | null>(null);
   const [conversation, setConversation] = useState<ConversationType[]>([]);
   const [gotData, setGotData] = useState<boolean>(false);
@@ -119,9 +112,9 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const { setWorkingOnPdf } = useLoadingContext();
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
   const { toast } = useToast();
-  const [username, setUsername] = useState("");
-  const [lockingTopic, setLockingTopic] = useState<string | null>(null)
-  const [errorGeneratingTopics, setErrorGeneratingTopics] = useState(false)
+  const [username, setUsername] = useState<string | null>(null);
+  const [lockingTopic, setLockingTopic] = useState<string | null>(null);
+  const [errorGeneratingTopics, setErrorGeneratingTopics] = useState(false);
 
   const initGemini = async (fileURL: string) => {
     setWorkingOnPdf(true);
@@ -187,16 +180,19 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       const { topics } = jsonDecode(resText);
       console.log(topics);
       setTopics(topics);
-      setErrorGeneratingTopics(false)
+      setErrorGeneratingTopics(false);
     } catch (error: any) {
-      setErrorGeneratingTopics(true)
-      console.log(error);
+      setErrorGeneratingTopics(true);
+      toast({
+        description: errorMessage(),
+        style: { zIndex: 2000 },
+      });
     }
   };
 
   const addTopicToFocus = async (text: string) => {
     const topics = [...focusTopics, text];
-    setLockingTopic(text)
+    setLockingTopic(text);
     const prompt = `This are the topics i would like you focus on, quizes, conversation, flashcards should be based on this topics
     topics=${topics.join(", ")}`;
     let jsonString = "";
@@ -209,18 +205,20 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       toast({
         description: `${text} has been added successfully`,
       });
-      setLockingTopic(null)
+      setLockingTopic(null);
     } catch (error: any) {
       toast({
         description: errorMessage(),
+        style: toastStyle,
+        className: toastClass,
       });
-      setLockingTopic(null)
+      setLockingTopic(null);
     }
     setFocusTopics((prev) => topics);
   };
 
   const removeTopicFromFocus = async (topic: string) => {
-    setLockingTopic(topic)
+    setLockingTopic(topic);
     const topics = [...focusTopics.filter((t) => t === topic)];
     const prompt = topics.length
       ? `This are the topics i would like you focus on, quizes, conversation, flashcards should be based on this topics
@@ -237,11 +235,13 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         description: `${topic} was removed successfully`,
       });
       setFocusTopics((prev) => prev.filter((t) => t !== topic));
-      setLockingTopic(null)
+      setLockingTopic(null);
     } catch (error: any) {
-      setLockingTopic(null)
+      setLockingTopic(null);
       toast({
         description: errorMessage(),
+        style: toastStyle,
+        className: toastClass,
       });
     }
   };
@@ -263,6 +263,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     } catch (error: any) {
       toast({
         description: errorMessage(),
+        style: toastStyle,
+        className: toastClass,
       });
     }
   };
@@ -316,6 +318,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       console.log(error);
       toast({
         description: errorMessage(),
+        style: toastStyle,
+        className: toastClass,
       });
     }
     setBusyAI(false);
@@ -323,10 +327,11 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const reset = () => {
     setChat(null);
-    setExtractedText([]);
+    setConversation([]);
     setDocumentImages([]);
     setGotData(false);
     setFocusTopics([]);
+    setUsername(null);
   };
 
   const getFlashCard = async () => {
@@ -357,6 +362,8 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     } catch (error: any) {
       toast({
         description: "Oopsie that didn't seem to work, please try again",
+        style: toastStyle,
+        className: toastClass,
       });
     }
     setBusyAI(false);
@@ -393,10 +400,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   };
 
   // update image data
-  const updateImagesData = (images: ImageDataType[]) => {
-    console.log(images);
-    setDocumentImages(images);
-  };
 
   const updateName = (username: string) => {
     console.log(username);
@@ -404,20 +407,14 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     setUsername(username);
   };
 
-  const updateExtractedText = (data: string[]) => {
-    setExtractedText(data);
-  };
-
   const retryGeneratingTopics = async () => {
     await generatePossibleTopics(chat!);
-  }
+  };
   return (
     <conversationContext.Provider
       value={{
         initGemini,
         interactions,
-        extractedText,
-        setExtractedText,
         chatWithGemini,
         conversation,
         getFlashCard,
@@ -426,8 +423,6 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         attemptQueryRetry,
         gotData,
         updateDataState,
-        updateImagesData,
-        updateExtractedText,
         reset,
         topics,
         docType,
@@ -440,7 +435,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         updateUsername: updateName,
         lockingTopic,
         errorGeneratingTopics,
-        retryGeneratingTopics
+        retryGeneratingTopics,
       }}
     >
       {children}

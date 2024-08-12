@@ -30,7 +30,7 @@ const NewNoteComponent = () => {
           initial={{ x: 0 }}
           animate={{ x: "-28rem" }}
           exit={{ x: "28rem" }}
-          className="fixed h-auto bottom-0 left-full p-5 min-w-[28rem] bg-secondary z-[500] shadow-lg rounder-lg"
+          className="fixed h-auto bottom-0 left-full p-5 min-w-[28rem] bg-secondary z-[900] shadow-lg rounder-lg"
         >
           <button
             className="w-12 h-12 absolute flex items-center justify-center right-2 top-2 "
