@@ -12,19 +12,21 @@ type LayoutType = {
 
 const PageLayout: FC<LayoutType> = ({ children }) => {
   return (
-    <ConversationContextProvider>
-      <PopupContextProvider>
-        <QuizContextProvider>
-          <NoteContextProvider>
-            <NotesComponent />
-            <Suspense>
-              <Navbar />
-            </Suspense>
-            {children}
-          </NoteContextProvider>
-        </QuizContextProvider>
-      </PopupContextProvider>
-    </ConversationContextProvider>
+    <Suspense>
+      <ConversationContextProvider>
+        <PopupContextProvider>
+          <QuizContextProvider>
+            <NoteContextProvider>
+              <NotesComponent />
+              <Suspense>
+                <Navbar />
+              </Suspense>
+              {children}
+            </NoteContextProvider>
+          </QuizContextProvider>
+        </PopupContextProvider>
+      </ConversationContextProvider>
+    </Suspense>
   );
 };
 
