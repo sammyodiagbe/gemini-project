@@ -25,7 +25,8 @@ const ConversationComponent = () => {
   const { openTopicsMenu } = useComponentInteractionsContext();
 
   useEffect(() => {
-    if (convoContainerRef) {
+    if (convoContainerRef.current!) {
+      console.log(convoContainerRef.current);
       convoContainerRef.current!.scrollTo({
         top: convoContainerRef.current!.scrollHeight,
         behavior: "smooth",
@@ -45,16 +46,14 @@ const ConversationComponent = () => {
         <div className="flex flex-col mx-auto relative w-full">
           <div
             ref={convoContainerRef}
+            id="conversation"
             className="custom-scrollbar w-full relative h-full max-h-full overflow-y-scroll mx-auto flex-grow"
           >
             {/* this would be the header of the chat */}
             {/* <div className=""></div> */}
 
             {/* this would be the conversation body */}
-            <div
-              id="conversation"
-              className=" w-[42.87rem] mx-auto h-full  flex-1 pb-[1.875rem] space-y-8"
-            >
+            <div className=" w-[42.87rem] mx-auto h-full  flex-1 pb-[1.875rem] space-y-8">
               {conversation.length ? (
                 conversation.map((conv, index) => {
                   let {

@@ -282,7 +282,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
     const focus = focusInstruction(focusTopics);
     const start = performance.now();
 
-    const prompt = ` ${message},   ${focus}. Follow JSON schema.<JSONSchema>${schemaType}</JSONSchema>,, if the user is only having a casual conversation with you, tell them you want to talk about the document content, if a user is asking to be quized tell them they can start a quiz session by clicking on the quiz button, if they ask for a flashcard, ask them to click on the flashcard button to get a flashcard, same applies for notes too`;
+    const prompt = ` ${message},   ${focus}. Follow this JSON schema please.<JSONSchema>${schemaType}</JSONSchema>, if the user is only having a casual conversation with you, tell them you want to talk about the document content, if a user is asking to be quized tell them they can start a quiz session by clicking on the quiz button, if they ask for a flashcard, ask them to click on the flashcard button to get a flashcard, same applies for notes too`;
 
     let jsonText: string = "";
     try {
