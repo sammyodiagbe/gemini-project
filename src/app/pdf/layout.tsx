@@ -4,7 +4,7 @@ import ConversationContextProvider from "@/context/conversationContext";
 import NoteContextProvider from "@/context/noteContext";
 import PopupContextProvider from "@/context/popupContext";
 import QuizContextProvider from "@/context/quizContext";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 
 type LayoutType = {
   children: React.ReactNode;
@@ -17,7 +17,9 @@ const PageLayout: FC<LayoutType> = ({ children }) => {
         <QuizContextProvider>
           <NoteContextProvider>
             <NotesComponent />
-            <Navbar />
+            <Suspense>
+              <Navbar />
+            </Suspense>
             {children}
           </NoteContextProvider>
         </QuizContextProvider>
