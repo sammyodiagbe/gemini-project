@@ -43,6 +43,11 @@ const ShortAnswerQuestionComponent: FC<ComponentType> = ({
       answer,
       userAnswer: responseText,
     };
+    const ele: HTMLElement = document.getElementById("conversation")!;
+    ele.scrollTo({
+      top: ele.scrollHeight,
+      behavior: "smooth",
+    });
     updateResponse(response);
   };
   return (
@@ -76,7 +81,6 @@ const ShortAnswerQuestionComponent: FC<ComponentType> = ({
         )}
         {answered && (
           <div className="my-4">
-            
             <p>{feedback}</p>
           </div>
         )}
