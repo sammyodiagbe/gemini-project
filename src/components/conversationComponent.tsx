@@ -2,10 +2,7 @@
 
 import { useConversationContext } from "@/context/conversationContext";
 import { Send } from "lucide-react";
-import {
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 
 import ChatMessageComponent from "./chatMessageComponent";
 import QuizMessageComponent from "./QuizMessageComponent";
@@ -13,19 +10,16 @@ import FlashCardComponent from "./flashCardComponent";
 import QueryErrorComponent from "./errorComponent";
 import PossibleInteractionComponent from "./possibleInteractionComponent";
 import InsightComponent from "./insightComponent";
-import PomodoroTimerComponent from "./pomodoroTimerComponent";
-import ThinkingAI from "./loadingAiComponent";
 import { useLoadingContext } from "@/context/loadingStateContext";
 import { useQuizContext } from "@/context/quizContext";
 import { cn } from "@/lib/utils";
-import ConversationHeader from "./convoHeaderComponent";
 import { useComponentInteractionsContext } from "@/context/componentInteractionContext";
 import PromptInputContainer from "./conversationComponents/textarea";
 
 const ConversationComponent = () => {
   const { interactions, conversation } = useConversationContext();
   const convoContainerRef = useRef<HTMLDivElement>(null);
-  const messagesConRef = useRef<HTMLDivElement>(null)
+  const messagesConRef = useRef<HTMLDivElement>(null);
   const { busyAI } = useLoadingContext();
   const { quizmode } = useQuizContext();
 
@@ -51,15 +45,17 @@ const ConversationComponent = () => {
         {/* <ConversationHeader /> */}
         <div className="flex flex-col mx-auto relative w-full">
           <div
-           ref={convoContainerRef}
+            ref={convoContainerRef}
             className="custom-scrollbar w-full relative h-full max-h-full overflow-y-scroll mx-auto flex-grow"
           >
             {/* this would be the header of the chat */}
             {/* <div className=""></div> */}
 
             {/* this would be the conversation body */}
-            <div  
-            id="conversation" className=" w-[42.87rem] mx-auto h-full  flex-1 pb-[1.875rem] space-y-8">
+            <div
+              id="conversation"
+              className=" w-[42.87rem] mx-auto h-full  flex-1 pb-[1.875rem] space-y-8"
+            >
               {conversation.length ? (
                 conversation.map((conv, index) => {
                   let {
