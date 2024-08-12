@@ -3,15 +3,8 @@
 import { useConversationContext } from "@/context/conversationContext";
 import { Send } from "lucide-react";
 import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FormEvent,
-  FormEventHandler,
-  KeyboardEvent,
-  KeyboardEventHandler,
   useEffect,
   useRef,
-  useState,
 } from "react";
 
 import ChatMessageComponent from "./chatMessageComponent";
