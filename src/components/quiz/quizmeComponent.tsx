@@ -52,16 +52,13 @@ const QuizMeComponent = () => {
     const questions = data.questions!;
 
     try {
-      const result = await fetch(
-        "http://127.0.0.1:5000/download-questions-pdf",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: jsonEncode({ data: questions }),
-        }
-      );
+      const result = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL!, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({ data: questions }),
+      });
       if (!result.ok) {
         toast({
           description: "Oops that didn't work, please try again",
@@ -129,102 +126,100 @@ const QuizMeComponent = () => {
           </span>
         )}
       </button>
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              variants={popupVariants}
-              animate="open"
-              exit={"close"}
-              initial="close"
-              className="absolute block  bottom-[-50px] right-full bg-secondary whitespace-nowrap p-5 -translate-x-5 rounded-lg w-[22.63rem] shadown-lg space-y-2 border-b-1"
-            >
-              <h1 className="text-lg">Pick Question type</h1>
-              <span className="grid grid-cols-2 gap-3 py-4">
-                <input
-                  type="checkbox"
-                  className="peer/mult hidden"
-                  name="multiplechoice"
-                  id="multiplechoice"
-                  onClick={(event) => event.stopPropagation()}
-                  checked={multipleChoice}
-                  onChange={(event) =>
-                    allowMultipleChoice(event.target.checked)
-                  }
-                />
-                <label
-                  onClick={(event) => event.stopPropagation()}
-                  className="py-3 bg-background cursor-pointer flex items-center justify-center rounded-md px-2 peer-checked/mult:bg-purple-500 peer-checked/mult:text-white"
-                  htmlFor="multiplechoice"
-                >
-                  <h2>Multiple Choice</h2>
-                </label>
-                <input
-                  type="checkbox"
-                  className="peer/short hidden"
-                  name="shortanswer"
-                  id="shortanswer"
-                  onClick={(event) => event.stopPropagation()}
-                  checked={shortAnswer}
-                  onChange={(event) => allowShortAnswer(event.target.checked)}
-                />
-                <label
-                  className="py-3 cursor-pointer bg-background flex items-center justify-center  rounded-md px-2 peer-checked/short:bg-purple-500 peer-checked/short:text-white"
-                  htmlFor="shortanswer"
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  <h2>Short answer</h2>
-                </label>
-              </span>
-              <span className="block">
-                <h2 className="mb-3">Choose Difficulty level</h2>
-                {difficultyLevels.map((lev, index) => {
-                  return (
-                    <DifficultyComponent
-                      title={lev}
-                      key={index}
-                      level={index + 1}
-                      handleLevelChange={handleLevelChange}
-                      selectedLevel={difLevel === index + 1}
-                    />
-                  );
-                })}
-              </span>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            variants={popupVariants}
+            animate="open"
+            exit={"close"}
+            initial="close"
+            className="absolute block  bottom-[-50px] right-full bg-secondary whitespace-nowrap p-5 -translate-x-5 rounded-lg w-[22.63rem] shadown-lg space-y-2 border-b-1"
+          >
+            <h1 className="text-lg">Pick Question type</h1>
+            <span className="grid grid-cols-2 gap-3 py-4">
+              <input
+                type="checkbox"
+                className="peer/mult hidden"
+                name="multiplechoice"
+                id="multiplechoice"
+                onClick={(event) => event.stopPropagation()}
+                checked={multipleChoice}
+                onChange={(event) => allowMultipleChoice(event.target.checked)}
+              />
+              <label
+                onClick={(event) => event.stopPropagation()}
+                className="py-3 bg-background cursor-pointer flex items-center justify-center rounded-md px-2 peer-checked/mult:bg-purple-500 peer-checked/mult:text-white"
+                htmlFor="multiplechoice"
+              >
+                <h2>Multiple Choice</h2>
+              </label>
+              <input
+                type="checkbox"
+                className="peer/short hidden"
+                name="shortanswer"
+                id="shortanswer"
+                onClick={(event) => event.stopPropagation()}
+                checked={shortAnswer}
+                onChange={(event) => allowShortAnswer(event.target.checked)}
+              />
+              <label
+                className="py-3 cursor-pointer bg-background flex items-center justify-center  rounded-md px-2 peer-checked/short:bg-purple-500 peer-checked/short:text-white"
+                htmlFor="shortanswer"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <h2>Short answer</h2>
+              </label>
+            </span>
+            <span className="block">
+              <h2 className="mb-3">Choose Difficulty level</h2>
+              {difficultyLevels.map((lev, index) => {
+                return (
+                  <DifficultyComponent
+                    title={lev}
+                    key={index}
+                    level={index + 1}
+                    handleLevelChange={handleLevelChange}
+                    selectedLevel={difLevel === index + 1}
+                  />
+                );
+              })}
+            </span>
 
-              <span>
-                <p className=" flex text-start py-3 text-foreground/60 max-w-full break-words whitespace-normal">
-                  <TriangleAlert size={28} className="mr-2" />
-                  If no selections are made, quiz defaults to 'multiplechoice'
-                  and difficulty level remains as 'piece of cake'
-                </p>
-              </span>
+            <span>
+              <p className=" flex text-start py-3 text-foreground/60 max-w-full break-words whitespace-normal">
+                <TriangleAlert size={28} className="mr-2" />
+                If no selections are made, quiz defaults to 'multiplechoice' and
+                difficulty level remains as 'piece of cake'
+              </p>
+            </span>
 
-              <span className="py-3 grid grid-cols-2 gap-2 ">
-                <button
-                  className="flex justify-center rounded-full p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
-                  onClick={beginQuiz}
-                >
-                  {startingQuiz ? (
-                    <LoaderPinwheel
-                      size={buttonIconSize}
-                      className="animate-spin"
-                    />
-                  ) : (
-                    "Start Quiz"
-                  )}
-                </button>
-                <button
-                  className="  rounded-full flex justify-center items-center p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    generateQuizQuestionsAndDownload();
-                  }}
-                >
-                  {generatingQues ? <Spinner /> : "Download Quiz"}
-                </button>
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            <span className="py-3 grid grid-cols-2 gap-2 ">
+              <button
+                className="flex justify-center rounded-full p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
+                onClick={beginQuiz}
+              >
+                {startingQuiz ? (
+                  <LoaderPinwheel
+                    size={buttonIconSize}
+                    className="animate-spin"
+                  />
+                ) : (
+                  "Start Quiz"
+                )}
+              </button>
+              <button
+                className="  rounded-full flex justify-center items-center p-2 bg-background/40 hover:bg-purple-500 hover:text-white transition-all"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  generateQuizQuestionsAndDownload();
+                }}
+              >
+                {generatingQues ? <Spinner /> : "Download Quiz"}
+              </button>
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

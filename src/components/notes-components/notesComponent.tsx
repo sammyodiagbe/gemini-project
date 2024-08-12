@@ -14,16 +14,16 @@ const NotesComponent = () => {
   const [noteText, setNoteText] = useState<string>("");
   const [generatingNotes, setGeneratingNotes] = useState(false);
   const [downloadingNotes, setDownloadingNotes] = useState(false);
-  const notesRef = useRef<HTMLDivElement>(null)
+  const notesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(notesRef.current) {
+    if (notesRef.current) {
       notesRef.current.scrollTo({
         top: notesRef.current.scrollHeight,
-        behavior: "smooth"
-      })
+        behavior: "smooth",
+      });
     }
-  }, [notes])
+  }, [notes]);
 
   const generateNotes = async () => {
     setGeneratingNotes(true);
@@ -35,12 +35,12 @@ const NotesComponent = () => {
     setDownloadingNotes(true);
 
     try {
-      const result = await fetch("http://127.0.0.1:5000/download-notes", {
+      const result = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL!, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: jsonEncode({ data: notes })
+        body: jsonEncode({ data: notes }),
       });
 
       const blob = await result.blob();
@@ -53,15 +53,14 @@ const NotesComponent = () => {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-      setDownloadingNotes(false)
-    }catch(error:any) {
-      console.log(error)
-      setDownloadingNotes(false)
+      setDownloadingNotes(false);
+    } catch (error: any) {
+      console.log(error);
+      setDownloadingNotes(false);
     }
 
-
-    setDownloadingNotes(false)
-  }
+    setDownloadingNotes(false);
+  };
 
   const variants = {
     open: {
@@ -101,7 +100,10 @@ const NotesComponent = () => {
               </div>
             </div>
 
-            <div className=" custom-scrollbar py-5 space-y-6 flex-1 overflow-y-auto p-3" ref={notesRef}>
+            <div
+              className=" custom-scrollbar py-5 space-y-6 flex-1 overflow-y-auto p-3"
+              ref={notesRef}
+            >
               {notes.length ? (
                 notes.map((note, index) => (
                   <NoteComponent index={index} key={index} note={note} />
@@ -116,8 +118,13 @@ const NotesComponent = () => {
 
             <div className=" fixed right-5 bottom-10 items-center flex space-x-4">
               {notes.length ? (
-                <button className="flex items-center space-x-2 hover:font-bold transition-all text-xs" onClick={() => downloadNotes()} disabled={generatingNotes || downloadingNotes}>
-                  <Download size={buttonIconSize} className="mr-1" /> {downloadingNotes ? "Downloading notes" :  "Download notes"}
+                <button
+                  className="flex items-center space-x-2 hover:font-bold transition-all text-xs"
+                  onClick={() => downloadNotes()}
+                  disabled={generatingNotes || downloadingNotes}
+                >
+                  <Download size={buttonIconSize} className="mr-1" />{" "}
+                  {downloadingNotes ? "Downloading notes" : "Download notes"}
                 </button>
               ) : null}
               <button
