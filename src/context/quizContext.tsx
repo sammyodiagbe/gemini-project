@@ -115,6 +115,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
 
       return quizdata;
     } catch (error: any) {
+      console.log(error);
       toast({
         description: errorMessage(),
       });

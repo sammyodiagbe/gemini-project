@@ -57,7 +57,7 @@ const QuizMeComponent = () => {
     const data = await generateQuestions();
 
     const questions = data.questions!;
-    if (!questions) {
+    if (!questions || questions === null) {
       toast({
         description: errorMessage(),
         className: toastClass,
