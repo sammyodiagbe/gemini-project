@@ -65,6 +65,7 @@ type ContextType = {
   initGemini: Function;
   username: string;
   updateUsername: Function;
+  lockingTopic: string | null
 };
 
 const conversationContext = createContext<ContextType>({
@@ -92,6 +93,7 @@ const conversationContext = createContext<ContextType>({
   initGemini: () => {},
   username: "",
   updateUsername: () => {},
+  lockingTopic: null
 });
 
 type ConversationContextType = {
@@ -114,6 +116,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
   const { toast } = useToast();
   const [username, setUsername] = useState("");
+  const [lockingTopic, setLockingTopic] = useState<string | null>(null)
 
   const initGemini = async (fileURL: string) => {
     setWorkingOnPdf(true);
@@ -132,7 +135,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         },
       };
       const textInstruction: TextPart = {
-        text: "You are an amazing study buddy, I have added a pdf file with you, you would help me understand the contents better",
+        text: "You are an amazing study buddy,your name is naala, I have added a pdf file with you, you would help me understand the contents better",
       };
       let chat = await AI.startChat({
         history: [{ role: "user", parts: [initPDf, textInstruction] }],
@@ -186,6 +189,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
 
   const addTopicToFocus = async (text: string) => {
     const topics = [...focusTopics, text];
+    setLockingTopic(text)
     const prompt = `This are the topics i would like you focus on, quizes, conversation, flashcards should be based on this topics
     topics=${topics.join(", ")}`;
     let jsonString = "";
@@ -198,15 +202,18 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
       toast({
         description: `${text} has been added successfully`,
       });
+      setLockingTopic(null)
     } catch (error: any) {
       toast({
         description: errorMessage(),
       });
+      setLockingTopic(null)
     }
     setFocusTopics((prev) => topics);
   };
 
   const removeTopicFromFocus = async (topic: string) => {
+    setLockingTopic(topic)
     const topics = [...focusTopics.filter((t) => t === topic)];
     const prompt = topics.length
       ? `This are the topics i would like you focus on, quizes, conversation, flashcards should be based on this topics
@@ -223,7 +230,9 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         description: `${topic} was removed successfully`,
       });
       setFocusTopics((prev) => prev.filter((t) => t !== topic));
+      setLockingTopic(null)
     } catch (error: any) {
+      setLockingTopic(null)
       toast({
         description: errorMessage(),
       });
@@ -418,6 +427,7 @@ const ConversationContextProvider: FC<ConversationContextType> = ({
         documentImagesData,
         username,
         updateUsername: updateName,
+        lockingTopic
       }}
     >
       {children}

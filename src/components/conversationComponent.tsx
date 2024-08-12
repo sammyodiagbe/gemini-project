@@ -59,7 +59,7 @@ const ConversationComponent = () => {
         <div className="flex flex-col mx-auto relative w-full">
           <div
            ref={convoContainerRef}
-            className=" w-full relative h-full max-h-full overflow-y-scroll mx-auto flex-grow"
+            className="custom-scrollbar w-full relative h-full max-h-full overflow-y-scroll mx-auto flex-grow"
           >
             {/* this would be the header of the chat */}
             {/* <div className=""></div> */}

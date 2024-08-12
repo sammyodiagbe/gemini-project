@@ -13,6 +13,7 @@ export const Gemini = AI.getGenerativeModel(
     generationConfig: {
       responseMimeType: "application/json",
       temperature: 0.75,
+      maxOutputTokens: 8000
     },
     safetySettings: [
       {

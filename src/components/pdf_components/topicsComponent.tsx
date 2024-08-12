@@ -17,7 +17,7 @@ const TopicsComponent = () => {
   return (
     <div
       className={cn(
-        "absolute top-0 left-0 w-[40rem] h-full bg-background space-y-2 p-2 z-[150] shadow-lg overflow-hidden overflow-y-auto transition-all duration-300 delay-400",
+        "custom-scrollbar absolute top-0 left-0 w-[40rem] h-full bg-background space-y-2 p-2 z-[150] shadow-lg overflow-hidden overflow-y-auto transition-all duration-300 delay-400",
         !openTopicsMenu ? "w-0 delay-0 p-0" : ""
       )}
     >

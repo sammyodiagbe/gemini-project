@@ -17,6 +17,7 @@ const TopicComponent: FC<ComponenentType> = ({ topic }) => {
   const lockedin = focusTopics.includes(topic);
   const { updateToasts, toasts } = useToastContext();
   const { openTopicsMenu } = useComponentInteractionsContext();
+  const { lockingTopic } = useConversationContext()
 
   const performAction = async () => {
     if (working) return;
@@ -40,6 +41,7 @@ const TopicComponent: FC<ComponenentType> = ({ topic }) => {
     setWorking(false);
     updateToasts(toast);
   };
+  const disable = (lockingTopic !== null)
   return (
     <div
       className={cn(
@@ -49,9 +51,10 @@ const TopicComponent: FC<ComponenentType> = ({ topic }) => {
     >
       <p className="flex-1 mr-3 text-sm">{topic}</p>
       <button
+        disabled={disable}
         className={cn(
-          "h-7 w-7 hover:font-bold hover:text-purple-500",
-          focusTopics.includes(topic) && "text-purple-500"
+          "h-7 w-7 hover:font-bold hover:text-purple-500 disabled:text-foreground/30 disabled:cursor-not-allowed",
+          focusTopics.includes(topic) && "text-purple-500", working && "text-foreground"
         )}
         onClick={performAction}
       >
