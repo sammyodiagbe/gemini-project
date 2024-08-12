@@ -37,6 +37,7 @@ const NotesComponent = () => {
     try {
       const result = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL!, {
         method: "POST",
+        mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
