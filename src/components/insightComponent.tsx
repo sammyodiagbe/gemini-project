@@ -1,7 +1,7 @@
 import { InsightType } from "@/lib/type";
 import { FC } from "react";
 import InsightChartComponent from "./insightChartComponent";
-import TimeComponent from "./timeComponent";
+import AiChatHeader from "./conversationComponents/chatHeader";
 
 type InsightPropsType = {
   insights: InsightType;
@@ -18,7 +18,7 @@ const InsightComponent: FC<InsightPropsType> = ({
 
   return (
     <div className="space-y-3  p-3 rounded-md">
-      <TimeComponent time={time!} />
+     <AiChatHeader time={time} />
 
       <h1 className="text-lg">Let's see how you did </h1>
       <p>{message}</p>

@@ -6,10 +6,11 @@ import { cn } from "@/lib/utils";
 import { Send } from "lucide-react";
 import { ChangeEvent, ChangeEventHandler, FormEvent, FormEventHandler, useRef, useState } from "react";
 import ConversationHeader from "../convoHeaderComponent";
+import ThinkingAI from "../loadingAiComponent";
 
 const PromptInputContainer = () => {
-    const { chatWithGemini,  } = useConversationContext()
-    const { quizmode } = useQuizContext()
+    const { chatWithGemini,   } = useConversationContext()
+    const { quizmode, busyAI } = useQuizContext()
     const [message, setMessage] = useState("")
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -54,7 +55,7 @@ const PromptInputContainer = () => {
         ></textarea>
         <button
           type="submit"
-          disabled={quizmode}
+          disabled={quizmode || busyAI}
           className={cn(
             "w-[3rem] h-[3rem] text-white hover:bg-primary/70 rounded-md hover:text-white flex items-center justify-center bg-gradient-to-r from-fuchsia-600 to-purple-600",
             quizmode && "cursor-not-allowed bg-gray-300 text-gray-700"
@@ -62,6 +63,7 @@ const PromptInputContainer = () => {
         >
           <Send size={18} color="white"/>
         </button>
+        {busyAI ? <ThinkingAI /> : null}
     <ConversationHeader />
       </div>
     </form>

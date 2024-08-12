@@ -34,7 +34,8 @@ type QuizContextType = {
   sendMultipleChoiceResponse: Function;
   quizSession: QuizSessionType[];
   sessionCount: number;
-  generateQuestions: Function
+  generateQuestions: Function,
+  busyAI: boolean
 };
 
 const quizContext = createContext<QuizContextType>({
@@ -47,7 +48,8 @@ const quizContext = createContext<QuizContextType>({
   sendMultipleChoiceResponse: () => {},
   quizSession: [],
   sessionCount: 0,
-  generateQuestions: () => {}
+  generateQuestions: () => {},
+  busyAI: false
 });
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -261,7 +263,8 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         sendMultipleChoiceResponse,
         quizSession,
         sessionCount,
-        generateQuestions
+        generateQuestions,
+        busyAI
       }}
     >
       {children}

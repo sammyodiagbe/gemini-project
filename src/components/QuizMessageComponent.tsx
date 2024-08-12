@@ -5,7 +5,6 @@ import ShortAnswerQuestionComponent from "./shortAnswerComponent";
 import QuizActionComponent from "./quizActionComponent";
 import { useQuizContext } from "@/context/quizContext";
 import { jsonEncode } from "@/lib/utils";
-import TimeComponent from "./timeComponent";
 
 type ComponentType = {
   quiz: QuizQuestionType[];
@@ -44,7 +43,6 @@ const QuizMessageComponent: React.FC<ComponentType> = ({
 
   return (
     <div className="space-y-3  p-3 rounded-md">
-      <TimeComponent time={time} />
       <p className="pb-4">{message}</p>
 
       <div className="py-2">

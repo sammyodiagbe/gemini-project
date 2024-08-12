@@ -8,6 +8,7 @@ import { useNoteContext } from "@/context/noteContext";
 import ReactMarkdown from "react-markdown";
 import { ReactTyped } from "react-typed";
 import MessageTypeComponent from "./chat/messageItem";
+import AiChatHeader from "./conversationComponents/chatHeader";
 type ChatComponentType = {
   conv: ConversationType;
 };
@@ -44,7 +45,7 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
       initial={{ transform: "scale(0)", opacity: 0 }}
       animate={{ transform: "scale(1)", opacity: 1 }}
       className={cn(
-        " mb-5 rounded-sm py-3 grid",
+        " mb-5 rounded-sm  grid",
         sender === "user" && "justify-start rounded-full"
       )}
     >
@@ -59,16 +60,14 @@ const ChatMessageComponent: FC<ChatComponentType> = ({
           className="mb-4 leading-8"
         />
       ) : ( */}
-      <p className="flex justify-between items-center text-sm font-bold mb-2">
-        <span>{sender === "ai" ? "Naala" : "You"}</span>
-        {time && <span>time taken: {Math.round(time)}s</span>}
-      </p>
+        {sender === "ai" ? <AiChatHeader time={time!} /> : <p className="text-sm p-2 font-bold">You</p>}
+       
 
       {/* <div className="prose lg:prose-xl">
         <p className="prose">{message}</p>
       </div> */}
       {!Array.isArray(message) ? (
-        <p>{message}</p>
+        <p className="text-sm px-2">{message}</p>
       ) : (
         message.map((m, index) => {
           return <MessageTypeComponent data={m} key={index} />;

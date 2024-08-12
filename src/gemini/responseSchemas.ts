@@ -18,14 +18,8 @@ export const chatResponseSchema = {
         type: "string",
         description: "Text content (required for paragraph, heading, link)",
       },
-      language: {
-        type: "string",
-        description: "Code language (required for code blocks)",
-      },
-      code: {
-        type: "string",
-        description: "Code snippet (required for code blocks)",
-      },
+     
+     
 
       headers: {
         type: "array",

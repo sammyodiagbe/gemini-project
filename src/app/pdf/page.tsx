@@ -65,7 +65,7 @@ const Page = () => {
   return (
     <main
       className={cn(
-        "flex h-screen max-h-[calc(100vh-70px)] w-screen overflow-x-hidden",
+        "flex h-screen max-h-[calc(100vh-70px)] w-screen overflow-hidden",
         !fileUrl ? "" : ""
       )}
     >
