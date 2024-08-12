@@ -13,7 +13,14 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { buttonIconSize, cn, jsonEncode } from "@/lib/utils";
+import {
+  buttonIconSize,
+  cn,
+  errorMessage,
+  jsonEncode,
+  toastClass,
+  toastStyle,
+} from "@/lib/utils";
 import { useQuizContext } from "@/context/quizContext";
 import Spinner from "../spinner";
 import { toast } from "../ui/use-toast";
@@ -50,15 +57,28 @@ const QuizMeComponent = () => {
     const data = await generateQuestions();
 
     const questions = data.questions!;
+    if (!questions) {
+      toast({
+        description: errorMessage(),
+        className: toastClass,
+        style: toastStyle,
+      });
+      setGeneratingQuez(false);
+      return;
+    }
 
     try {
-      const result = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL!, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonEncode({ data: questions }),
-      });
+      const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL!}/download-questions-pdf`,
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({ data: questions }),
+        }
+      );
       if (!result.ok) {
         toast({
           description: "Oops that didn't work, please try again",
@@ -79,10 +99,11 @@ const QuizMeComponent = () => {
       setGeneratingQuez(false);
     } catch (error: any) {
       console.log(error);
-      setGeneratingQuez(false);
+
       toast({
         description: "Oh no something went wrong, please try again",
       });
+      setGeneratingQuez(false);
     }
     // next is to post a message to the backend
 

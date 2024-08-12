@@ -34,8 +34,8 @@ type QuizContextType = {
   sendMultipleChoiceResponse: Function;
   quizSession: QuizSessionType[];
   sessionCount: number;
-  generateQuestions: Function,
-  busyAI: boolean
+  generateQuestions: Function;
+  busyAI: boolean;
 };
 
 const quizContext = createContext<QuizContextType>({
@@ -49,7 +49,7 @@ const quizContext = createContext<QuizContextType>({
   quizSession: [],
   sessionCount: 0,
   generateQuestions: () => {},
-  busyAI: false
+  busyAI: false,
 });
 
 const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -106,24 +106,21 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
     const start = performance.now();
     try {
       const result = await chat?.sendMessageStream(prompt);
- 
+
       for await (let chunk of result?.stream!) {
         jsonString += chunk.text();
       }
       const quizdata = jsonDecode(jsonString);
-      // 
-     
+      //
+
       return quizdata;
     } catch (error: any) {
-      console.log(error)
       toast({
         description: errorMessage(),
       });
     }
     setBusyAI(false);
   };
-
-
 
   const checkShortAnswer = async (
     userAnswer: string,
@@ -264,7 +261,7 @@ const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
         quizSession,
         sessionCount,
         generateQuestions,
-        busyAI
+        busyAI,
       }}
     >
       {children}

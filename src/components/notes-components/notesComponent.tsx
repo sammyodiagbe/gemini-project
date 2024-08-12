@@ -35,14 +35,17 @@ const NotesComponent = () => {
     setDownloadingNotes(true);
 
     try {
-      const result = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL!, {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonEncode({ data: notes }),
-      });
+      const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL!}/download-notes`,
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({ data: notes }),
+        }
+      );
 
       const blob = await result.blob();
       const url: string = window.URL.createObjectURL(blob);
