@@ -12,7 +12,6 @@ import { ReactTyped } from "react-typed";
 const Page = () => {
   const [name, setName] = useState("");
   const [hasProvidedName, setHasProvdiedName] = useState(false);
-  const router = useRouter();
   const [showNavLink, setShowNavLink] = useState(false);
 
   const provideName = () => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useConversationContext } from "@/context/conversationContext";
-import { Send } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 import ChatMessageComponent from "./chatMessageComponent";
