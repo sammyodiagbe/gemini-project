@@ -37,11 +37,11 @@ export default function RootLayout({
         >
           <LoadingStateContextProvider>
             <ComponentInteractionsProvider>
-              <Toaster />
               {children}
             </ComponentInteractionsProvider>
             <Analytics />
           </LoadingStateContextProvider>
+          <Toaster />
         </body>
       </ThemeProvider>
     </html>

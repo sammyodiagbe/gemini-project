@@ -20,7 +20,8 @@ const NewNoteComponent = () => {
     setText("");
     toast({
       description: "Note added Successfully",
-      style: { zIndex: "3000" },
+      style: { zIndex: 3000 },
+      className: "z-[3000]",
     });
   };
   return (

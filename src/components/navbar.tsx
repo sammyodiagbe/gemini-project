@@ -25,9 +25,6 @@ const Navbar = () => {
           <li>
             <ThemeToggler />
           </li>
-          <li>
-            <div className="h-[2.5rem] w-[2.5rem] rounded-full bg-onBackground" />
-          </li>
         </ul>
       </div>
     </nav>
