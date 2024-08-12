@@ -36,7 +36,7 @@ export default function Home() {
     setMessage("");
   };
   return (
-    <main className="p-3 py-8 space-y-[100px]">
+    <main className="p-3 py-10 space-y-[100px]">
       <header className="text-center space-y-7">
         <h1 className="text-5xl max-w-[700px] mx-auto font-bold leading-2">
           Meet Naala, your perfect Study Partner: AI-Powered, Always Available
