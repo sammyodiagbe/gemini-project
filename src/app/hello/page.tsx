@@ -6,21 +6,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { buttonClass } from "@/lib/tailwind_classes";
 import Link from "next/link";
-import { useConversationContext } from "@/context/conversationContext";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { ReactTyped } from "react-typed";
 
 const Page = () => {
   const [name, setName] = useState("");
   const [hasProvidedName, setHasProvdiedName] = useState(false);
-  const { updateUsername } = useConversationContext();
   const router = useRouter();
+  const [showNavLink, setShowNavLink] = useState(false);
 
   const provideName = () => {
     if (name.trim() === "") return;
     setHasProvdiedName(true);
-    setTimeout(() => {
-      router.push(`/pdf?name=${name}`);
-    }, 1000);
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center">
@@ -57,10 +54,15 @@ const Page = () => {
             </motion.div>
           ) : (
             <div>
-              <AnimatedTextComponent
-                text={`Awesome ${name}, nice to meet you, let's get this study party started.`}
-                Wrapper={"p"}
-                classStyle="text-lg"
+              <ReactTyped
+                typeSpeed={50}
+                strings={[
+                  `Awesome ${name}, nice to meet you, let's get this study party started.`,
+                ]}
+                className="text-lg"
+                onComplete={() => {
+                  setShowNavLink(true);
+                }}
               />
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -68,9 +70,14 @@ const Page = () => {
                 transition={{ delay: 4 }}
                 className="py-4 flex justify-end"
               >
-                <Link href={"/pdf"} className={cn(buttonClass, "p-6 py-3")}>
-                  I am ready
-                </Link>
+                {showNavLink ? (
+                  <Link
+                    href={`/pdf?name=${name}`}
+                    className={cn(buttonClass, "p-6 py-3")}
+                  >
+                    I am ready
+                  </Link>
+                ) : null}
               </motion.div>
             </div>
           )}

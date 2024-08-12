@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import MyPdfViewer from "@/components/pdfViewer";
 import ConversationComponent from "@/components/conversationComponent";
@@ -13,6 +12,7 @@ import { useQuizContext } from "@/context/quizContext";
 import NewNoteComponent from "@/components/notes-components/newNote";
 import TopicsComponent from "@/components/pdf_components/topicsComponent";
 import { useToast } from "@/components/ui/use-toast";
+import { useSearchParams } from "next/navigation";
 
 const Page = () => {
   const [fileUrl, setFile] = useState<string | null>(null);
@@ -22,6 +22,9 @@ const Page = () => {
   const { quizmode } = useQuizContext();
   const { initGemini } = useConversationContext();
   const { toast } = useToast();
+  const search = useSearchParams();
+  const name = search.get("name");
+
   useEffect(() => {
     reset();
   }, []);
@@ -76,10 +79,10 @@ const Page = () => {
       {fileUrl === null ? (
         <div className="flex-1 w-full h-full flex items-center justify-center select-none">
           <div className="max-w-[600px] space-y-5 text-center">
-            <h1 className="text-8xl text-center mb-5 font-light ">
+            <h1 className="text-7xl text-center mb-5 font-light ">
               What are we{" "}
               <span className="text-fuchsia-500/90 font-black">studying</span>{" "}
-              today?
+              today, {name}?
             </h1>
             <label
               htmlFor="pdf_file"

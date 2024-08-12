@@ -2,12 +2,12 @@
 import Link from "next/link";
 import NetworkStatusComponent from "./networkStatusComponent";
 import ThemeToggler from "./themeToggleComponent";
-import { useConversationContext } from "@/context/conversationContext";
+import { useSearchParams } from "next/navigation";
 
 const Navbar = () => {
-  const { username } = useConversationContext();
+  const query = useSearchParams();
+  const name = query.get("name");
 
-  console.log(username);
   return (
     <nav className="flex justify-between bg-backgroundColor text-textColor items-center p-4 h-[4.375rem] border-b-1 border-b-textColor">
       <h1 className="font-bold text-xl">
@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="">
         <ul className="flex space-x-3 items-center">
           <li>
-            <b>Hi, {username !== "" ? username : "friend"}</b>
+            <b>Hi, {name !== null ? name : "friend"}</b>
           </li>
           <li>
             <NetworkStatusComponent />
